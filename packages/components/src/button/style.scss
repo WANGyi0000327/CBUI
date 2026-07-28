@@ -1,0 +1,9 @@
+// Button 组件样式入口
+// 按需引入时通过此文件加载样式
+// 注意：SFC 内的 <style scoped> 由 Vite 自动处理
+// 此文件用于补充组件需要的全局样式或 Sass 变量引用
+
+@use '@cb-ui/theme/src/variables' as *;
+
+// 此处可放置 Button 组件的非 scoped 全局样式
+// 目前 Button 所有样式均在 SFC <style scoped> 中

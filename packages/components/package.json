@@ -1,0 +1,51 @@
+{
+  "name": "@cb-ui/components",
+  "version": "0.1.0",
+  "description": "CB UI 组件库 - 基于 TDesign 二次开发",
+  "type": "module",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "style": "./dist/style.css",
+  "files": ["dist", "src"],
+  "sideEffects": ["**/*.css", "**/*.scss"],
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./dist/style.css": "./dist/style.css",
+    "./button": {
+      "import": "./src/button/index.ts",
+      "types": "./src/button/types.ts"
+    },
+    "./input": {
+      "import": "./src/input/index.ts",
+      "types": "./src/input/types.ts"
+    },
+    "./resolver": {
+      "import": "./src/resolver.ts",
+      "types": "./src/resolver.ts"
+    }
+  },
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "extract:props": "node scripts/extract-props.mjs"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.0",
+    "tdesign-vue-next": "^1.16.1"
+  },
+  "dependencies": {
+    "@cb-ui/utils": "workspace:*",
+    "tdesign-vue-next": "^1.16.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "vite": "^8.0.0",
+    "vite-plugin-dts": "^4.0.0",
+    "vue": "^3.4.0"
+  }
+}

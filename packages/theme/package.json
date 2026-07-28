@@ -1,0 +1,21 @@
+{
+  "name": "@cb-ui/theme",
+  "version": "0.1.0",
+  "description": "CB UI 主题包 - 设计 token、Sass 变量、Tailwind 预设",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.css",
+  "style": "./src/index.css",
+  "exports": {
+    ".": {
+      "style": "./src/index.css"
+    },
+    "./variables": {
+      "style": "./src/variables.scss"
+    },
+    "./tailwind.preset": {
+      "default": "./src/tailwind.preset.js"
+    }
+  },
+  "files": ["src"]
+}

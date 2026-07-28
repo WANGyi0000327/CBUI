@@ -1,0 +1,5 @@
+# pnpm workspace 配置
+# 定义 Monorepo 的工作空间，包含所有子包
+packages:
+  - 'packages/*'
+  - 'docs'

@@ -1,0 +1,72 @@
+/* ============================================================
+ * VitePress 自定义样式覆盖
+ * ------------------------------------------------------------
+ * 在 VitePress 默认主题基础上定制 CB UI 文档站样式
+ * ============================================================ */
+
+:root {
+  /* 覆盖 VitePress 主色为 CB UI 品牌色 */
+  --vp-c-brand-1: #4b3fe3;
+  --vp-c-brand-2: #3c2eca;
+  --vp-c-brand-3: #6f6fff;
+  --vp-c-brand-light: #e5eaff;
+}
+
+/* 首页 Hero 区域 */
+.VPHero {
+  .image-container {
+    .image-bg {
+      background: linear-gradient(135deg, #e5eaff 0%, #f2f7ff 100%);
+    }
+  }
+}
+
+/* 代码块 */
+.vp-doc {
+  div[class*='language-'] {
+    margin: 16px 0;
+    border-radius: 8px;
+  }
+}
+
+/* DemoBlock 示例容器 */
+.cb-demo-block {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  margin: 16px 0;
+  overflow: hidden;
+
+  &__source {
+    padding: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  &__meta {
+    border-top: 1px solid var(--vp-c-divider);
+    background-color: var(--vp-c-bg-soft);
+
+    summary {
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--vp-c-text-2);
+      user-select: none;
+
+      &:hover {
+        color: var(--vp-c-brand-1);
+      }
+    }
+  }
+
+  &__code {
+    padding: 0 16px 16px;
+
+    div[class*='language-'] {
+      margin: 0;
+      border-radius: 0;
+    }
+  }
+}

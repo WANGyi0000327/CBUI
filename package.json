@@ -1,0 +1,37 @@
+{
+  "name": "cb-ui-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "基于 Vue3 + TypeScript + VitePress + TailwindCSS + Sass 的前端组件库（基于 TDesign 二次开发）",
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm -F docs dev",
+    "build:docs": "pnpm -F docs build",
+    "build:lib": "pnpm -F @cb-ui/components build",
+    "build": "pnpm build:lib && pnpm build:docs",
+    "preview": "pnpm -F docs preview",
+    "extract:props": "pnpm -F @cb-ui/components extract:props",
+    "lint": "eslint . --ext .vue,.ts,.tsx --fix",
+    "format": "prettier --write \"**/*.{vue,ts,tsx,scss,css,md,json}\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.0",
+    "@typescript-eslint/parser": "^7.13.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.27.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.3.0",
+    "sass": "^1.77.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.4.0",
+    "vitest": "^3.0.0",
+    "vue": "^3.4.0"
+  }
+}

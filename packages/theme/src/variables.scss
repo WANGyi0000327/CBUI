@@ -1,0 +1,91 @@
+// ============================================================
+// CB UI 设计系统 Sass 变量
+// ------------------------------------------------------------
+// 所有组件共享的设计 token，通过 @use 引入
+// 与 Tailwind 预设保持一致的数值
+// ============================================================
+
+// ---- 颜色：主色 ----
+$cb-color-primary: #4b3fe3;
+$cb-color-primary-light: #e5eaff;
+$cb-color-primary-lighter: #f2f7ff;
+$cb-color-primary-dark: #3c2eca;
+$cb-color-primary-darker: #1a1759;
+
+// ---- 颜色：语义色 ----
+$cb-color-success: #1dc981;
+$cb-color-warning: #efaa17;
+$cb-color-danger: #e8463a;
+$cb-color-info: #22a5f7;
+
+// ---- 颜色：中性色 ----
+$cb-color-text: #171717;
+$cb-color-text-muted: #52525b;
+$cb-color-text-disabled: #a1a1aa;
+$cb-color-border: rgba(23, 23, 23, 0.12);
+$cb-color-bg: #ffffff;
+$cb-color-bg-muted: #f7f7f8;
+$cb-color-bg-hover: #efeff2;
+
+// ---- 间距 ----
+$cb-space-4: 4px;
+$cb-space-8: 8px;
+$cb-space-12: 12px;
+$cb-space-16: 16px;
+$cb-space-20: 20px;
+$cb-space-24: 24px;
+
+// ---- 圆角 ----
+$cb-radius-sm: 6px;
+$cb-radius: 8px;
+$cb-radius-lg: 12px;
+$cb-radius-full: 999px;
+
+// ---- 字体 ----
+$cb-font-sans: 'SF Pro Text', 'PingFang SC', system-ui, -apple-system, 'Segoe UI', Roboto,
+  sans-serif;
+$cb-font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+// ---- 字号 ----
+$cb-font-size-caption: 12px;
+$cb-font-size-body: 14px;
+$cb-font-size-title: 16px;
+
+// ---- 过渡 ----
+$cb-transition-duration: 0.2s;
+$cb-transition-timing: ease;
+
+// ============================================================
+// Mixins
+// ============================================================
+
+// 单行文本截断
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// 多行文本截断
+@mixin text-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// 清除浮动
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+// 居中布局
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

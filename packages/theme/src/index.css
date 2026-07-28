@@ -1,0 +1,53 @@
+/* ============================================================
+ * CB UI 全局 CSS 变量
+ * ------------------------------------------------------------
+ * 通过 CSS 变量实现主题切换（明暗模式）
+ * Tailwind 颜色与 Sass 变量均引用此处的值
+ * ============================================================ */
+
+:root {
+  /* 主色 */
+  --cb-primary: #4b3fe3;
+  --cb-primary-light: #e5eaff;
+  --cb-primary-lighter: #f2f7ff;
+  --cb-primary-dark: #3c2eca;
+  --cb-primary-darker: #1a1759;
+
+  /* 语义色 */
+  --cb-success: #1dc981;
+  --cb-warning: #efaa17;
+  --cb-danger: #e8463a;
+  --cb-info: #22a5f7;
+
+  /* 中性色 */
+  --cb-text: #171717;
+  --cb-text-muted: #52525b;
+  --cb-text-disabled: #a1a1aa;
+  --cb-border: rgba(23, 23, 23, 0.12);
+  --cb-bg: #ffffff;
+  --cb-bg-muted: #f7f7f8;
+  --cb-bg-hover: #efeff2;
+
+  /* 圆角 */
+  --cb-radius-sm: 6px;
+  --cb-radius: 8px;
+  --cb-radius-lg: 12px;
+
+  /* 过渡 */
+  --cb-transition: 0.2s ease;
+}
+
+/* 深色模式覆盖 */
+[data-theme='dark'] {
+  --cb-primary: #6054f1;
+  --cb-primary-light: #1a1759;
+  --cb-primary-lighter: #3c2eca;
+  --cb-primary-dark: #cfd8ff;
+
+  --cb-text: #e5e5e5;
+  --cb-text-muted: #a1a1aa;
+  --cb-border: rgba(229, 229, 229, 0.12);
+  --cb-bg: #171717;
+  --cb-bg-muted: #262626;
+  --cb-bg-hover: #3a3a3a;
+}

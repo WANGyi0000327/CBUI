@@ -1,0 +1,7 @@
+// Input 组件样式入口
+// 按需引入时通过此文件加载样式
+
+@use '@cb-ui/theme/src/variables' as *;
+
+// 此处可放置 Input 组件的非 scoped 全局样式
+// 目前 Input 所有样式均在 SFC <style scoped> 中

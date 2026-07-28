@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@cb-ui/components": ["packages/components/src"],
+      "@cb-ui/components/*": ["packages/components/src/*"],
+      "@cb-ui/theme": ["packages/theme/src"],
+      "@cb-ui/theme/*": ["packages/theme/src/*"],
+      "@cb-ui/utils": ["packages/utils/src"],
+      "@cb-ui/utils/*": ["packages/utils/src/*"]
+    }
+  },
+  "include": ["packages/**/*", "docs/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts"]
+}
