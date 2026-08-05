@@ -7,6 +7,8 @@ dist
 docs/.vitepress/dist
 docs/.vitepress/cache
 docs/.vitepress/generated
+packages/components/dist
+packages/components/scripts/dist
 *.local
 
 # 编辑器
