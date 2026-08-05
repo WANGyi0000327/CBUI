@@ -111,10 +111,10 @@ export interface InputSlots {
   /**
    * 输入框前置内容
    */
-  prefix?: () => any
+  prefix?: () => unknown
 
   /**
    * 输入框后置内容
    */
-  suffix?: () => any
+  suffix?: () => unknown
 }

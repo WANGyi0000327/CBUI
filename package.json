@@ -14,6 +14,8 @@
     "build": "pnpm build:lib && pnpm build:docs",
     "preview": "pnpm -F docs preview",
     "extract:props": "pnpm -F @cb-ui/components extract:props",
+    "gen:index": "node scripts/generate-index.mjs",
+    "gen": "node scripts/gen-component.mjs",
     "lint": "eslint . --ext .vue,.ts,.tsx --fix",
     "format": "prettier --write \"**/*.{vue,ts,tsx,scss,css,md,json}\"",
     "test": "vitest run",

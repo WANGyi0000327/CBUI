@@ -51,11 +51,12 @@
 </template>
 
 <script setup lang="ts">
-// ref 是 Vue 响应式 API，需要显式导入
+defineOptions({ name: 'CbInput' })
+
 import { ref } from 'vue'
 import type { InputProps, InputEmits } from './types'
 
-const props = withDefaults(defineProps<InputProps>(), {
+withDefaults(defineProps<InputProps>(), {
   modelValue: '',
   size: 'medium',
   disabled: false,

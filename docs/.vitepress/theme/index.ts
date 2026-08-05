@@ -25,5 +25,25 @@ export default {
     app.use(CBUI)
     // 注册文档站公共组件
     app.component('DemoBlock', DemoBlock)
+
+    // 客户端环境加载 iconfont SVG Sprite
+    // VitePress 使用 SSR，服务端无 window/document，需判断后再加载
+    if (typeof window !== 'undefined') {
+      import('@cb-ui/components/config/iconfont.js').then(() => {
+        // 阿里 iconfont 新版 js 仅将 SVG string 赋值给 window._iconfont_svg_string_xxx
+        // 需手动将 SVG 注入到 DOM 中，<use xlink:href="#icon-xxx"> 才能引用到 symbol
+        const keys = Object.keys(window).filter((k) => k.startsWith('_iconfont_svg_string_'))
+        keys.forEach((k) => {
+          const svgStr = (window as Record<string, unknown>)[k] as string
+          if (svgStr && !document.getElementById(k)) {
+            const div = document.createElement('div')
+            div.id = k
+            div.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden'
+            div.innerHTML = svgStr
+            document.body.insertBefore(div, document.body.firstChild)
+          }
+        })
+      })
+    }
   },
 } satisfies Theme

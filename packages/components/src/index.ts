@@ -1,40 +1,55 @@
 /**
  * CB UI 组件库全量入口
  * ------------------------------------------------------------
- * 此文件为组件库的主入口，导出所有组件、类型与安装方法
+ * 该文件由 scripts/generate-index.mjs 自动生成，请勿手动修改
+ * 重新生成命令：pnpm gen:index
  */
+
 import type { App } from 'vue'
 
 // 导入组件
-import { Button } from './button'
-import { Input } from './input'
-import { Card } from './card'
+import Button from './button'
+import Card from './card'
+import DatePicker from './date-picker'
+import Icon from './icon'
+import Input from './input'
+import Modal from './modal'
 
 // 导出组件
-export { Button, Input, Card }
+export { Button, Card, DatePicker, Icon, Input, Modal }
 
 // 导出类型
-export type { ButtonProps, ButtonEmits, ButtonSlots, ButtonType, ButtonSize, ButtonNativeType } from './button'
+export type {
+  ButtonProps,
+  ButtonEmits,
+  ButtonSlots,
+  ButtonType,
+  ButtonSize,
+  ButtonNativeType,
+} from './button'
+export type {
+  CardProps,
+  CardEmits,
+  CardSlots,
+  AddCartEventPayload,
+  ProductHallListType,
+} from './card'
+export type { DatePickerProps, DatePickerEmits, DatePickerSlots } from './date-picker'
+export type { IconProps } from './icon'
 export type { InputProps, InputEmits, InputSlots, InputSize } from './input'
-export type { CardProps, CardEmits, CardSlots } from './card'
+export type { ModalProps, ModalEmits, ModalSlots } from './modal'
 
 // 导出 Resolver（用于按需加载）
 export { CBUIResolver } from './resolver'
 export type { CBUIResolverOptions, ComponentResolver } from './resolver'
 
-// 组件列表
-const components = [Button, Input, Card]
+const components = [Button, Card, DatePicker, Icon, Input, Modal]
 
-/**
- * Vue 插件安装方法
- * @example
- * import { CBUI } from '@cb-ui/components'
- * app.use(CBUI)
- */
 export const CBUI = {
   install(app: App) {
     components.forEach((component) => {
-      const name = (component as any).name || (component as any).__name || ''
+      const name =
+        (component as { name?: string }).name || (component as { __name?: string }).__name || ''
       if (name) {
         app.component(name, component)
       }

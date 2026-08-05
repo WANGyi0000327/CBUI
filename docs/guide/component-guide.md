@@ -19,7 +19,7 @@ packages/components/src/
 ├── input/
 ├── card/
 ├── modal/
-├── index.ts                # 组件库总入口（手动注册新组件在这里）
+├── index.ts                # 组件库总入口（自动生成，无需手动修改）
 ├── resolver.ts             # 前缀配置（修改前缀在这里）
 └── style.ts                # 全局样式入口
 ```
@@ -28,21 +28,48 @@ packages/components/src/
 
 ## 二、快速添加组件（推荐方式）
 
-### 2.1 一键生成脚手架
+### 2.1 一键生成（最推荐）
 
-我们在 `packages/components/scripts/` 下提供了脚手架脚本，可以一键生成组件模板：
+使用脚手架脚本，一行命令生成组件所有文件并自动注册：
 
 ```bash
-# 用法：pnpm gen <组件名>
-pnpm gen modal
-
-# 会在 packages/components/src/modal/ 下生成：
-#   Modal.vue
-#   types.ts
-#   index.ts
+pnpm gen modal 模态框
 ```
 
-**生成的 Modal.vue**：
+脚本会自动完成：
+1. 创建 `packages/components/src/modal/` 目录及文件
+2. 生成 `docs/components/modal.md` 文档模板
+3. 自动更新 `packages/components/src/index.ts`
+4. 侧边栏自动扫描，无需手动修改 `config.ts`
+
+::: tip 说明
+`pnpm gen` 是 `node scripts/gen-component.mjs` 的快捷命令，定义在根目录 `package.json` 中。
+:::
+
+### 2.2 复制已有组件（手动）
+
+如果不想用脚本，可以复制已有组件目录手动修改：
+
+```bash
+# 复制 button 目录作为模板
+cp -r packages/components/src/button packages/components/src/modal
+
+# 然后修改里面的文件内容
+```
+
+**复制后需要修改的文件**：
+
+1. `Modal.vue`：组件实现
+2. `types.ts`：类型定义
+3. `index.ts`：导出入口
+
+**修改完成后，记得运行以下命令自动更新入口**：
+
+```bash
+pnpm gen:index
+```
+
+**Modal.vue 模板示例**：
 
 ```vue
 &lt;template&gt;
@@ -224,31 +251,61 @@ pnpm dev
 
 ---
 
-## 三、自动生成组件文档（进阶）
+## 三、创建组件文档
 
-为了避免每次都手写文档，提供了 `pnpm docs:gen` 脚本，可以从组件的 `types.ts` 和 JSDoc 注释自动生成文档骨架。
-
-### 3.1 编写带 JSDoc 的类型
-
-```typescript
-/**
- * Modal 模态框
- */
-export interface ModalProps {
-  /** 是否显示（v-model） */
-  modelValue: boolean
-  /** 标题 */
-  title?: string
-  /** 宽度 */
-  width?: string | number
-}
-```
-
-### 3.2 运行脚本
+复制已有组件的文档模板（如 `button.md`），修改内容：
 
 ```bash
-pnpm docs:gen modal
-# 自动生成 docs/components/modal.md
+# 复制 button.md 作为模板
+cp docs/components/button.md docs/components/modal.md
+# 然后修改里面的内容
+```
+
+**文档模板结构**：
+
+```markdown
+---
+title: Modal 模态框
+description: 在浮层中显示内容。
+---
+
+# Modal 模态框
+
+在浮层中显示内容。
+
+## 基础用法
+
+&lt;DemoBlock&gt;
+  &lt;CbModal title="标题"&gt;内容&lt;/CbModal&gt;
+
+  &lt;template #code&gt;
+
+```vue
+&lt;template&gt;
+  &lt;CbModal title="标题"&gt;内容&lt;/CbModal&gt;
+&lt;/template&gt;
+```
+
+  &lt;/template&gt;
+&lt;/DemoBlock&gt;
+
+## API
+
+### Props
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+
+### Events
+
+| 事件名 | 说明 | 回调参数 |
+| --- | --- | --- |
+
+### Slots
+
+| 插槽名 | 说明 |
+| --- | --- |
+| default | 默认内容 |
 ```
 
 ---
@@ -453,10 +510,19 @@ Resolver 收到 'CbButton'
 
 新增一个组件（如 Modal）需要做：
 
-- [ ] 在 `packages/components/src/modal/` 创建三个文件
-- [ ] 在 `packages/components/src/index.ts` 中加 3 行
+**方式一：一键生成（推荐）**
+
+- [ ] 运行 `pnpm gen modal 模态框`
+- [ ] 补充 `Modal.vue` 的组件逻辑
+- [ ] 补充 `types.ts` 的 Props 定义
+- [ ] 补充 `docs/components/modal.md` 的 API 表格和示例
+- [ ] 运行 `pnpm dev` 验证
+
+**方式二：手动创建**
+
+- [ ] 在 `packages/components/src/modal/` 创建四个文件
+- [ ] 运行 `pnpm gen:index` 自动更新入口
 - [ ] 创建 `docs/components/modal.md`（API 表格手动编写，或用脚本辅助生成后复制）
-- [ ] 在 `docs/.vitepress/config.ts` 侧边栏加一项
 - [ ] 运行 `pnpm dev` 验证
 
 ---

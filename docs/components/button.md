@@ -11,7 +11,7 @@ title: Button 按钮
 使用 `type` 属性定义按钮样式。
 
 <DemoBlock>
-  <CbButton>默认按钮</CbButton>
+  <CbButton>默认按钮1</CbButton>
   <CbButton type="primary">主要按钮</CbButton>
   <CbButton type="danger">危险按钮</CbButton>
 

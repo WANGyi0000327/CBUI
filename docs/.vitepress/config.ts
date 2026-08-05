@@ -1,5 +1,37 @@
 import { defineConfig } from 'vitepress'
-import { resolve } from 'path'
+import { resolve, basename } from 'path'
+import { readdirSync, readFileSync, existsSync } from 'fs'
+
+/**
+ * 自动扫描 docs/components/ 目录，生成侧边栏配置
+ * 从每个 .md 文件的 frontmatter 中读取 title 作为显示文本
+ */
+function getComponentSidebarItems() {
+  const componentsDir = resolve(__dirname, '../components')
+  if (!existsSync(componentsDir)) return []
+
+  const items = readdirSync(componentsDir)
+    .filter((name) => name.endsWith('.md'))
+    .map((name) => {
+      const filePath = resolve(componentsDir, name)
+      const base = basename(name, '.md')
+
+      // 尝试从 frontmatter 读取 title
+      let text = base
+      try {
+        const content = readFileSync(filePath, 'utf-8')
+        const match = content.match(/^---\s*\ntitle:\s*(.+?)\n/m)
+        if (match) text = match[1].trim()
+      } catch {
+        // 忽略读取错误，使用文件名
+      }
+
+      return { text, link: `/components/${base}` }
+    })
+    .sort((a, b) => a.text.localeCompare(b.text, 'zh-CN'))
+
+  return [{ text: '基础组件', items }]
+}
 
 // VitePress 配置
 // 文档站点核心配置：导航、侧边栏、主题、Vite 增强
@@ -41,16 +73,7 @@ export default defineConfig({
           ],
         },
       ],
-      '/components/': [
-        {
-          text: '基础组件',
-          items: [
-            { text: 'Button 按钮', link: '/components/button' },
-            { text: 'Input 输入框', link: '/components/input' },
-            { text: 'Card 卡片', link: '/components/card' },
-          ],
-        },
-      ],
+      '/components/': getComponentSidebarItems(),
       '/prd/': [
         {
           text: '产品文档',
@@ -99,8 +122,7 @@ export default defineConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          // 使用现代 API，避免 legacy 警告
-          api: 'modern-compiler',
+          // Vite 8 默认使用 modern API，无需手动指定
           // 自动注入 Sass 变量，组件无需单独 @use
           additionalData: `@use "@cb-ui/theme/src/variables" as *;`,
         },

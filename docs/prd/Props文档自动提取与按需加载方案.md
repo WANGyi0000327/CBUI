@@ -35,7 +35,7 @@
 │   vite-plugin-dts ──▶ 生成 .d.ts 类型声明文件                │
 │            │                                                 │
 │            ▼                                                 │
-│   typedoc / vitepress-plugin-api ──▶ 提取类型信息            │
+│   extract-props.mjs ──▶ 提取类型信息生成草稿                 │
 │            │                                                 │
 │            ▼                                                 │
 │   生成 Markdown API 文档 ──▶ 组件文档页面                     │
@@ -242,28 +242,19 @@ export interface ButtonProps {
 
 > VitePress 1.x 内置支持 `<!-- @include: ./path -->` 形式的 Markdown 文件包含，但在本项目环境中未能正常渲染。
 
-**方案二：使用 TypeDoc**
+**方案二：自定义脚本提取（当前采用）**
 
 ```bash
-# 安装
-pnpm add -D typedoc typedoc-plugin-markdown
+# 运行辅助脚本生成 API 草稿
+pnpm extract:props
 
-# 配置 typedoc.json
-{
-  "entryPoints": ["packages/components/src/index.ts"],
-  "out": "docs/api",
-  "plugin": ["typedoc-plugin-markdown"],
-  "excludePrivate": true,
-  "excludeProtected": true,
-  "categorizeByGroup": false,
-  "sort": ["enum-value-ascending"]
-}
-
-# 生成命令
-pnpm typedoc
+# 查看生成的文件
+cat docs/.vitepress/generated/button-api.md
 ```
 
-**方案三：自定义脚本提取**
+**方案三：TypeDoc（未采用）**
+
+> TypeDoc 可以生成完整的 API 文档，但输出格式不适合直接嵌入 VitePress 组件文档页面，故未采用。
 
 ```typescript
 // scripts/generate-api-docs.ts
@@ -360,11 +351,11 @@ function getDefaultValue(node: ts.PropertySignature): string {
 ### 1.3 文档生成流程
 
 ```bash
-# 1. 构建组件库，生成 .d.ts 文件
+# 1. 构建组件库
 pnpm build:lib
 
-# 2. 生成 API 文档
-pnpm typedoc
+# 2. 生成 API 文档草稿
+pnpm extract:props
 
 # 3. 构建文档站
 pnpm build:docs
@@ -441,14 +432,11 @@ import './style.scss'
 **使用方式**：
 
 ```typescript
-// 手动引入组件
-import { Button } from '@cb-ui/components'
+// 手动引入组件（复制代码到项目后的引入方式）
+import { Button } from '@/components/cb-ui/button'
 
-// 手动引入样式（方式1：引入组件自带样式）
-import '@cb-ui/components/button/style.scss'
-
-// 手动引入样式（方式2：从 dist 引入）
-import '@cb-ui/components/dist/button.css'
+// 手动引入样式（如果组件有独立样式文件）
+import '@/components/cb-ui/button/style.scss'
 ```
 
 **优点**：
@@ -481,7 +469,7 @@ export default defineConfig({
       resolvers: [
         CBUIResolver({
           importStyle: true,
-          prefix: 'cb',
+          prefix: 'Cb',
         }),
       ],
     }),
@@ -530,7 +518,7 @@ export interface CBUIResolverOptions {
 export function CBUIResolver(options: CBUIResolverOptions = {}): ComponentResolver {
   const {
     importStyle = true,
-    prefix = 'cb',
+    prefix = 'Cb',
     libraryName = '@cb-ui/components',
     styleSuffix = 'scss',
   } = options
@@ -650,7 +638,7 @@ useMessage.success('操作成功')
 import { defineConfig } from 'vite'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
-import { CBUIResolver } from '@cb-ui/components'
+import { CBUIResolver } from '../../packages/components/src/resolver'
 
 export default defineConfig({
   plugins: [
@@ -671,7 +659,7 @@ export default defineConfig({
 import { defineConfig } from 'vite'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
-import { CBUIResolver } from '@cb-ui/components'
+import { CBUIResolver } from '../../packages/components/src/resolver'
 
 export default defineConfig({
   plugins: [
@@ -717,11 +705,11 @@ export default defineConfig({
 ### 3.1 文档提取验证
 
 ```bash
-# 验证类型声明生成
-pnpm build:lib && ls -la dist/*.d.ts
+# 验证组件库构建
+pnpm build:lib && ls -la packages/components/dist/
 
-# 验证 API 文档生成
-pnpm typedoc && ls -la docs/api/
+# 验证 API 草稿生成
+pnpm extract:props && ls -la docs/.vitepress/generated/
 
 # 验证文档站构建
 pnpm build:docs
@@ -731,10 +719,10 @@ pnpm build:docs
 
 ```bash
 # 验证组件导出
-pnpm build:lib && node -e "const { Button } = require('./dist/index.cjs.js'); console.log(Button)"
+pnpm build:lib && node -e "const { Button } = require('./packages/components/dist/index.cjs.js'); console.log(Button)"
 
 # 验证样式导出
-ls -la dist/button/style.css
+ls -la packages/components/dist/button/style.css
 
 # 验证自动引入
 pnpm dev
@@ -765,7 +753,7 @@ pnpm dev
 
 | 功能 | 方案 | 工具 |
 |---|---|---|
-| Props 文档自动提取 | JSDoc + TypeScript 类型定义 | vite-plugin-dts + TypeDoc/vitepress-plugin-api |
+| Props 文档自动提取 | 手动编写，辅助脚本生成草稿 | extract-props.mjs |
 | 组件按需加载 | unplugin-vue-components 自动引入 | unplugin-vue-components + unplugin-auto-import |
 | 样式按需加载 | Resolver 自动引入样式 | 自定义 CBUIResolver |
 | Tree Shaking | ES Module + sideEffects 标记 | Vite/Rollup |

@@ -26,8 +26,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        // 使用现代 API，避免 legacy 警告
-        api: 'modern-compiler',
+        // Vite 8 默认使用 modern API，无需手动指定
         // 自动注入 Sass 变量，组件无需单独 @use
         additionalData: `@use "@cb-ui/theme/src/variables" as *;`,
       },

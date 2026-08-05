@@ -6,14 +6,15 @@ title: 常见问题
 
 ## Q1: 添加新组件感觉很麻烦？
 
-确实，添加一个组件要改 4 个地方：
+现在只需一行命令：
 
-1. `packages/components/src/modal/` 三个文件
-2. `packages/components/src/index.ts` 加 3 行
-3. `docs/components/modal.md` 新建文档
-4. `docs/.vitepress/config.ts` 加侧边栏
+```bash
+pnpm gen modal 模态框
+```
 
-**简化方案**：参考 `docs/guide/component-guide.md` 第二节"快速添加组件"中的脚手架脚本部分，可以用 `pnpm gen modal` 一键生成基础模板。
+脚本会自动完成：创建组件文件、生成文档模板、更新 `index.ts`。**侧边栏也是自动扫描的，完全不用手动改 `config.ts`**。
+
+如果不用脚本，也可以复制已有组件目录手动创建，然后运行 `pnpm gen:index` 自动更新入口。详见 [组件开发指南](/guide/component-guide)。
 
 ## Q2: 怎么配置前缀是 Cb？
 
@@ -25,7 +26,7 @@ title: 常见问题
 
 ## Q3: docs/components/modal.md 必须自己写吗？
 
-可以手写，也可以用自动生成（详见 [组件开发指南 - 第三章](/guide/component-guide#三自动生成组件文档进阶)）。
+需要手动编写（详见 [组件开发指南 - 第三章](/guide/component-guide#三创建组件文档)）。
 
 最简单的做法是复制已有文档的模板修改：
 
@@ -49,19 +50,9 @@ cp docs/components/button.md docs/components/modal.md
 
 ## Q6: 文档站侧边栏如何新增组件？
 
-编辑 `docs/.vitepress/config.ts`，在 `'/components/':` 数组中添加：
+**现在不需要手动添加了**。侧边栏已配置为自动扫描 `docs/components/` 目录下的所有 `.md` 文件，只要创建了 `docs/components/modal.md`，侧边栏会自动显示。
 
-```typescript
-'/components/': [
-  {
-    text: '基础组件',
-    items: [
-      { text: 'Button 按钮', link: '/components/button' },
-      { text: 'Modal 模态框', link: '/components/modal' },  // 新增
-    ],
-  },
-],
-```
+如果某个组件不想显示在侧边栏，可以将其文档放在其他目录。
 
 ## Q7: 样式不生效怎么办？
 

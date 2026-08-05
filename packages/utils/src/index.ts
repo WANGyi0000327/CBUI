@@ -29,11 +29,11 @@ export function isEmpty(val: unknown): boolean {
  * @param fn 目标函数
  * @param delay 延迟毫秒
  */
-export function debounce<T extends (...args: any[]) => any>(fn: T, delay = 200): T {
+export function debounce<T extends (...args: never[]) => unknown>(fn: T, delay = 200): T {
   let timer: ReturnType<typeof setTimeout> | null = null
-  return ((...args: any[]) => {
+  return ((...args: never[]) => {
     if (timer) clearTimeout(timer)
-    timer = setTimeout(() => fn(...args), delay)
+    timer = setTimeout(() => (fn as (...a: never[]) => unknown)(...args), delay)
   }) as T
 }
 
@@ -42,13 +42,13 @@ export function debounce<T extends (...args: any[]) => any>(fn: T, delay = 200):
  * @param fn 目标函数
  * @param delay 间隔毫秒
  */
-export function throttle<T extends (...args: any[]) => any>(fn: T, delay = 200): T {
+export function throttle<T extends (...args: never[]) => unknown>(fn: T, delay = 200): T {
   let last = 0
-  return ((...args: any[]) => {
+  return ((...args: never[]) => {
     const now = Date.now()
     if (now - last >= delay) {
       last = now
-      fn(...args)
+      ;(fn as (...a: never[]) => unknown)(...args)
     }
   }) as T
 }

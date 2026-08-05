@@ -16,7 +16,7 @@ CB UI 是基于 **TDesign** 二次开发的个人组件库，底层依赖 `tdesi
 
 - Node.js >= 18.0.0
 - Vue 3.4+
-- TDesign Vue Next 1.10+
+- TDesign Vue Next 1.16+
 
 ---
 
@@ -26,10 +26,10 @@ CB UI 是基于 **TDesign** 二次开发的个人组件库，底层依赖 `tdesi
 
 ```bash
 # pnpm
-pnpm add tdesign-vue-next
+pnpm add tdesign-vue-next@^1.16.1
 
 # npm
-npm install tdesign-vue-next
+npm install tdesign-vue-next@^1.16.1
 ```
 
 ---
@@ -117,43 +117,7 @@ import { Button as CbButton } from '@/components/cb-ui/button'
 
 ---
 
-## 四、基于 TDesign 的二次封装
-
-CB UI 的组件是对 TDesign 组件的二次封装，以 Button 为例：
-
-```vue
-&lt;template&gt;
-  &lt;t-button
-    class="cb-button"
-    :class="[
-      `cb-button--${type}`,
-      `cb-button--${size}`,
-    ]"
-    :disabled="disabled || loading"
-    @click="handleClick"
-  &gt;
-    &lt;t-loading v-if="loading" /&gt;
-    &lt;slot /&gt;
-  &lt;/t-button&gt;
-&lt;/template&gt;
-
-&lt;script setup lang="ts"&gt;
-import { TButton, TLoading } from 'tdesign-vue-next'
-
-// 组件逻辑...
-&lt;/script&gt;
-```
-
-::: tip 封装优势
-- 统一的命名规范（Cb 前缀）
-- 统一的样式主题
-- 符合团队使用习惯的 API 设计
-- 可扩展的默认配置
-:::
-
----
-
-## 五、组件列表
+## 四、组件列表
 
 | 组件 | 说明 | 基础组件 |
 |---|---|---|
@@ -163,7 +127,7 @@ import { TButton, TLoading } from 'tdesign-vue-next'
 
 ---
 
-## 六、本地开发
+## 五、本地开发
 
 如果你想参与组件库开发：
 
@@ -183,7 +147,7 @@ pnpm dev
 
 ---
 
-## 七、TypeScript 支持
+## 六、TypeScript 支持
 
 CB UI 使用 TypeScript 编写，复制组件时会自动获得类型提示：
 
@@ -193,23 +157,7 @@ import type { ButtonProps, InputProps } from '@/components/cb-ui'
 
 ---
 
-## 八、与 TDesign 的关系
-
-| 层级 | 说明 |
-|---|---|
-| TDesign | 底层 UI 组件库，提供基础组件 |
-| CB UI | 基于 TDesign 二次封装，统一团队规范 |
-| 业务项目 | 复制 CB UI 组件代码，根据业务需求调整 |
-
-**为什么不发布 npm 包？**
-
-- 组件库主要供个人/团队内部使用
-- 不同项目可能有不同的定制需求
-- 复制代码更灵活，可直接修改
-
----
-
-## 九、常见问题
+## 七、常见问题
 
 ### Q: 组件样式不生效？
 

@@ -18,14 +18,13 @@
     <span v-if="loading" class="cb-button__spinner" aria-hidden="true" />
 
     <!-- 按钮内容 -->
-    <span class="cb-button__content">
-      <slot />
-    </span>
+    <span class="cb-button__content"> <slot /> </span>
   </button>
 </template>
 
 <script setup lang="ts">
-// withDefaults 和 defineEmits 是 Vue 编译器宏，无需显式导入
+defineOptions({ name: 'CbButton' })
+
 import type { ButtonProps, ButtonEmits } from './types'
 
 // 使用 withDefaults 提供默认值，保持类型推导

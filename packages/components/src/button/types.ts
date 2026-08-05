@@ -72,5 +72,5 @@ export interface ButtonSlots {
   /**
    * 按钮内容
    */
-  default: () => any
+  default: () => unknown
 }
