@@ -1,0 +1,4 @@
+// DateRangeConfirmPicker 组件样式入口
+// 按需引入时通过此文件加载样式（resolver 的 sideEffects 指向此文件）
+@use '@cb-ui/theme/src/variables' as *;
+// 目前 DateRangeConfirmPicker 的 popup 样式在 SFC <style>（非 scoped）中

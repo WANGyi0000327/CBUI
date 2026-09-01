@@ -1,0 +1,4 @@
+// CurrencyInput 组件样式入口
+// 按需引入时通过此文件加载样式（resolver 的 sideEffects 指向此文件）
+@use '@cb-ui/theme/src/variables' as *;
+// 目前 CurrencyInput 所有样式均在 SFC <style scoped> 中

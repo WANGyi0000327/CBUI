@@ -78,6 +78,10 @@ function generateIndexContent(components) {
   }
 
   lines.push(``)
+  lines.push(`// 导入指令（v-click-outside 等，供 CbDateRangeConfirmPicker 等组件使用）`)
+  lines.push(`import { clickOutside as vClickOutside } from './directives/clickOutside'`)
+
+  lines.push(``)
   lines.push(`// 导出组件`)
   lines.push(`export { ${components.map((c) => c.componentName).join(', ')} }`)
 
@@ -105,6 +109,8 @@ function generateIndexContent(components) {
   lines.push(`        app.component(name, component)`)
   lines.push(`      }`)
   lines.push(`    })`)
+  lines.push(`    // 全局注册 v-click-outside 指令（CbDateRangeConfirmPicker 等组件依赖）`)
+  lines.push(`    app.directive('click-outside', vClickOutside)`)
   lines.push(`    // 自动初始化 iconfont SVG Sprite`)
   lines.push(`    import('./assets/iconfont/initIconfont').then(({ initIconfont }) => {`)
   lines.push(`      initIconfont()`)
