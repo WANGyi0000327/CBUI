@@ -25,7 +25,7 @@ import DemoBlock from '../components/DemoBlock.vue'
 export default {
   extends: DefaultTheme,
   enhanceApp({ app }) {
-    // 注册 TDesign 组件库（CbButton / CbInput 等二次封装组件内部依赖 t-* 标签）
+    // 注册 TDesign 组件库（CbButton / CbCopy 等二次封装组件内部依赖 t-* 标签）
     app.use(TDesign)
 
     // 注册 CB UI 组件库（全量引入）

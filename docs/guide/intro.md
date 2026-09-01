@@ -67,8 +67,8 @@ CB UI 不是从零开发的组件库，而是基于 TDesign 进行二次封装�
 | CB UI 组件 | TDesign 组件 | 说明       |
 | ---------- | ------------ | ---------- |
 | `CbButton` | `t-button`   | 按钮组件   |
-| `CbInput`  | `t-input`    | 输入框组件 |
-| `CbCard`   | `t-card`     | 卡片组件   |
+| `CbCopy`   | -            | 复制组件（基于 CbIcon） |
+| `CbIcon`   | -            | 图标组件（基于 iconfont） |
 
 ---
 

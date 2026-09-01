@@ -8,51 +8,35 @@
 import type { App } from 'vue'
 
 // 导入组件
-import Button from './button'
-import Card from './card'
-import DatePicker from './date-picker'
-import Icon from './icon'
-import Input from './input'
-import Modal from './modal'
+import { Button } from './button'
+import { Copy } from './copy'
+import { Icon } from './icon'
 
 // 导出组件
-export { Button, Card, DatePicker, Icon, Input, Modal }
+export { Button, Copy, Icon }
 
 // 导出类型
-export type {
-  ButtonProps,
-  ButtonEmits,
-  ButtonSlots,
-  ButtonType,
-  ButtonSize,
-  ButtonNativeType,
-} from './button'
-export type {
-  CardProps,
-  CardEmits,
-  CardSlots,
-  AddCartEventPayload,
-  ProductHallListType,
-} from './card'
-export type { DatePickerProps, DatePickerEmits, DatePickerSlots } from './date-picker'
+export type { ButtonProps, ButtonEmits, ButtonSlots, ButtonType, ButtonSize, ButtonNativeType } from './button'
+export type { CopyProps } from './copy'
 export type { IconProps } from './icon'
-export type { InputProps, InputEmits, InputSlots, InputSize } from './input'
-export type { ModalProps, ModalEmits, ModalSlots } from './modal'
 
 // 导出 Resolver（用于按需加载）
 export { CBUIResolver } from './resolver'
 export type { CBUIResolverOptions, ComponentResolver } from './resolver'
 
-const components = [Button, Card, DatePicker, Icon, Input, Modal]
+const components = [Button, Copy, Icon]
 
 export const CBUI = {
   install(app: App) {
     components.forEach((component) => {
-      const name =
-        (component as { name?: string }).name || (component as { __name?: string }).__name || ''
+      const name = (component as { name?: string }).name || (component as { __name?: string }).__name || ''
       if (name) {
         app.component(name, component)
       }
+    })
+    // 自动初始化 iconfont SVG Sprite
+    import('./assets/iconfont/initIconfont').then(({ initIconfont }) => {
+      initIconfont()
     })
   },
 }

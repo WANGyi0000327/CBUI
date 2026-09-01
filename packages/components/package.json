@@ -26,10 +26,6 @@
       "import": "./src/button/index.ts",
       "types": "./src/button/types.ts"
     },
-    "./input": {
-      "import": "./src/input/index.ts",
-      "types": "./src/input/types.ts"
-    },
     "./resolver": {
       "import": "./src/resolver.ts",
       "types": "./src/resolver.ts"
