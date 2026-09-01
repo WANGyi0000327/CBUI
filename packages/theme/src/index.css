@@ -35,6 +35,18 @@
 
   /* 过渡 */
   --cb-transition: 0.2s ease;
+
+  /* TDesign brand 色映射到 CB 主色
+   * 让 t-button / t-popup 等组件使用项目主色，而非 TDesign 默认深蓝 #0052D9 */
+  --td-brand-color: var(--cb-primary);
+  --td-brand-color-hover: var(--cb-primary-dark);
+  --td-brand-color-active: var(--cb-primary-darker);
+  --td-brand-color-disabled: var(--cb-primary-light);
+  --td-brand-color-light: var(--cb-primary-light);
+  /* cb-brand-default 等浅色背景所需色阶（-10 最浅） */
+  --td-brand-color-10: var(--cb-primary-light);
+  --td-brand-color-9: var(--cb-primary-light);
+  --td-brand-color-8: var(--cb-primary-lighter);
 }
 
 /* 深色模式覆盖 */
@@ -50,4 +62,45 @@
   --cb-bg: #171717;
   --cb-bg-muted: #262626;
   --cb-bg-hover: #3a3a3a;
+  /* 深色模式 brand 映射保持一致 */
+  --td-brand-color: var(--cb-primary);
+  --td-brand-color-10: var(--cb-primary-light);
+}
+
+/* ============================================================
+ * TDesign t-button 自定义主题（全局版本）
+ * ------------------------------------------------------------
+ * cb-brand-default / cb-brand-gray / cb-brand-error 最初定义在
+ * Button.vue 的 <style scoped> 内，仅对 Button 组件内部 t-button 生效。
+ * 此处提供全局版本，使任何 t-button（如 ButtonFold 内部使用的）
+ * 加上对应 class 即可生效，无需重复定义。
+ * 与 Button.vue scoped 版本样式一致；scoped 版本因 [data-v-xxx]
+ * 属性选择器优先级更高，对 Button 组件内部无影响。
+ * ============================================================ */
+.t-button.cb-brand-default {
+  color: var(--td-brand-color);
+  background-color: var(--td-brand-color-10);
+}
+.t-button.cb-brand-default.t-is-disabled,
+.t-button.cb-brand-default.t-button--disabled {
+  color: var(--td-text-color-9, #a1a1aa);
+  background-color: #efefef;
+}
+.t-button.cb-brand-gray {
+  color: var(--td-text-color-6, #52525b);
+  background-color: var(--td-brand-color-10);
+}
+.t-button.cb-brand-gray.t-is-disabled,
+.t-button.cb-brand-gray.t-button--disabled {
+  color: var(--td-text-color-9, #a1a1aa);
+  background-color: #efefef;
+}
+.t-button.cb-brand-error {
+  color: var(--td-error-color, #e8463a);
+  background-color: var(--td-brand-color-10);
+}
+.t-button.cb-brand-error.t-is-disabled,
+.t-button.cb-brand-error.t-button--disabled {
+  color: var(--td-text-color-9, #a1a1aa);
+  background-color: #efefef;
 }

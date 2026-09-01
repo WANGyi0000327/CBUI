@@ -9,14 +9,16 @@ import type { App } from 'vue'
 
 // 导入组件
 import { Button } from './button'
+import { ButtonFold } from './button-fold'
 import { Copy } from './copy'
 import { Icon } from './icon'
 
 // 导出组件
-export { Button, Copy, Icon }
+export { Button, ButtonFold, Copy, Icon }
 
 // 导出类型
 export type { ButtonProps, ButtonEmits, ButtonSlots, ButtonType, ButtonSize, ButtonNativeType } from './button'
+export type { ButtonFoldProps, ButtonFoldType } from './button-fold'
 export type { CopyProps } from './copy'
 export type { IconProps } from './icon'
 
@@ -24,7 +26,7 @@ export type { IconProps } from './icon'
 export { CBUIResolver } from './resolver'
 export type { CBUIResolverOptions, ComponentResolver } from './resolver'
 
-const components = [Button, Copy, Icon]
+const components = [Button, ButtonFold, Copy, Icon]
 
 export const CBUI = {
   install(app: App) {
