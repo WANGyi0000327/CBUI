@@ -1,142 +1,96 @@
 <template>
-  <button
-    class="cb-button"
-    :class="[
-      `cb-button--${type}`,
-      `cb-button--${size}`,
-      {
-        'is-disabled': disabled || loading,
-        'is-loading': loading,
-        'is-block': block,
-      },
-    ]"
-    :type="nativeType"
-    :disabled="disabled || loading"
-    @click="handleClick"
-  >
-    <!-- 加载图标 -->
-    <span v-if="loading" class="cb-button__spinner" aria-hidden="true" />
-
-    <!-- 按钮内容 -->
-    <span class="cb-button__content"> <slot /> </span>
-  </button>
+  <TButton v-bind="$attrs" :theme="changeTheme" :class="theme" :icon="renderIcon">
+    <!--
+      传递具名插槽：用 Object.entries 后索引访问（slotEntry[0] = 插槽名），
+      避免 `v-for="(_, name) in $slots"` 解构写法在 noImplicitAny 下的
+      TS7022 "'name' implicitly has type any"：变量 name 同时在 `#[name]` 中
+      被引用，造成自引用初始化器导致推断失败。
+      `slotProps` 作为透传参数，运行时是任意对象，这里不做强类型是合理的。
+    -->
+    <template
+      v-for="slotEntry in Object.entries($slots)"
+      :key="slotEntry[0]"
+      #[slotEntry[0]]="slotProps"
+    >
+      <slot :name="slotEntry[0]" v-bind="slotProps"></slot>
+    </template>
+  </TButton>
 </template>
 
-<script setup lang="ts">
-defineOptions({ name: 'CbButton' })
+<script setup lang="tsx">
+import type { TNode } from 'tdesign-vue-next'
+import { Button as TButton } from 'tdesign-vue-next'
+import type { PropType } from 'vue'
+import { computed, h } from 'vue'
+import CbIcon from '../icon/Icon.vue'
+type ThemeTypes = 'default' | 'primary' | 'danger' | 'warning' | 'success'
 
-import type { ButtonProps, ButtonEmits } from './types'
+type CustomThemeTypes = ThemeTypes | 'cb-brand-default' | 'cb-brand-gray'
 
-// 使用 withDefaults 提供默认值，保持类型推导
-// 注意：withDefaults 的默认值必须是字面量，不可引用 setup 内局部变量
-const props = withDefaults(defineProps<ButtonProps>(), {
-  type: 'default',
-  size: 'medium',
-  disabled: false,
-  loading: false,
-  nativeType: 'button',
-  block: false,
+defineOptions({
+  name: 'TButton',
 })
 
-const emit = defineEmits<ButtonEmits>()
+const themeTypes = ['default', 'primary', 'warning', 'success', 'danger']
+const props = defineProps({
+  theme: {
+    type: String as PropType<CustomThemeTypes>,
+    default: 'primary',
+  },
+  icon: {
+    type: [String, Function] as PropType<string | TNode>,
+    default: undefined, // 加上这一行
+  },
+})
 
-// 点击处理：禁用或加载中时不触发
-const handleClick = (event: MouseEvent) => {
-  if (props.disabled || props.loading) return
-  emit('click', event)
-}
+const renderIcon = computed(() => {
+  if (typeof props.icon === 'string') {
+    return () => h(CbIcon, { name: String(props.icon) })
+  }
+  return props.icon
+})
+
+const changeTheme = computed(() =>
+  themeTypes.findIndex((item) => item === props.theme) === -1
+    ? 'default'
+    : (props.theme as ThemeTypes)
+)
 </script>
 
-<style scoped lang="scss">
-.cb-button {
-  display: inline-flex;
+<style lang="scss" scoped>
+.t-button {
+  padding: 6px 8px;
+  min-width: 70px;
+  // display: flex;
+  gap: 4px;
   align-items: center;
-  justify-content: center;
-  gap: $cb-space-8;
-  padding: $cb-space-8 $cb-space-16;
-  border: 1px solid $cb-color-border;
-  border-radius: $cb-radius;
-  background-color: $cb-color-bg;
-  color: $cb-color-text;
-  font-family: $cb-font-sans;
-  font-size: $cb-font-size-body;
-  line-height: 1.5;
-  cursor: pointer;
-  transition: all $cb-transition-duration $cb-transition-timing;
-  user-select: none;
-  white-space: nowrap;
-
-  // 块级按钮
-  &.is-block {
-    display: flex;
-    width: 100%;
-  }
-
-  // ---- 类型变体 ----
-  &--primary {
-    background-color: $cb-color-primary;
-    border-color: $cb-color-primary;
-    color: #fff;
-
-    &:hover:not(.is-disabled) {
-      background-color: $cb-color-primary-dark;
-      border-color: $cb-color-primary-dark;
+  &.cb-brand-default {
+    color: var(--td-brand-color);
+    background-color: var(--td-brand-color-10);
+    &.t-is-disabled {
+      color: var(--td-text-color-9);
+      background-color: #efefef;
     }
   }
-
-  &--default {
-    background-color: $cb-color-bg;
-    border-color: $cb-color-border;
-    color: $cb-color-text;
-
-    &:hover:not(.is-disabled) {
-      border-color: $cb-color-primary;
-      color: $cb-color-primary;
+  &.cb-brand-gray {
+    color: var(--td-text-color-6);
+    background-color: var(--td-brand-color-10);
+    &.t-is-disabled {
+      color: var(--td-text-color-9);
+      background-color: #efefef;
     }
   }
-
-  &--danger {
-    background-color: $cb-color-danger;
-    border-color: $cb-color-danger;
-    color: #fff;
-
-    &:hover:not(.is-disabled) {
-      opacity: 0.9;
+  &.cb-brand-error {
+    color: var(--td-error-color);
+    background-color: var(--td-brand-color-10);
+    &.t-is-disabled {
+      color: var(--td-text-color-9);
+      background-color: #efefef;
     }
   }
-
-  // ---- 尺寸变体 ----
-  &--small {
-    padding: $cb-space-4 $cb-space-12;
-    font-size: $cb-font-size-caption;
-  }
-
-  &--large {
-    padding: $cb-space-12 $cb-space-24;
-    font-size: $cb-font-size-title;
-  }
-
-  // ---- 状态 ----
-  &.is-disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  // ---- 加载图标 ----
-  &__spinner {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    border: 2px solid currentColor;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: cb-button-spin 0.6s linear infinite;
-  }
-}
-
-@keyframes cb-button-spin {
-  to {
-    transform: rotate(360deg);
+  &.t-button--variant-text {
+    padding: 0 4px !important;
+    min-width: 0px;
   }
 }
 </style>

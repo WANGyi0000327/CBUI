@@ -12,6 +12,7 @@
   "dependencies": {
     "@cb-ui/components": "workspace:*",
     "@cb-ui/theme": "workspace:*",
+    "tdesign-vue-next": "^1.16.1",
     "vue": "^3.4.0"
   },
   "devDependencies": {

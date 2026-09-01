@@ -21,6 +21,7 @@ pnpm gen modal 模态框
 前缀配置在 `packages/components/src/resolver.ts` 中，详细见 [组件开发指南 - 第六章](/guide/component-guide#六配置组件前缀cb)。
 
 **简单记忆**：
+
 - 想全局改前缀：编辑 `resolver.ts` 第 57 行 `const { prefix = 'Cb' } = options`
 - 想单独某个项目用不同前缀：业务项目的 `vite.config.ts` 中传 `CBUIResolver({ prefix: 'My' })`
 

@@ -66,7 +66,7 @@ your-project/
 
 ```scss
 // src/styles/cb-variables.scss
-$cb-color-primary: #4B3FE3;
+$cb-color-primary: #4b3fe3;
 $cb-color-text: #171717;
 $cb-color-border: rgba(23, 23, 23, 0.12);
 
@@ -93,9 +93,7 @@ app.mount('#app')
 #### 步骤 4：直接使用组件
 
 ```vue
-&lt;template&gt;
-  &lt;CbButton type="primary"&gt;主要按钮&lt;/CbButton&gt;
-&lt;/template&gt;
+&lt;template&gt; &lt;CbButton type="primary"&gt;主要按钮&lt;/CbButton&gt; &lt;/template&gt;
 ```
 
 ---
@@ -105,25 +103,20 @@ app.mount('#app')
 如果只需要单个组件，可以直接复制该组件的代码：
 
 ```vue
-&lt;script setup lang="ts"&gt;
-// 直接引入复制的组件
-import { Button as CbButton } from '@/components/cb-ui/button'
-&lt;/script&gt;
-
-&lt;template&gt;
-  &lt;CbButton type="primary"&gt;主要按钮&lt;/CbButton&gt;
-&lt;/template&gt;
+&lt;script setup lang="ts"&gt; // 直接引入复制的组件 import { Button as CbButton } from
+'@/components/cb-ui/button' &lt;/script&gt; &lt;template&gt; &lt;CbButton
+type="primary"&gt;主要按钮&lt;/CbButton&gt; &lt;/template&gt;
 ```
 
 ---
 
 ## 四、组件列表
 
-| 组件 | 说明 | 基础组件 |
-|---|---|---|
-| Button | 按钮 | `t-button` |
-| Input | 输入框 | `t-input` |
-| Card | 卡片 | `t-card` |
+| 组件   | 说明   | 基础组件   |
+| ------ | ------ | ---------- |
+| Button | 按钮   | `t-button` |
+| Input  | 输入框 | `t-input`  |
+| Card   | 卡片   | `t-card`   |
 
 ---
 

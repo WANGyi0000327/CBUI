@@ -12,7 +12,7 @@ description: 日期选择器组件描述。
 <DemoBlock>
   <CbDatePicker>内容</CbDatePicker>
 
-  <template #code>
+<template #code>
 
 ```vue
 <template>
@@ -28,15 +28,15 @@ description: 日期选择器组件描述。
 ### Props
 
 | 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
+| ---- | ---- | ---- | ------ |
 
 ### Events
 
 | 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
+| ------ | ---- | -------- |
 
 ### Slots
 
-| 插槽名 | 说明 |
-| --- | --- |
+| 插槽名  | 说明     |
+| ------- | -------- |
 | default | 默认内容 |

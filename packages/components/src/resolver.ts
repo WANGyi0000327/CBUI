@@ -4,11 +4,13 @@
  */
 export interface ComponentResolver {
   type?: 'component' | 'directive'
-  resolve: (name: string) => {
-    name: string
-    from: string
-    sideEffects?: string
-  } | undefined
+  resolve: (name: string) =>
+    | {
+        name: string
+        from: string
+        sideEffects?: string
+      }
+    | undefined
 }
 
 /**
@@ -67,9 +69,7 @@ export function CBUIResolver(options: CBUIResolverOptions = {}): ComponentResolv
       const partialName = name.slice(prefix.length)
       if (!partialName) return
 
-      const kebabName = partialName
-        .replace(/([a-z])([A-Z])/g, '$1-$2')
-        .toLowerCase()
+      const kebabName = partialName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 
       const result: {
         name: string

@@ -42,7 +42,13 @@ $cb-radius-lg: 12px;
 $cb-radius-full: 999px;
 
 // ---- 字体 ----
-$cb-font-sans: 'SF Pro Text', 'PingFang SC', system-ui, -apple-system, 'Segoe UI', Roboto,
+$cb-font-sans:
+  'SF Pro Text',
+  'PingFang SC',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  Roboto,
   sans-serif;
 $cb-font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 

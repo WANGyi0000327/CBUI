@@ -12,7 +12,7 @@ description: 基于 iconfont 的 SVG 图标组件。
 <DemoBlock>
   <CbIcon name="ruzhi" size="24px" color="#333" />
 
-  <template #code>
+<template #code>
 
 ```vue
 <template>
@@ -32,7 +32,7 @@ description: 基于 iconfont 的 SVG 图标组件。
     <CbIcon name="ruzhi" size="32px" color="#333" />
   </div>
 
-  <template #code>
+<template #code>
 
 ```vue
 <template>
@@ -58,8 +58,8 @@ description: 基于 iconfont 的 SVG 图标组件。
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| name | 图标名称（不含 `icon-` 前缀） | `string` | - |
-| size | 图标大小（CSS font-size 值） | `string` | - |
-| color | 图标颜色（CSS 颜色值） | `string` | - |
+| 属性  | 说明                          | 类型     | 默认值 |
+| ----- | ----------------------------- | -------- | ------ |
+| name  | 图标名称（不含 `icon-` 前缀） | `string` | -      |
+| size  | 图标大小（CSS font-size 值）  | `string` | -      |
+| color | 图标颜色（CSS 颜色值）        | `string` | -      |

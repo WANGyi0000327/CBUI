@@ -1,10 +1,10 @@
 # CB UI 组件库 - Props 文档自动提取与按需加载方案
 
 | 文档名称 | Props 文档自动提取与按需加载方案 |
-|---|---|
-| 版本 | V1.0.0 |
-| 创建日期 | 2026-07-21 |
-| 文档状态 | 待评审 |
+| -------- | -------------------------------- |
+| 版本     | V1.0.0                           |
+| 创建日期 | 2026-07-21                       |
+| 文档状态 | 待评审                           |
 
 ---
 
@@ -128,11 +128,7 @@ export interface ButtonSlots {
 <template>
   <button
     class="cb-button"
-    :class="[
-      `cb-button--${type}`,
-      `cb-button--${size}`,
-      { 'is-disabled': disabled || loading },
-    ]"
+    :class="[`cb-button--${type}`, `cb-button--${size}`, { 'is-disabled': disabled || loading }]"
     :disabled="disabled || loading"
     @click="handleClick"
   >
@@ -203,10 +199,10 @@ export default defineConfig({
 // dist/button/types.d.ts
 
 /** 按钮类型 */
-export type ButtonType = 'primary' | 'default' | 'danger';
+export type ButtonType = 'primary' | 'default' | 'danger'
 
 /** 按钮尺寸 */
-export type ButtonSize = 'small' | 'medium' | 'large';
+export type ButtonSize = 'small' | 'medium' | 'large'
 
 /**
  * 按钮组件属性
@@ -216,13 +212,13 @@ export interface ButtonProps {
    * 按钮类型
    * @default 'default'
    */
-  type?: ButtonType;
+  type?: ButtonType
 
   /**
    * 按钮尺寸
    * @default 'medium'
    */
-  size?: ButtonSize;
+  size?: ButtonSize
   // ...
 }
 ```
@@ -234,6 +230,7 @@ export interface ButtonProps {
 > 尝试过 VitePress 内置的 `<<< @/path` 和 `<!-- @include: ./path -->` 两种包含语法，均未能正常渲染为 Markdown 表格（内容被当作代码块或直接消失）。
 >
 > 当前方案：
+>
 > - 辅助脚本：[packages/components/scripts/extract-props.mjs](file:///d:/domexiangm720/CBUi/packages/components/scripts/extract-props.mjs)
 > - 使用方式：运行 `pnpm extract:props` 生成 API 草稿，复制到组件文档中手动维护
 > - 生成目录：`docs/.vitepress/generated/{component}-api.md`（已在 .gitignore 中忽略）
@@ -287,7 +284,10 @@ function generateApiDocs(componentPath: string) {
   return markdown
 }
 
-function findInterface(sourceFile: ts.SourceFile, suffix: string): ts.InterfaceDeclaration | undefined {
+function findInterface(
+  sourceFile: ts.SourceFile,
+  suffix: string
+): ts.InterfaceDeclaration | undefined {
   let result: ts.InterfaceDeclaration | undefined
 
   ts.forEachChild(sourceFile, (node) => {
@@ -339,14 +339,14 @@ function getDefaultValue(node: ts.PropertySignature): string {
 
 #### 1.2.6 JSDoc 注释规范
 
-| 标签 | 用途 | 示例 |
-|---|---|---|
-| `@description` | 属性说明 | `@description 按钮类型` |
-| `@default` | 默认值 | `@default 'default'` |
-| `@param` | 参数说明 | `@param event 鼠标事件对象` |
-| `@example` | 使用示例 | `@example <cb-button>Click</cb-button>` |
-| `@deprecated` | 废弃标记 | `@deprecated 请使用 size 属性` |
-| `@see` | 参考链接 | `@see https://example.com` |
+| 标签           | 用途     | 示例                                    |
+| -------------- | -------- | --------------------------------------- |
+| `@description` | 属性说明 | `@description 按钮类型`                 |
+| `@default`     | 默认值   | `@default 'default'`                    |
+| `@param`       | 参数说明 | `@param event 鼠标事件对象`             |
+| `@example`     | 使用示例 | `@example <cb-button>Click</cb-button>` |
+| `@deprecated`  | 废弃标记 | `@deprecated 请使用 size 属性`          |
+| `@see`         | 参考链接 | `@see https://example.com`              |
 
 ### 1.3 文档生成流程
 
@@ -377,12 +377,12 @@ pnpm build:docs
 
 #### 2.2.1 方案对比
 
-| 方案 | 优点 | 缺点 | 适用场景 |
-|---|---|---|---|
-| 手动按需引入 | 灵活可控 | 代码冗长 | 小项目 |
-| unplugin-vue-components 自动引入 | 零配置，自动检测 | 仅支持模板中使用 | 中大型项目 |
-| unplugin-auto-import 自动引入 | 支持组合式函数 | 配置较复杂 | 需要自动导入 composables |
-| Tree Shaking | 无需额外配置 | 依赖构建工具支持 | 所有项目 |
+| 方案                             | 优点             | 缺点             | 适用场景                 |
+| -------------------------------- | ---------------- | ---------------- | ------------------------ |
+| 手动按需引入                     | 灵活可控         | 代码冗长         | 小项目                   |
+| unplugin-vue-components 自动引入 | 零配置，自动检测 | 仅支持模板中使用 | 中大型项目               |
+| unplugin-auto-import 自动引入    | 支持组合式函数   | 配置较复杂       | 需要自动导入 composables |
+| Tree Shaking                     | 无需额外配置     | 依赖构建工具支持 | 所有项目                 |
 
 **推荐方案：unplugin-vue-components + unplugin-auto-import**
 
@@ -440,10 +440,12 @@ import '@/components/cb-ui/button/style.scss'
 ```
 
 **优点**：
+
 - 完全可控
 - 无额外依赖
 
 **缺点**：
+
 - 每次使用都需要引入
 - 容易遗漏样式引入
 
@@ -603,10 +605,7 @@ useMessage.success('操作成功')
 ```json
 {
   "type": "module",
-  "sideEffects": [
-    "*.css",
-    "*.scss"
-  ]
+  "sideEffects": ["*.css", "*.scss"]
 }
 ```
 
@@ -623,11 +622,11 @@ useMessage.success('操作成功')
 
 ### 2.3 按需加载性能对比
 
-| 引入方式 | 打包体积（gzip） | 说明 |
-|---|---|---|
-| 全量引入 | ~200KB | 包含所有组件 |
-| 按需引入（Button + Input） | ~30KB | 仅包含使用的组件 |
-| 自动引入（Button + Input） | ~30KB | 与手动按需引入相同 |
+| 引入方式                   | 打包体积（gzip） | 说明               |
+| -------------------------- | ---------------- | ------------------ |
+| 全量引入                   | ~200KB           | 包含所有组件       |
+| 按需引入（Button + Input） | ~30KB            | 仅包含使用的组件   |
+| 自动引入（Button + Input） | ~30KB            | 与手动按需引入相同 |
 
 ### 2.4 最佳实践
 
@@ -751,12 +750,12 @@ pnpm dev
 
 ## 五、总结
 
-| 功能 | 方案 | 工具 |
-|---|---|---|
-| Props 文档自动提取 | 手动编写，辅助脚本生成草稿 | extract-props.mjs |
-| 组件按需加载 | unplugin-vue-components 自动引入 | unplugin-vue-components + unplugin-auto-import |
-| 样式按需加载 | Resolver 自动引入样式 | 自定义 CBUIResolver |
-| Tree Shaking | ES Module + sideEffects 标记 | Vite/Rollup |
+| 功能               | 方案                             | 工具                                           |
+| ------------------ | -------------------------------- | ---------------------------------------------- |
+| Props 文档自动提取 | 手动编写，辅助脚本生成草稿       | extract-props.mjs                              |
+| 组件按需加载       | unplugin-vue-components 自动引入 | unplugin-vue-components + unplugin-auto-import |
+| 样式按需加载       | Resolver 自动引入样式            | 自定义 CBUIResolver                            |
+| Tree Shaking       | ES Module + sideEffects 标记     | Vite/Rollup                                    |
 
 通过以上方案，可以实现：
 

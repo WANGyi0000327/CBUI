@@ -5,11 +5,13 @@
 declare module 'unplugin-vue-components' {
   export interface ComponentResolver {
     type?: 'component' | 'directive'
-    resolve: (name: string) => {
-      name: string
-      from: string
-      sideEffects?: string
-    } | undefined
+    resolve: (name: string) =>
+      | {
+          name: string
+          from: string
+          sideEffects?: string
+        }
+      | undefined
   }
 }
 

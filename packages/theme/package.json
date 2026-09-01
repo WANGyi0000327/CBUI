@@ -17,5 +17,7 @@
       "default": "./src/tailwind.preset.js"
     }
   },
-  "files": ["src"]
+  "files": [
+    "src"
+  ]
 }

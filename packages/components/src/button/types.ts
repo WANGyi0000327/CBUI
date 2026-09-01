@@ -1,76 +1,35 @@
-/**
- * 按钮类型
- */
+import type { TNode } from 'tdesign-vue-next'
+
+/** 以下类型仅保留兼容入口导出，业务属性以组件内部 defineProps 为准 */
+
 export type ButtonType = 'primary' | 'default' | 'danger'
-
-/**
- * 按钮尺寸
- */
 export type ButtonSize = 'small' | 'medium' | 'large'
-
-/**
- * 按钮原生 HTML 类型
- */
 export type ButtonNativeType = 'button' | 'submit' | 'reset'
 
+/** TDesign 按钮主题 */
+export type ButtonTheme = 'default' | 'primary' | 'danger' | 'warning' | 'success'
+/** CB UI 自定义按钮主题 + TDesign 原生主题 */
+export type CustomButtonTheme = ButtonTheme | 'cb-brand-default' | 'cb-brand-gray'
+
 /**
- * 按钮组件属性
+ * 按钮组件属性（以 defineProps 中实际定义为准）
  */
 export interface ButtonProps {
   /**
-   * 按钮类型
-   * @default 'default'
+   * 按钮主题
+   * @default 'primary'
    */
-  type?: ButtonType
-
+  theme?: CustomButtonTheme
   /**
-   * 按钮尺寸
-   * @default 'medium'
+   * 按钮图标（字符串 = CbIcon 名称；TNode = 自定义渲染函数）
    */
-  size?: ButtonSize
-
-  /**
-   * 是否禁用
-   * @default false
-   */
-  disabled?: boolean
-
-  /**
-   * 是否加载中
-   * @default false
-   */
-  loading?: boolean
-
-  /**
-   * 原生 button 类型
-   * @default 'button'
-   */
-  nativeType?: ButtonNativeType
-
-  /**
-   * 是否为块级元素（占满父容器宽度）
-   * @default false
-   */
-  block?: boolean
+  icon?: string | TNode
 }
 
-/**
- * 按钮组件事件
- */
 export interface ButtonEmits {
-  /**
-   * 点击按钮时触发
-   * @param event 鼠标事件对象
-   */
   click: [event: MouseEvent]
 }
 
-/**
- * 按钮组件插槽
- */
 export interface ButtonSlots {
-  /**
-   * 按钮内容
-   */
   default: () => unknown
 }

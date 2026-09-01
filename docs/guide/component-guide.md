@@ -37,6 +37,7 @@ pnpm gen modal 模态框
 ```
 
 脚本会自动完成：
+
 1. 创建 `packages/components/src/modal/` 目录及文件
 2. 生成 `docs/components/modal.md` 文档模板
 3. 自动更新 `packages/components/src/index.ts`
@@ -72,25 +73,10 @@ pnpm gen:index
 **Modal.vue 模板示例**：
 
 ```vue
-&lt;template&gt;
-  &lt;div class="cb-modal"&gt;
-    &lt;slot /&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script setup lang="ts"&gt;
-import type { ModalProps } from './types'
-
-withDefaults(defineProps&lt;ModalProps&gt;(), {
-  // 在这里设置默认值
-})
-&lt;/script&gt;
-
-&lt;style scoped lang="scss"&gt;
-.cb-modal {
-  // 组件样式
-}
-&lt;/style&gt;
+&lt;template&gt; &lt;div class="cb-modal"&gt; &lt;slot /&gt; &lt;/div&gt; &lt;/template&gt;
+&lt;script setup lang="ts"&gt; import type { ModalProps } from './types'
+withDefaults(defineProps&lt;ModalProps&gt;(), { // 在这里设置默认值 }) &lt;/script&gt; &lt;style
+scoped lang="scss"&gt; .cb-modal { // 组件样式 } &lt;/style&gt;
 ```
 
 **生成的 types.ts**：
@@ -129,23 +115,10 @@ packages/components/src/
 #### 步骤 2：写 Modal.vue
 
 ```vue
-&lt;template&gt;
-  &lt;div class="cb-modal"&gt;
-    &lt;slot /&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script setup lang="ts"&gt;
-import type { ModalProps } from './types'
-
-withDefaults(defineProps&lt;ModalProps&gt;(), {})
-&lt;/script&gt;
-
-&lt;style scoped lang="scss"&gt;
-.cb-modal {
-  /* 样式 */
-}
-&lt;/style&gt;
+&lt;template&gt; &lt;div class="cb-modal"&gt; &lt;slot /&gt; &lt;/div&gt; &lt;/template&gt;
+&lt;script setup lang="ts"&gt; import type { ModalProps } from './types'
+withDefaults(defineProps&lt;ModalProps&gt;(), {}) &lt;/script&gt; &lt;style scoped lang="scss"&gt;
+.cb-modal { /* 样式 */ } &lt;/style&gt;
 ```
 
 #### 步骤 3：写 types.ts
@@ -189,7 +162,7 @@ const components = [Button, Input, Card, Modal]
 
 这是最麻烦的一步。下面是模板，复制粘贴即可：
 
-```markdown
+````markdown
 ---
 title: Modal 模态框
 description: 在浮层中显示内容。
@@ -202,17 +175,16 @@ description: 在浮层中显示内容。
 ## 基础用法
 
 &lt;DemoBlock&gt;
-  &lt;CbModal title="标题"&gt;内容&lt;/CbModal&gt;
+&lt;CbModal title="标题"&gt;内容&lt;/CbModal&gt;
 
-  &lt;template #code&gt;
+&lt;template #code&gt;
 
 ```vue
-&lt;template&gt;
-  &lt;CbModal title="标题"&gt;内容&lt;/CbModal&gt;
-&lt;/template&gt;
+&lt;template&gt; &lt;CbModal title="标题"&gt;内容&lt;/CbModal&gt; &lt;/template&gt;
 ```
+````
 
-  &lt;/template&gt;
+&lt;/template&gt;
 &lt;/DemoBlock&gt;
 
 ## API
@@ -220,19 +192,20 @@ description: 在浮层中显示内容。
 ### Props
 
 | 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
+| ---- | ---- | ---- | ------ |
 
 ### Events
 
 | 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
+| ------ | ---- | -------- |
 
 ### Slots
 
-| 插槽名 | 说明 |
-| --- | --- |
+| 插槽名  | 说明     |
+| ------- | -------- |
 | default | 默认内容 |
-```
+
+````
 
 #### 步骤 7：更新侧边栏
 
@@ -240,7 +213,7 @@ description: 在浮层中显示内容。
 
 ```typescript
 { text: 'Modal 模态框', link: '/components/modal' },
-```
+````
 
 #### 步骤 8：预览
 
@@ -263,7 +236,7 @@ cp docs/components/button.md docs/components/modal.md
 
 **文档模板结构**：
 
-```markdown
+````markdown
 ---
 title: Modal 模态框
 description: 在浮层中显示内容。
@@ -276,17 +249,16 @@ description: 在浮层中显示内容。
 ## 基础用法
 
 &lt;DemoBlock&gt;
-  &lt;CbModal title="标题"&gt;内容&lt;/CbModal&gt;
+&lt;CbModal title="标题"&gt;内容&lt;/CbModal&gt;
 
-  &lt;template #code&gt;
+&lt;template #code&gt;
 
 ```vue
-&lt;template&gt;
-  &lt;CbModal title="标题"&gt;内容&lt;/CbModal&gt;
-&lt;/template&gt;
+&lt;template&gt; &lt;CbModal title="标题"&gt;内容&lt;/CbModal&gt; &lt;/template&gt;
 ```
+````
 
-  &lt;/template&gt;
+&lt;/template&gt;
 &lt;/DemoBlock&gt;
 
 ## API
@@ -294,19 +266,20 @@ description: 在浮层中显示内容。
 ### Props
 
 | 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
+| ---- | ---- | ---- | ------ |
 
 ### Events
 
 | 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
+| ------ | ---- | -------- |
 
 ### Slots
 
-| 插槽名 | 说明 |
-| --- | --- |
+| 插槽名  | 说明     |
+| ------- | -------- |
 | default | 默认内容 |
-```
+
+````
 
 ---
 
@@ -333,7 +306,7 @@ rm -rf packages/components/src/modal
 # 3. 删除文档
 rm docs/components/modal.md
 # 4. 在 docs/.vitepress/config.ts 侧边栏中删除对应项
-```
+````
 
 ---
 
@@ -352,11 +325,13 @@ rm docs/components/modal.md
  */
 export interface ComponentResolver {
   type?: 'component' | 'directive'
-  resolve: (name: string) => {
-    name: string
-    from: string
-    sideEffects?: string
-  } | undefined
+  resolve: (name: string) =>
+    | {
+        name: string
+        from: string
+        sideEffects?: string
+      }
+    | undefined
 }
 
 /**
@@ -376,7 +351,7 @@ export interface CBUIResolverOptions {
 export function CBUIResolver(options: CBUIResolverOptions = {}): ComponentResolver {
   const {
     importStyle = true,
-    prefix = 'Cb',                // ← 前缀默认值在这里
+    prefix = 'Cb', // ← 前缀默认值在这里
     libraryName = '@cb-ui/components',
     styleSuffix = 'scss',
   } = options
@@ -384,8 +359,8 @@ export function CBUIResolver(options: CBUIResolverOptions = {}): ComponentResolv
   return {
     type: 'component',
     resolve: (name: string) => {
-      if (!name.startsWith(prefix)) return    // 检查是否以前缀开头
-      const partialName = name.slice(prefix.length)  // 去掉前缀
+      if (!name.startsWith(prefix)) return // 检查是否以前缀开头
+      const partialName = name.slice(prefix.length) // 去掉前缀
       const kebabName = partialName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
       const result: any = {
         name: partialName,
@@ -431,8 +406,8 @@ export default defineConfig({
     Components({
       resolvers: [
         CBUIResolver({
-          prefix: 'Cb',   // 文档站用 Cb 前缀
-        })
+          prefix: 'Cb', // 文档站用 Cb 前缀
+        }),
       ],
     }),
   ],
@@ -452,8 +427,8 @@ export default defineConfig({
     Components({
       resolvers: [
         CBUIResolver({
-          prefix: 'My',   // 业务项目用 My 前缀
-        })
+          prefix: 'My', // 业务项目用 My 前缀
+        }),
       ],
     }),
   ],
@@ -463,10 +438,8 @@ export default defineConfig({
 这样业务项目里就能这样使用：
 
 ```vue
-&lt;template&gt;
-  &lt;MyButton&gt;按钮&lt;/MyButton&gt;
-  &lt;MyModal title="标题"&gt;内容&lt;/MyModal&gt;
-&lt;/template&gt;
+&lt;template&gt; &lt;MyButton&gt;按钮&lt;/MyButton&gt; &lt;MyModal
+title="标题"&gt;内容&lt;/MyModal&gt; &lt;/template&gt;
 ```
 
 不需要修改组件库源代码，组件库本身仍然以 Cb 前缀发布。
@@ -495,14 +468,14 @@ Resolver 收到 'CbButton'
 
 ## 七、命名规范速查
 
-| 类型 | 规则 | 示例 |
-|---|---|---|
-| 目录名 | kebab-case | `button`、`input-group` |
-| 组件文件名 | PascalCase | `Button.vue`、`InputGroup.vue` |
-| 组件名 | PascalCase | `Button`、`InputGroup` |
-| 模板中使用 | 前缀 + PascalCase | `<CbButton>`、`<CbInputGroup>` |
-| CSS 类 | BEM | `.cb-button`、`cb-button__icon`、`cb-button--primary` |
-| 类型接口 | PascalCase + Props/Emits/Slots | `ButtonProps` |
+| 类型       | 规则                           | 示例                                                  |
+| ---------- | ------------------------------ | ----------------------------------------------------- |
+| 目录名     | kebab-case                     | `button`、`input-group`                               |
+| 组件文件名 | PascalCase                     | `Button.vue`、`InputGroup.vue`                        |
+| 组件名     | PascalCase                     | `Button`、`InputGroup`                                |
+| 模板中使用 | 前缀 + PascalCase              | `<CbButton>`、`<CbInputGroup>`                        |
+| CSS 类     | BEM                            | `.cb-button`、`cb-button__icon`、`cb-button--primary` |
+| 类型接口   | PascalCase + Props/Emits/Slots | `ButtonProps`                                         |
 
 ---
 
@@ -553,17 +526,17 @@ pnpm extract:props
 ```markdown
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
+| 属性 | 说明     | 类型                                 | 默认值    |
+| ---- | -------- | ------------------------------------ | --------- |
 | type | 按钮类型 | `'primary' \| 'default' \| 'danger'` | 'default' |
-| size | 按钮尺寸 | `'small' \| 'medium' \| 'large'` | 'medium' |
+| size | 按钮尺寸 | `'small' \| 'medium' \| 'large'`     | 'medium'  |
 ```
 
 直接复制到 `button.md` 中即可。
 
 ### 9.3 脚本位置
 
-| 文件 | 作用 |
-|---|---|
-| [packages/components/scripts/extract-props.mjs](file:///d:/domexiangm720/CBUi/packages/components/scripts/extract-props.mjs) | 提取脚本入口 |
-| `docs/.vitepress/generated/<component>-api.md` | 自动生成的 API 草稿（已在 .gitignore 中忽略） |
+| 文件                                                                                                                         | 作用                                          |
+| ---------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| [packages/components/scripts/extract-props.mjs](file:///d:/domexiangm720/CBUi/packages/components/scripts/extract-props.mjs) | 提取脚本入口                                  |
+| `docs/.vitepress/generated/<component>-api.md`                                                                               | 自动生成的 API 草稿（已在 .gitignore 中忽略） |

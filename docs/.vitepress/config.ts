@@ -110,6 +110,14 @@ export default defineConfig({
 
   // Vite 配置增强
   vite: {
+    // ========== JSX / TSX 编译配置（关键：独立于 tsconfig，必须显式指定）==========
+    // CbButton 等组件使用 <script setup lang="tsx"> 写 JSX（如 <cb-icon name="..." />）
+    // 默认 esbuild 按 React 运行时编译 → 生成 React.createElement，浏览器报 React is not defined
+    // 这里指定 vue 作为 JSX 运行时入口，与 tsconfig.base.json 中 "jsxImportSource": "vue" 保持一致
+    esbuild: {
+      jsx: 'automatic',
+      jsxImportSource: 'vue',
+    },
     resolve: {
       alias: {
         // 文档站直接引用本地组件源码，便于实时预览

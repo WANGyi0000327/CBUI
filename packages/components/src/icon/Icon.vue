@@ -1,10 +1,5 @@
 <template>
-  <svg
-    v-bind="$attrs"
-    aria-hidden="true"
-    class="svg-icon"
-    :style="{ color, fontSize: size }"
-  >
+  <svg v-bind="$attrs" aria-hidden="true" class="svg-icon" :style="{ color, fontSize: size }">
     <use :xlink:href="iconClassName" />
   </svg>
 </template>
