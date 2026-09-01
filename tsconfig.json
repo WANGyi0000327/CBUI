@@ -5,6 +5,12 @@
     "paths": {
       "@cb-ui/components": ["packages/components/src"],
       "@cb-ui/components/*": ["packages/components/src/*"],
+      // iconfont.js 是 181KB 的阿里 iconfont 生成产物，tsconfig 默认 allowJs:false，
+      // 通用 paths 别名 @cb-ui/components/* 会把它解析到实际 .js 文件，
+      // TS 一旦定位到实际 .js 就会忽略 iconfont.d.ts 的 ambient 声明，从而报 TS2307。
+      // 这里加一条精确映射，单独把该 side-effect 路径指向 .d.ts，TS 类型检查即通过；
+      // Vite 构建时用自己的 alias，不受影响，仍会加载真实 iconfont.js 执行 side-effect。
+      "@cb-ui/components/config/iconfont.js": ["packages/components/src/config/iconfont.d.ts"],
       "@cb-ui/theme": ["packages/theme/src"],
       "@cb-ui/theme/*": ["packages/theme/src/*"],
       "@cb-ui/utils": ["packages/utils/src"],
