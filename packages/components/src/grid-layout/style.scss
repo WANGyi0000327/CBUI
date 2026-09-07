@@ -1,0 +1,5 @@
+// GridLayout 组件样式入口
+// 按需引入时通过此文件加载样式（resolver 的 sideEffects 指向此文件）
+@use '@cb-ui/theme/src/variables' as *;
+// GridLayout 样式依赖 Tailwind 的 grid / gap-[8px] / h-full 工具类，
+// 使用方需确保 Tailwind 已启用；SFC 内 <style scoped> 为空。
