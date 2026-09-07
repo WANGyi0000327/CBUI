@@ -17,12 +17,13 @@ import { DateRangeConfirmPicker } from './date-range-confirm-picker'
 import { GridLayout } from './grid-layout'
 import { Icon } from './icon'
 import { ImageSecret } from './image-secret'
+import { MorePopup } from './more-popup'
 
 // 导入指令（v-click-outside 等，供 CbDateRangeConfirmPicker 等组件使用）
 import { clickOutside as vClickOutside } from './directives/clickOutside'
 
 // 导出组件
-export { Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret }
+export { Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup }
 
 // 导出类型
 export type { ButtonProps, ButtonEmits, ButtonSlots, ButtonType, ButtonSize, ButtonNativeType } from './button'
@@ -34,12 +35,13 @@ export type { DateRangeConfirmPickerProps, DateRangeConfirmPickerEmits } from '.
 export type { GridLayoutProps } from './grid-layout'
 export type { IconProps } from './icon'
 export type { ImageSecretProps } from './image-secret'
+export type { MorePopupProps, MorePopupEmits, MorePopupSlots } from './more-popup'
 
 // 导出 Resolver（用于按需加载）
 export { CBUIResolver } from './resolver'
 export type { CBUIResolverOptions, ComponentResolver } from './resolver'
 
-const components = [Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret]
+const components = [Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup]
 
 export const CBUI = {
   install(app: App) {

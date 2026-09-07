@@ -21,6 +21,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^8.0.0
         version: 8.66.0(eslint@8.57.1)(typescript@5.9.3)
+      '@vitejs/plugin-vue':
+        specifier: ^5.0.0
+        version: 5.2.4(vite@5.4.21(@types/node@20.19.43)(lightningcss@1.33.0)(sass@1.101.3))(vue@3.5.40(typescript@5.9.3))
       '@vue/test-utils':
         specifier: ^2.5.0
         version: 2.5.0(@vue/compiler-dom@3.5.40)(@vue/server-renderer@3.5.40)(vue@3.5.40(typescript@5.9.3))
