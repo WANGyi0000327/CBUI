@@ -125,6 +125,9 @@ export default defineConfig({
         // 注意：theme 指向 packages/theme 目录（不带 src），这样 @cb-ui/theme/src/variables 能正确解析
         '@cb-ui/theme': resolve(__dirname, '../../packages/theme'),
         '@cb-ui/utils': resolve(__dirname, '../../packages/utils/src'),
+        // CbImageSecret 等组件内部 import { serviceManager } from '#/config/api'
+        // 把 # 指向组件库 src 目录，使用 config/api.ts shim 作为 mock
+        '#': resolve(__dirname, '../../packages/components/src'),
       },
     },
     css: {

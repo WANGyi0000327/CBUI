@@ -14,7 +14,10 @@
       "@cb-ui/theme": ["packages/theme/src"],
       "@cb-ui/theme/*": ["packages/theme/src/*"],
       "@cb-ui/utils": ["packages/utils/src"],
-      "@cb-ui/utils/*": ["packages/utils/src/*"]
+      "@cb-ui/utils/*": ["packages/utils/src/*"],
+      // CbImageSecret 等组件内部 import { serviceManager } from '#/config/api'
+      // 把 # 指向组件库 src 目录，使用 config/api.ts shim 作为 mock
+      "#/*": ["packages/components/src/*"]
     }
   },
   "include": ["packages/**/*", "docs/**/*"],
