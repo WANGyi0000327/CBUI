@@ -21,6 +21,9 @@ export default defineConfig({
       '@cb-ui/utils': resolve(__dirname, '../utils/src'),
       // 注意：theme 指向 packages/theme 目录（不带 src），这样 @cb-ui/theme/src/variables 能正确解析
       '@cb-ui/theme': resolve(__dirname, '../theme'),
+      // CbImageSecret 等组件内部 import { serviceManager } from '#/config/api'
+      // 与 tsconfig paths、docs/.vitepress 配置保持一致，把 # 指向组件库 src 目录
+      '#': resolve(__dirname, 'src'),
     },
   },
   css: {

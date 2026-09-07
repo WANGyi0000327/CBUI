@@ -2,46 +2,63 @@ import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Button from './Button.vue'
 
+/**
+ * Button 组件测试
+ * ------------------------------------------------------------
+ * 组件是基于 TDesign (TButton) 的二次封装：
+ * - 标准 theme（default/primary/danger/warning/success）直接透传给 TButton
+ * - 自定义主题 cb-brand-* 作为额外 class 绑定在根元素，theme 回退为 default
+ * - 字符串 icon 会渲染为 CbIcon（svg.svg-icon）
+ * - 其余 attrs（disabled / nativeType / size 等）通过 $attrs 透传
+ */
 describe('Button', () => {
   // 基础渲染
   it('renders default button correctly', () => {
     const wrapper = mount(Button, {
       slots: { default: 'Click Me' },
     })
-    expect(wrapper.classes()).toContain('cb-button--default')
-    expect(wrapper.classes()).toContain('cb-button--medium')
+    expect(wrapper.get('button').classes()).toContain('t-button')
     expect(wrapper.text()).toBe('Click Me')
   })
 
-  // 类型变体
-  it('applies primary type class', () => {
-    const wrapper = mount(Button, {
-      props: { type: 'primary' },
-      slots: { default: 'Submit' },
-    })
-    expect(wrapper.classes()).toContain('cb-button--primary')
+  // 默认主题
+  it('defaults to primary theme', () => {
+    const wrapper = mount(Button)
+    expect(wrapper.get('button').classes()).toContain('t-button--theme-primary')
   })
 
-  it('applies danger type class', () => {
+  // 标准主题透传给 TDesign
+  it('passes standard theme to TDesign Button', () => {
     const wrapper = mount(Button, {
-      props: { type: 'danger' },
+      props: { theme: 'danger' },
     })
-    expect(wrapper.classes()).toContain('cb-button--danger')
+    expect(wrapper.get('button').classes()).toContain('t-button--theme-danger')
   })
 
-  // 尺寸变体
-  it('applies small size class', () => {
+  // 自定义品牌主题：类绑定在根元素，theme 回退为 default
+  it('applies cb-brand-default custom theme and falls back to default', () => {
     const wrapper = mount(Button, {
-      props: { size: 'small' },
+      props: { theme: 'cb-brand-default' },
     })
-    expect(wrapper.classes()).toContain('cb-button--small')
+    const btn = wrapper.get('button')
+    expect(btn.classes()).toContain('cb-brand-default')
+    expect(btn.classes()).toContain('t-button--theme-default')
   })
 
-  it('applies large size class', () => {
+  it('applies cb-brand-gray custom theme', () => {
     const wrapper = mount(Button, {
-      props: { size: 'large' },
+      props: { theme: 'cb-brand-gray' },
     })
-    expect(wrapper.classes()).toContain('cb-button--large')
+    expect(wrapper.get('button').classes()).toContain('cb-brand-gray')
+  })
+
+  // 字符串 icon → CbIcon
+  it('renders string icon as CbIcon', () => {
+    const wrapper = mount(Button, {
+      props: { icon: 'search' },
+    })
+    const svg = wrapper.get('svg.svg-icon')
+    expect(svg.find('use').attributes('href')).toBe('#icon-search')
   })
 
   // 点击事件
@@ -49,57 +66,59 @@ describe('Button', () => {
     const wrapper = mount(Button, {
       slots: { default: 'Click' },
     })
-    await wrapper.trigger('click')
+    await wrapper.get('button').trigger('click')
     expect(wrapper.emitted('click')).toHaveLength(1)
   })
 
-  // 禁用状态不触发点击
-  it('does not emit click when disabled', async () => {
+  // attrs 透传：disabled
+  it('passes disabled attribute through to native button', () => {
     const wrapper = mount(Button, {
       props: { disabled: true },
     })
-    await wrapper.trigger('click')
-    expect(wrapper.emitted('click')).toBeFalsy()
+    expect(wrapper.get('button').attributes('disabled')).toBeDefined()
   })
 
-  // 加载状态不触发点击
-  it('does not emit click when loading', async () => {
+  // attrs 透传：原生 type 属性（文档契约：type=submit/reset/button 原样透传）
+  it('passes native type attribute when type is submit', () => {
     const wrapper = mount(Button, {
-      props: { loading: true },
+      props: { type: 'submit' },
     })
-    await wrapper.trigger('click')
-    expect(wrapper.emitted('click')).toBeFalsy()
+    expect(wrapper.get('button').attributes('type')).toBe('submit')
   })
 
-  // 禁用状态添加 is-disabled 类
-  it('adds is-disabled class when disabled', () => {
+  it('passes native type attribute when type is reset', () => {
     const wrapper = mount(Button, {
-      props: { disabled: true },
+      props: { type: 'reset' },
     })
-    expect(wrapper.classes()).toContain('is-disabled')
+    expect(wrapper.get('button').attributes('type')).toBe('reset')
   })
 
-  // 加载状态显示加载图标
-  it('shows spinner when loading', () => {
+  // type 双通道：主题色写入 type 时自动映射为 theme
+  it('maps theme color written in type to theme', () => {
     const wrapper = mount(Button, {
-      props: { loading: true },
+      props: { type: 'primary' },
     })
-    expect(wrapper.find('.cb-button__spinner').exists()).toBe(true)
+    const btn = wrapper.get('button')
+    expect(btn.classes()).toContain('t-button--theme-primary')
+    // 原生 type 不应被主题色污染
+    expect(btn.attributes('type')).toBe('button')
   })
 
-  // 块级按钮
-  it('adds is-block class when block is true', () => {
+  // type 双通道：type 优先级高于 theme
+  it('gives type higher priority than theme', () => {
     const wrapper = mount(Button, {
-      props: { block: true },
+      props: { type: 'danger', theme: 'primary' },
     })
-    expect(wrapper.classes()).toContain('is-block')
+    expect(wrapper.get('button').classes()).toContain('t-button--theme-danger')
   })
 
-  // 原生 type 属性
-  it('sets native type attribute', () => {
+  // type 双通道：自定义主题写入 type 同样生效
+  it('maps custom theme written in type', () => {
     const wrapper = mount(Button, {
-      props: { nativeType: 'submit' },
+      props: { type: 'cb-brand-default' },
     })
-    expect(wrapper.attributes('type')).toBe('submit')
+    const btn = wrapper.get('button')
+    expect(btn.classes()).toContain('cb-brand-default')
+    expect(btn.classes()).toContain('t-button--theme-default')
   })
 })

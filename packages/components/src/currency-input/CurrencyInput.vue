@@ -1,15 +1,15 @@
 <template>
   <t-input-number
+    v-bind="$attrs"
+    ref="currecyRef"
     v-model="modelValue"
     :placeholder="placeholder"
     theme="normal"
-    :decimalPlaces="decimalPlaces"
+    :decimal-places="decimalPlaces"
     :max="max"
     :min="min"
-    v-bind="$attrs"
-    @blur="handleOnBlur"
     class="cb-currency-input"
-    ref="currecyRef"
+    @blur="handleOnBlur"
   >
     <template v-if="isShowSuffix" #suffix><span>元</span></template>
   </t-input-number>

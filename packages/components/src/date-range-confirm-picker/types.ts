@@ -10,9 +10,7 @@
  * DateRangeConfirmPicker 组件属性
  * 该组件未定义 defineProps，所有属性通过 $attrs 透传给 t-date-range-picker
  */
-export interface DateRangeConfirmPickerProps {
-  // 无显式 props，全部透传给 t-date-range-picker
-}
+export type DateRangeConfirmPickerProps = Record<string, never>
 
 /**
  * DateRangeConfirmPicker 组件事件

@@ -1,9 +1,6 @@
 <template>
   <div class="custom-image">
-    <img
-      v-if="!loading"
-      :src="url"
-      v-bind="$attrs" />
+    <img v-if="!loading" :src="url" v-bind="$attrs" />
     <!-- <t-loading v-if="loading" />
     <div v-if="loadError" class="error">图片加载失败</div> -->
   </div>
@@ -15,7 +12,7 @@ defineOptions({
 })
 
 import { ref, watch } from 'vue'
-import { serviceManager } from '#/config/api'
+import { serviceManager } from '../config/api'
 
 const props = defineProps({
   tempUrl: {
@@ -67,17 +64,17 @@ const getImageUrl = async () => {
 watch(
   () => props.tempUrl,
   () => {
-    props.tempUrl && getImageUrl()
+    if (props.tempUrl) getImageUrl()
   },
   { immediate: true }
 )
 </script>
 
 <style lang="scss" scoped>
-  .custom-image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--td-text-color-6);
-  }
+.custom-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--td-text-color-6);
+}
 </style>

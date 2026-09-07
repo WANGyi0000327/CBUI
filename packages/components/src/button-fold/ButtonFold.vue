@@ -1,5 +1,5 @@
 <template>
-  <div class="operation-container" v-if="getNormalizedChildren().length">
+  <div v-if="getNormalizedChildren().length" class="operation-container">
     <div class="first-operation flex item-center gap-[4px]">
       <template v-for="(item, index) in getFirstOperations()" :key="index">
         <component :is="item" v-bind="getMergedProps(item)" />
@@ -10,8 +10,8 @@
       v-if="getOtherOperations().length > 0"
       :visible="visible"
       placement="bottom"
-      :overlayClassName="overlayClassName"
-      @Visible-change="handleVisibleChange"
+      :overlay-class-name="overlayClassName"
+      @visible-change="handleVisibleChange"
       @overlay-click="handleContextClick"
     >
       <cb-icon
@@ -23,11 +23,11 @@
         @click="handleMoreClick"
       />
       <t-button
+        v-if="type === 'moreBtn'"
         theme="primary"
         class="cb-brand-default"
         :disabled="disabledAll"
         @click="handleMoreClick"
-        v-if="type === 'moreBtn'"
       >
         <span>{{ operationName }}</span>
         <cb-icon class="mt-[4px]" :name="visible ? 'jaintou_shang' : 'jaintou_xia'"></cb-icon>

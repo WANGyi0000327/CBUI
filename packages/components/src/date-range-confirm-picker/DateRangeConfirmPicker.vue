@@ -8,10 +8,10 @@
       v-bind="$attrs"
       :presets="presets"
       :popup-props="popupProps"
-      presetsPlacement="bottom"
-      @click="handleOpen"
+      presets-placement="bottom"
       class="cb-date-range-confirm-picker"
-      @presetClick="handleConfirmClick"
+      @click="handleOpen"
+      @preset-click="handleConfirmClick"
     >
     </t-date-range-picker>
   </div>

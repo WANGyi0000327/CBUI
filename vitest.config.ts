@@ -21,6 +21,8 @@ export default defineConfig({
       '@cb-ui/components': resolve(__dirname, './packages/components/src'),
       '@cb-ui/theme': resolve(__dirname, './packages/theme/src'),
       '@cb-ui/utils': resolve(__dirname, './packages/utils/src'),
+      // 与 components/vite.config.ts、tsconfig paths 保持一致
+      '#': resolve(__dirname, './packages/components/src'),
     },
   },
 })

@@ -24,6 +24,12 @@ export interface ButtonProps {
    * 按钮图标（字符串 = CbIcon 名称；TNode = 自定义渲染函数）
    */
   icon?: string | TNode
+  /**
+   * 兼容旧 API 的 type 双通道：
+   * - 主题色值（primary/default/warning/success/danger/cb-brand-*）→ 自动映射为 theme，优先级高于 theme
+   * - 原生按钮类型（button/submit/reset）→ 原样透传给 <t-button>
+   */
+  type?: string
 }
 
 export interface ButtonEmits {

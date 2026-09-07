@@ -1,5 +1,5 @@
 <template>
-  <TButton v-bind="$attrs" :theme="changeTheme" :class="theme" :icon="renderIcon">
+  <TButton v-bind="$attrs" :type="nativeType" :theme="changeTheme" :class="effectiveTheme" :icon="renderIcon">
     <!--
       传递具名插槽：用 Object.entries 后索引访问（slotEntry[0] = 插槽名），
       避免 `v-for="(_, name) in $slots"` 解构写法在 noImplicitAny 下的
@@ -27,11 +27,14 @@ type ThemeTypes = 'default' | 'primary' | 'danger' | 'warning' | 'success'
 
 type CustomThemeTypes = ThemeTypes | 'cb-brand-default' | 'cb-brand-gray'
 
+type NativeButtonType = 'button' | 'submit' | 'reset'
+
 defineOptions({
   name: 'TButton',
 })
 
 const themeTypes = ['default', 'primary', 'warning', 'success', 'danger']
+const nativeTypes: NativeButtonType[] = ['button', 'submit', 'reset']
 const props = defineProps({
   theme: {
     type: String as PropType<CustomThemeTypes>,
@@ -41,6 +44,31 @@ const props = defineProps({
     type: [String, Function] as PropType<string | TNode>,
     default: undefined, // 加上这一行
   },
+  /**
+   * 兼容旧 API 的 type 双通道：
+   * - 主题色值（primary/default/warning/success/danger/cb-brand-*）→ 自动映射为 theme，优先级高于 theme prop
+   * - 原生按钮类型（button/submit/reset）→ 原样透传给 <t-button> 作为表单原生行为
+   */
+  type: {
+    type: String as PropType<string>,
+    default: undefined,
+  },
+})
+
+const isThemeValue = (v: string) => themeTypes.includes(v) || v.startsWith('cb-brand-')
+
+// 最终生效主题：type 写主题色时 type 优先，否则用 theme
+const effectiveTheme = computed<CustomThemeTypes>(() => {
+  const t = props.type
+  if (t && isThemeValue(t)) return t as CustomThemeTypes
+  return props.theme
+})
+
+// 原生按钮类型：type 为 button/submit/reset 时透传给 TButton 的 type prop
+const nativeType = computed<NativeButtonType | undefined>(() => {
+  const t = props.type
+  if (t && nativeTypes.includes(t as NativeButtonType)) return t as NativeButtonType
+  return undefined
 })
 
 const renderIcon = computed(() => {
@@ -51,9 +79,9 @@ const renderIcon = computed(() => {
 })
 
 const changeTheme = computed(() =>
-  themeTypes.findIndex((item) => item === props.theme) === -1
+  themeTypes.findIndex((item) => item === effectiveTheme.value) === -1
     ? 'default'
-    : (props.theme as ThemeTypes)
+    : (effectiveTheme.value as ThemeTypes)
 )
 </script>
 
