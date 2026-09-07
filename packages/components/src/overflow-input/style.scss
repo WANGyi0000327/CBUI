@@ -1,0 +1,9 @@
+// OverflowInput 组件样式入口
+// 按需引入时通过此文件加载样式
+// 注意：SFC 内的 <style lang="scss"> 已包含组件全部样式（非 scoped，使用 cb- 前缀）
+// 此文件用于按需加载场景的样式入口声明
+
+@use '@cb-ui/theme/src/variables' as *;
+
+// OverflowInput 的全部样式位于 SFC <style lang="scss"> 中，
+// 此文件仅作为 resolver 按需引入时的样式入口占位。

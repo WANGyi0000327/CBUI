@@ -117,10 +117,7 @@ onBeforeUnmount(() => {
   observer?.disconnect()
 })
 const handleVisibleChange = (val: boolean, context: { trigger: string }) => {
-  if (
-    context.trigger === 'trigger-element-click' ||
-    context.trigger === 'document'
-  ) {
+  if (context.trigger === 'trigger-element-click' || context.trigger === 'document') {
     visible.value = val
   }
 }
@@ -132,10 +129,7 @@ const close = () => {
 }
 const handleContextClick = (context: { e: MouseEvent }) => {
   const triggerClassName = (context.e.target as any)?.className as string
-  if (
-    triggerClassName.indexOf('t-link') !== -1 ||
-    triggerClassName.indexOf('t-button') !== -1
-  ) {
+  if (triggerClassName.indexOf('t-link') !== -1 || triggerClassName.indexOf('t-button') !== -1) {
     close()
   }
 }

@@ -37,11 +37,12 @@
     "extract:props": "node scripts/extract-props.mjs"
   },
   "peerDependencies": {
-    "vue": "^3.4.0",
-    "tdesign-vue-next": "^1.16.1"
+    "tdesign-vue-next": "^1.16.1",
+    "vue": "^3.4.0"
   },
   "dependencies": {
     "@cb-ui/utils": "workspace:*",
+    "@vueuse/core": "^14.4.0",
     "tdesign-vue-next": "^1.16.1"
   },
   "devDependencies": {

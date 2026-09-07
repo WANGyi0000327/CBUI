@@ -1,0 +1,8 @@
+// RenderComponent 组件样式入口
+// 按需引入时通过此文件加载样式
+// 注意：SFC 内无独立 <style>，组件为纯渲染函数包装器
+// 此文件用于按需加载场景的样式入口声明
+
+@use '@cb-ui/theme/src/variables' as *;
+
+// RenderComponent 无样式，渲染内容样式由被渲染组件自身提供。

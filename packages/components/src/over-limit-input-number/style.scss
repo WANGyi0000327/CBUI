@@ -1,0 +1,8 @@
+// OverLimitInputNumber 组件样式入口
+// 按需引入时通过此文件加载样式
+// 注意：SFC 内无独立 <style>，组件样式均由 t-input-number 提供
+// 此文件用于按需加载场景的样式入口声明
+
+@use '@cb-ui/theme/src/variables' as *;
+
+// OverLimitInputNumber 无额外样式，样式均由 t-input-number 提供。

@@ -1,0 +1,10 @@
+// PreviewImage 组件样式入口
+// 按需引入时通过此文件加载样式
+// 注意：SFC 内含两段 <style>（scoped 触发器样式 + 全局 t-image-viewer 覆盖样式）
+// 此文件用于按需加载场景的样式入口声明
+
+@use '@cb-ui/theme/src/variables' as *;
+
+// PreviewImage 的样式位于 SFC 两段 <style lang="scss"> 中，
+// 其中全局样式段用于覆盖 t-image-viewer 的默认布局。
+// 此文件仅作为 resolver 按需引入时的样式入口占位。

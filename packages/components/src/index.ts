@@ -18,12 +18,24 @@ import { GridLayout } from './grid-layout'
 import { Icon } from './icon'
 import { ImageSecret } from './image-secret'
 import { MorePopup } from './more-popup'
+import { MultipleSelect } from './multiple-select'
+import { NumericInput } from './numeric-input'
+import { OverBtns } from './over-btns'
+import { OverLimitInputNumber } from './over-limit-input-number'
+import { OverflowInput } from './overflow-input'
+import { PageLayout } from './page-layout'
+import { Pagination } from './pagination'
+import { PreviewImage } from './preview-image'
+import { RenderComponent } from './render-component'
+import { Search } from './search'
+import { SearchFilter } from './search-filter'
+import { SearchInput } from './search-input'
 
 // 导入指令（v-click-outside 等，供 CbDateRangeConfirmPicker 等组件使用）
 import { clickOutside as vClickOutside } from './directives/clickOutside'
 
 // 导出组件
-export { Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup }
+export { Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput }
 
 // 导出类型
 export type { ButtonProps, ButtonEmits, ButtonSlots, ButtonType, ButtonSize, ButtonNativeType } from './button'
@@ -36,12 +48,24 @@ export type { GridLayoutProps } from './grid-layout'
 export type { IconProps } from './icon'
 export type { ImageSecretProps } from './image-secret'
 export type { MorePopupProps, MorePopupEmits, MorePopupSlots } from './more-popup'
+export type { MultipleSelectProps } from './multiple-select'
+export type { NumericInputProps, NumericInputEmits } from './numeric-input'
+export type { OverBtnsProps, OverBtn, OverRow } from './over-btns'
+export type { OverLimitInputNumberProps, OverLimitInputNumberEmits } from './over-limit-input-number'
+export type { OverflowInputProps } from './overflow-input'
+export type { CbPageLayoutInstance } from './page-layout'
+export type { PaginationProps } from './pagination'
+export type { PreviewImageProps } from './preview-image'
+export type { RenderComponentProps, RenderComponentEmits } from './render-component'
+export type { CBSearchProps } from './search'
+export type { SearchFilterProps, FormItem } from './search-filter'
+export type { SearchInputProps } from './search-input'
 
 // 导出 Resolver（用于按需加载）
 export { CBUIResolver } from './resolver'
 export type { CBUIResolverOptions, ComponentResolver } from './resolver'
 
-const components = [Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup]
+const components = [Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput]
 
 export const CBUI = {
   install(app: App) {
