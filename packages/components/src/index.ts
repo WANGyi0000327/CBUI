@@ -8,6 +8,7 @@
 import type { App } from 'vue'
 
 // 导入组件
+import { CbAudioPlayer } from './audio-player'
 import { Button } from './button'
 import { ButtonFold } from './button-fold'
 import { Copy } from './copy'
@@ -31,15 +32,22 @@ import { Search } from './search'
 import { SearchFilter } from './search-filter'
 import { SearchInput } from './search-input'
 import { StatusTag } from './status-tag'
+import { Tabs } from './tabs'
+import { TagBar } from './tag-bar'
 import { TagImg } from './tag-img'
+import { Tags } from './tags'
+import { TimeSelect } from './time-select'
+import { TimeSelectLine } from './time-select-line'
+import { VoiceToText } from './voice-to-text'
 
 // 导入指令（v-click-outside 等，供 CbDateRangeConfirmPicker 等组件使用）
 import { clickOutside as vClickOutside } from './directives/clickOutside'
 
 // 导出组件
-export { Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, TagImg }
+export { CbAudioPlayer, Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, VoiceToText }
 
 // 导出类型
+export type { AudioPlayerProps } from './audio-player'
 export type { ButtonProps, ButtonEmits, ButtonSlots, ButtonType, ButtonSize, ButtonNativeType } from './button'
 export type { ButtonFoldProps, ButtonFoldType } from './button-fold'
 export type { CopyProps } from './copy'
@@ -63,13 +71,19 @@ export type { CBSearchProps } from './search'
 export type { SearchFilterProps, FormItem } from './search-filter'
 export type { SearchInputProps } from './search-input'
 export type { tagType } from './status-tag'
+export type { CbTabsProps, typeTab } from './tabs'
+export type { CbTagBarProps, TagBarTab } from './tag-bar'
 export type { TagImgProps } from './tag-img'
+export type { CbTagsProps } from './tags'
+export type { CbTimeSelectProps, TimeFilterValue, TimeFilterArrayValue } from './time-select'
+export type { CbTimeSelectLineProps, MonthItem } from './time-select-line'
+export type { AudioTranscriptHookProps, TranscriptItem } from './voice-to-text'
 
 // 导出 Resolver（用于按需加载）
 export { CBUIResolver } from './resolver'
 export type { CBUIResolverOptions, ComponentResolver } from './resolver'
 
-const components = [Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, TagImg]
+const components = [CbAudioPlayer, Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, VoiceToText]
 
 export const CBUI = {
   install(app: App) {

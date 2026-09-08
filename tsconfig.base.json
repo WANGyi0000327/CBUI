@@ -15,7 +15,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"]
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "baseUrl": ".",
+    "paths": {
+      "#/*": ["packages/components/src/*"]
+    }
   },
   "exclude": ["node_modules", "dist"]
 }
