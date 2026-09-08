@@ -45,7 +45,8 @@ export default defineConfig({
   description: '基于 Vue3 + TypeScript + VitePress + TailwindCSS + Sass 的前端组件库',
   base: '/',
   lang: 'zh-CN',
-  lastUpdated: true,
+  // 关闭页面底部的「上次更新时间 Last updated」显示
+  lastUpdated: false,
   cleanUrls: true,
 
   // 主题配置
@@ -138,6 +139,11 @@ export default defineConfig({
           additionalData: `@use "@cb-ui/theme/src/variables" as *;`,
         },
       },
+    },
+    server: {
+      // 监听所有网卡：dev server 同时暴露 Localhost 与 Network（局域网 IP）地址
+      // 便于手机/其他设备通过 http://<局域网IP>:5173 访问文档站
+      host: true,
     },
   },
 })

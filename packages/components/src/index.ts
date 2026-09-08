@@ -30,12 +30,14 @@ import { RenderComponent } from './render-component'
 import { Search } from './search'
 import { SearchFilter } from './search-filter'
 import { SearchInput } from './search-input'
+import { StatusTag } from './status-tag'
+import { TagImg } from './tag-img'
 
 // 导入指令（v-click-outside 等，供 CbDateRangeConfirmPicker 等组件使用）
 import { clickOutside as vClickOutside } from './directives/clickOutside'
 
 // 导出组件
-export { Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput }
+export { Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, TagImg }
 
 // 导出类型
 export type { ButtonProps, ButtonEmits, ButtonSlots, ButtonType, ButtonSize, ButtonNativeType } from './button'
@@ -60,12 +62,14 @@ export type { RenderComponentProps, RenderComponentEmits } from './render-compon
 export type { CBSearchProps } from './search'
 export type { SearchFilterProps, FormItem } from './search-filter'
 export type { SearchInputProps } from './search-input'
+export type { tagType } from './status-tag'
+export type { TagImgProps } from './tag-img'
 
 // 导出 Resolver（用于按需加载）
 export { CBUIResolver } from './resolver'
 export type { CBUIResolverOptions, ComponentResolver } from './resolver'
 
-const components = [Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput]
+const components = [Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, TagImg]
 
 export const CBUI = {
   install(app: App) {
