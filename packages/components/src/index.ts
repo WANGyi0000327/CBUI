@@ -11,6 +11,10 @@ import type { App } from 'vue'
 import { CbAudioPlayer } from './audio-player'
 import { Button } from './button'
 import { ButtonFold } from './button-fold'
+import { ColControl } from './col-control'
+import { CollapseSidebar } from './collapse-sidebar'
+import { ColumnControl } from './column-control'
+import { CommonDialog } from './common-dialog'
 import { Copy } from './copy'
 import { CountUpNumber } from './count-up-number'
 import { CurrencyInput } from './currency-input'
@@ -44,12 +48,16 @@ import { VoiceToText } from './voice-to-text'
 import { clickOutside as vClickOutside } from './directives/clickOutside'
 
 // 导出组件
-export { CbAudioPlayer, Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, VoiceToText }
+export { CbAudioPlayer, Button, ButtonFold, ColControl, CollapseSidebar, ColumnControl, CommonDialog, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, VoiceToText }
 
 // 导出类型
 export type { AudioPlayerProps } from './audio-player'
 export type { ButtonProps, ButtonEmits, ButtonSlots, ButtonType, ButtonSize, ButtonNativeType } from './button'
 export type { ButtonFoldProps, ButtonFoldType } from './button-fold'
+export type { CbColControlProps, ColControlColumn } from './col-control'
+export type { CbCollapseSidebarProps } from './collapse-sidebar'
+export type { TableColumn, ColumnOption, ColumnConfig, ColumnControlProps } from './column-control'
+export type { BaseDialogProps } from './common-dialog'
 export type { CopyProps } from './copy'
 export type { CountUpNumberProps } from './count-up-number'
 export type { CurrencyInputProps, CurrencyInputInstance } from './currency-input'
@@ -83,7 +91,7 @@ export type { AudioTranscriptHookProps, TranscriptItem } from './voice-to-text'
 export { CBUIResolver } from './resolver'
 export type { CBUIResolverOptions, ComponentResolver } from './resolver'
 
-const components = [CbAudioPlayer, Button, ButtonFold, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, VoiceToText]
+const components = [CbAudioPlayer, Button, ButtonFold, ColControl, CollapseSidebar, ColumnControl, CommonDialog, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, VoiceToText]
 
 export const CBUI = {
   install(app: App) {

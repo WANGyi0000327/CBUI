@@ -14,6 +14,9 @@ export default defineConfig({
       insertTypesEntry: true,
       copyDtsFiles: true,
       staticImport: true,
+      // 类型产物输出到 dist（避免默认 in-source 输出污染 src，导致 src 内 .js/.d.ts 干扰模块解析）
+      entryRoot: resolve(__dirname, 'src'),
+      outDir: resolve(__dirname, 'dist'),
     }),
   ],
   resolve: {

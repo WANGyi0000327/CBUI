@@ -27,5 +27,11 @@ module.exports = {
     ],
     'no-console': 'off',
   },
-  ignorePatterns: ['dist', 'node_modules', '*.config.js', '*.config.ts'],
+  ignorePatterns: [
+    'dist',
+    'node_modules',
+    '*.config.js',
+    '*.config.ts',
+    '**/*.d.ts', // vite-plugin-dts 构建产物（含 defineProps<Props, {}> 声明），不做 lint 检查
+  ],
 }

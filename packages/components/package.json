@@ -45,7 +45,8 @@
     "@vueuse/core": "^14.4.0",
     "dayjs": "^1.11.23",
     "tdesign-icons-vue-next": "^0.4.11",
-    "tdesign-vue-next": "^1.16.1"
+    "tdesign-vue-next": "^1.16.1",
+    "vue-draggable-plus": "^0.6.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.0",
