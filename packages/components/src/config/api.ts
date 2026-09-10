@@ -19,6 +19,8 @@
 export interface IHttpService {
   /** 根据业务文件路径获取可访问的临时 URL */
   getFileTempUrl(filePath: string): Promise<string>
+  /** 上传文件（CbUpload 使用，组件库未实现，业务方覆盖） */
+  upload?: (file: File) => Promise<any>
 }
 
 /** serviceManager 接口 */

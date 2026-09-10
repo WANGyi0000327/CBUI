@@ -91,3 +91,24 @@ export const downLoadXMLFile = async (src?: string) => {
     window.open(src, '_blank')
   }
 }
+
+/**
+ * downloadFileBySaveAs：另存为下载文件
+ * 原实现位于业务包 @repo/tdesign-ui（库内不存在），此处落地为库内工具。
+ * @param url 文件地址
+ * @param name 保存文件名（缺省用 url 末段）
+ */
+export const downloadFileBySaveAs = (url: string, name?: string) => {
+  if (!url) return
+  const fileName = name || url.split('/').pop()?.split('?')[0] || '文件'
+  const a = document.createElement('a')
+  a.href = url
+  a.download = fileName
+  a.target = '_blank'
+  a.rel = 'noopener'
+  document.body.appendChild(a)
+  a.click()
+  setTimeout(() => {
+    document.body.removeChild(a)
+  }, 100)
+}

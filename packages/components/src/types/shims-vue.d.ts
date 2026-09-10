@@ -7,3 +7,9 @@ declare module '*.vue' {
   const component: DefineComponent<Record<string, unknown>, Record<string, unknown>, unknown>
   export default component
 }
+
+/** 静态资源模块声明：SVG 图标（文件预览等组件引用） */
+declare module '*.svg' {
+  const src: string
+  export default src
+}

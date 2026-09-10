@@ -10,18 +10,20 @@ import { ref } from 'vue'
 
 通用**音频播放器**组件（TDesign 生态）：播放/暂停、可拖拽进度条、倍速（0.5~2 倍）、音频下载（XMLHttpRequest 请求头下载）。内置**全局音频互斥管理**——同一时刻仅一个实例播放。支持两种样式（完整/精简），可作为独立组件使用，也是 **CbVoiceToText** 的内置播放器。
 
+> 示例 `src` 已内置 18 秒可播放音频（`/demo-voice.wav`），点击播放可见时间走动与进度条推进。
+
 ## 基础用法
 
 <DemoBlock>
   <CbAudioPlayer
-    src="https://example.com/audio.mp3"
+    src="/demo-voice.wav"
   />
 
 <template #code>
 
 ```vue
 <template>
-  <CbAudioPlayer src="https://example.com/audio.mp3" />
+  <CbAudioPlayer src="/demo-voice.wav" />
 </template>
 ```
 
@@ -34,7 +36,7 @@ import { ref } from 'vue'
 
 <DemoBlock>
   <CbAudioPlayer
-    src="https://example.com/audio.mp3"
+    src="/demo-voice.wav"
     styletype="2"
   />
 
@@ -42,7 +44,7 @@ import { ref } from 'vue'
 
 ```vue
 <template>
-  <CbAudioPlayer src="https://example.com/audio.mp3" styletype="2" />
+  <CbAudioPlayer src="/demo-voice.wav" styletype="2" />
 </template>
 ```
 

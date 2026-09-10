@@ -19,6 +19,11 @@ import { Copy } from './copy'
 import { CountUpNumber } from './count-up-number'
 import { CurrencyInput } from './currency-input'
 import { DateRangeConfirmPicker } from './date-range-confirm-picker'
+import { DynamicFormGenerator } from './dynamic-form-generator'
+import { FilePreview } from './file-preview'
+import { FilePreviewV2 } from './file-preview-v2'
+import { FilterPopup } from './filter-popup'
+import { GoodMainImage } from './good-main-image'
 import { GridLayout } from './grid-layout'
 import { Icon } from './icon'
 import { ImageSecret } from './image-secret'
@@ -42,13 +47,15 @@ import { TagImg } from './tag-img'
 import { Tags } from './tags'
 import { TimeSelect } from './time-select'
 import { TimeSelectLine } from './time-select-line'
+import { Upload } from './upload'
+import { CbVideoPlayer } from './video-player'
 import { VoiceToText } from './voice-to-text'
 
 // 导入指令（v-click-outside 等，供 CbDateRangeConfirmPicker 等组件使用）
 import { clickOutside as vClickOutside } from './directives/clickOutside'
 
 // 导出组件
-export { CbAudioPlayer, Button, ButtonFold, ColControl, CollapseSidebar, ColumnControl, CommonDialog, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, VoiceToText }
+export { CbAudioPlayer, Button, ButtonFold, ColControl, CollapseSidebar, ColumnControl, CommonDialog, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, DynamicFormGenerator, FilePreview, FilePreviewV2, FilterPopup, GoodMainImage, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, Upload, CbVideoPlayer, VoiceToText }
 
 // 导出类型
 export type { AudioPlayerProps } from './audio-player'
@@ -74,7 +81,6 @@ export type { OverflowInputProps } from './overflow-input'
 export type { CbPageLayoutInstance } from './page-layout'
 export type { PaginationProps } from './pagination'
 export type { PreviewImageProps } from './preview-image'
-export type { RenderComponentProps, RenderComponentEmits } from './render-component'
 export type { CBSearchProps } from './search'
 export type { SearchFilterProps, FormItem } from './search-filter'
 export type { SearchInputProps } from './search-input'
@@ -91,7 +97,7 @@ export type { AudioTranscriptHookProps, TranscriptItem } from './voice-to-text'
 export { CBUIResolver } from './resolver'
 export type { CBUIResolverOptions, ComponentResolver } from './resolver'
 
-const components = [CbAudioPlayer, Button, ButtonFold, ColControl, CollapseSidebar, ColumnControl, CommonDialog, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, VoiceToText]
+const components = [CbAudioPlayer, Button, ButtonFold, ColControl, CollapseSidebar, ColumnControl, CommonDialog, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, DynamicFormGenerator, FilePreview, FilePreviewV2, FilterPopup, GoodMainImage, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, Upload, CbVideoPlayer, VoiceToText]
 
 export const CBUI = {
   install(app: App) {

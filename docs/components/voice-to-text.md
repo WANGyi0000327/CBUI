@@ -25,14 +25,14 @@ const transcripts = [
     SpeakerId: '0',
   },
 ]
-const audioSrc = 'https://example.com/audio.mp3'
+const audioSrc = '/demo-voice.wav'
 </script>
 
 # CbVoiceToText 音频转文字
 
 通话/录音**转文字**展示组件：左侧 A 说话人、右侧 B 说话人气泡展示逐字稿，下方内嵌 **CbAudioPlayer** 音频播放器；播放时按时间轴自动高亮当前字幕（滚动居中），点击字幕可跳转到对应时间点播放。适用于通话记录、录音复盘等场景。
 
-> 注意：示例 `audioSrc` 为占位地址，播放器 UI 正常渲染；接入真实音频后自动联动高亮与点击跳转。
+> 示例 `audioSrc` 已内置 18 秒可播放音频（`/demo-voice.wav`，段落起始处带提示哔声）；播放时可见时间走动与字幕高亮/滚动联动，点击字幕可跳转播放。
 
 ## 基础用法
 
@@ -69,7 +69,7 @@ const transcripts = [
     SpeakerId: '1',
   },
 ]
-const audioSrc = 'https://example.com/audio.mp3'
+const audioSrc = '/demo-voice.wav'
 </script>
 ```
 
