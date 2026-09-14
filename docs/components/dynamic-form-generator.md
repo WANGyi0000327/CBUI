@@ -3,7 +3,8 @@ title: CbDynamicFormGenerator 动态表单
 ---
 
 <script setup>
-import { reactive, h } from 'vue'
+import { reactive, ref, h } from 'vue'
+import { MessagePlugin } from 'tdesign-vue-next'
 
 const fields = [
   { key: 'name', label: '姓名', type: 'input', rules: [{ required: true, message: '请输入姓名' }] },
@@ -36,6 +37,15 @@ const formData = reactive({
   tags: [],
   joinDate: '',
 })
+
+// 提交校验：通过 ref 调用组件 exposed 的 validate()（通过返回 true，失败返回校验结果）
+const formRef = ref()
+const handleSubmit = async () => {
+  const valid = await formRef.value?.validate()
+  if (valid) {
+    MessagePlugin.success('校验通过，可提交')
+  }
+}
 
 // 条件显示示例
 const conditionFields = [
@@ -78,9 +88,9 @@ const customData = reactive({ amount: '100' })
 
 <DemoBlock>
   <div style="border: 1px solid var(--td-border-level-2-color); border-radius: 4px; padding: 16px; max-width: 560px;">
-    <CbDynamicFormGenerator v-model:form-data="formData" :fields="fields">
+    <CbDynamicFormGenerator ref="formRef" v-model:form-data="formData" :fields="fields">
       <template #submit>
-        <t-button theme="primary" style="margin-top: 8px;">提交</t-button>
+        <t-button theme="primary" style="margin-top: 8px;" @click="handleSubmit">提交</t-button>
       </template>
     </CbDynamicFormGenerator>
     <p style="margin-top: 12px; font-size: 13px; color: #666;">表单数据：{{ JSON.stringify(formData) }}</p>
@@ -90,15 +100,16 @@ const customData = reactive({ amount: '100' })
 
 ```vue
 <template>
-  <CbDynamicFormGenerator v-model:form-data="formData" :fields="fields">
+  <CbDynamicFormGenerator ref="formRef" v-model:form-data="formData" :fields="fields">
     <template #submit>
-      <t-button theme="primary">提交</t-button>
+      <t-button theme="primary" @click="handleSubmit">提交</t-button>
     </template>
   </CbDynamicFormGenerator>
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
+import { MessagePlugin } from 'tdesign-vue-next'
 
 const fields = [
   { key: 'name', label: '姓名', type: 'input', rules: [{ required: true, message: '请输入姓名' }] },
@@ -107,6 +118,14 @@ const fields = [
   { key: 'joinDate', label: '入职日期', type: 'date' },
 ]
 const formData = reactive({ name: '', city: '', tags: [], joinDate: '' })
+// 提交校验：通过 ref 调用组件 exposed 的 validate()（通过返回 true，失败返回校验结果）
+const formRef = ref()
+const handleSubmit = async () => {
+  const valid = await formRef.value?.validate()
+  if (valid) {
+    MessagePlugin.success('校验通过，可提交')
+  }
+}
 </script>
 ```
 

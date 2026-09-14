@@ -35,7 +35,9 @@ import { OverLimitInputNumber } from './over-limit-input-number'
 import { OverflowInput } from './overflow-input'
 import { PageLayout } from './page-layout'
 import { Pagination } from './pagination'
+import { PermissionTree } from './permission-tree'
 import { PreviewImage } from './preview-image'
+import { PublicTable } from './public-table'
 import { RenderComponent } from './render-component'
 import { Search } from './search'
 import { SearchFilter } from './search-filter'
@@ -55,7 +57,7 @@ import { VoiceToText } from './voice-to-text'
 import { clickOutside as vClickOutside } from './directives/clickOutside'
 
 // 导出组件
-export { CbAudioPlayer, Button, ButtonFold, ColControl, CollapseSidebar, ColumnControl, CommonDialog, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, DynamicFormGenerator, FilePreview, FilePreviewV2, FilterPopup, GoodMainImage, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, Upload, CbVideoPlayer, VoiceToText }
+export { CbAudioPlayer, Button, ButtonFold, ColControl, CollapseSidebar, ColumnControl, CommonDialog, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, DynamicFormGenerator, FilePreview, FilePreviewV2, FilterPopup, GoodMainImage, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PermissionTree, PreviewImage, PublicTable, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, Upload, CbVideoPlayer, VoiceToText }
 
 // 导出类型
 export type { AudioPlayerProps } from './audio-player'
@@ -80,7 +82,9 @@ export type { OverLimitInputNumberProps, OverLimitInputNumberEmits } from './ove
 export type { OverflowInputProps } from './overflow-input'
 export type { CbPageLayoutInstance } from './page-layout'
 export type { PaginationProps } from './pagination'
+export type { CustomTreeKey, BackendTreeNode, CheckedInfo, TreeSelectionConfig } from './permission-tree'
 export type { PreviewImageProps } from './preview-image'
+export type { ConfigType, PageInfo, ReqForm, HighSearchItem } from './public-table'
 export type { CBSearchProps } from './search'
 export type { SearchFilterProps, FormItem } from './search-filter'
 export type { SearchInputProps } from './search-input'
@@ -97,7 +101,7 @@ export type { AudioTranscriptHookProps, TranscriptItem } from './voice-to-text'
 export { CBUIResolver } from './resolver'
 export type { CBUIResolverOptions, ComponentResolver } from './resolver'
 
-const components = [CbAudioPlayer, Button, ButtonFold, ColControl, CollapseSidebar, ColumnControl, CommonDialog, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, DynamicFormGenerator, FilePreview, FilePreviewV2, FilterPopup, GoodMainImage, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PreviewImage, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, Upload, CbVideoPlayer, VoiceToText]
+const components = [CbAudioPlayer, Button, ButtonFold, ColControl, CollapseSidebar, ColumnControl, CommonDialog, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, DynamicFormGenerator, FilePreview, FilePreviewV2, FilterPopup, GoodMainImage, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PermissionTree, PreviewImage, PublicTable, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, Upload, CbVideoPlayer, VoiceToText]
 
 export const CBUI = {
   install(app: App) {

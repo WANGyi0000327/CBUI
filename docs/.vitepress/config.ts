@@ -34,6 +34,8 @@ const BUSINESS_COMPONENTS = new Set([
   'upload', // CbUpload 上传（上传服务）
   'voice-to-text', // CbVoiceToText 音频转文字（转写服务）
   'preview-image', // CbPreviewImage 预览图片（图片服务）
+  'permission-tree', // CbPermissionTree 权限树（权限数据）
+  'public-table', // CbPublicTable 公开表格（业务表格）
 ])
 // 基础组件子分组（按功能细分，md 文件名）
 const BASE_SUBGROUPS: Array<{ text: string; keys: string[] }> = [
@@ -234,7 +236,9 @@ export default defineConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          // Vite 8 默认使用 modern API，无需手动指定
+          // 使用 Sass modern-compiler API，消除 legacy-js-api 弃用警告
+          // 依赖 sass >= 1.79（当前 1.101.3 满足）
+          api: 'modern-compiler',
           // 自动注入 Sass 变量，组件无需单独 @use
           additionalData: `@use "@cb-ui/theme/src/variables" as *;`,
         },
