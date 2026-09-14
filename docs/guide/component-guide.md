@@ -2,9 +2,13 @@
 title: 组件开发指南
 ---
 
-# CB UI 组件库维护指南
+# 组件开发指南
 
-本文档详细说明如何添加、修改、删除组件，以及前缀配置方法。
+本文档说明如何向 CB UI 添加、修改、删除组件，以及落地规范与验证链。
+
+::: tip 落地铁律
+组件源码来自业务项目，**原样粘贴、一字不改**；只做构建/类型/功能所需的最小必要修正，且每次修正都需在交付说明中逐条告知。
+:::
 
 ---
 
@@ -12,531 +16,285 @@ title: 组件开发指南
 
 ```
 packages/components/src/
-├── button/                 # 组件目录（kebab-case）
-│   ├── Button.vue          # 组件实现
-│   ├── types.ts            # 类型定义
-│   └── index.ts            # 导出入口
-├── input/
-├── card/
-├── modal/
-├── index.ts                # 组件库总入口（自动生成，无需手动修改）
-├── resolver.ts             # 前缀配置（修改前缀在这里）
-└── style.ts                # 全局样式入口
+├── <kebab-case>/
+│   ├── <PascalCase>.vue     # 组件实现（defineOptions name: 'Cb<PascalCase>'）
+│   ├── types.ts             # 类型定义（Props/Emits/Slots；部分组件用 interface.ts）
+│   ├── index.ts             # 组件目录入口（barrel：导出组件 + 类型）
+│   ├── <PascalCase>.spec.ts # 单元测试（Vitest + @vue/test-utils）
+│   └── style.scss           # 组件样式（可选）
+├── index.ts                 # 全量入口（脚本生成，勿手改）
+├── resolver.ts              # 按需加载 Resolver（Cb 前缀）
+├── config/api.ts            # serviceManager shim（业务服务 mock）
+├── directives/              # 自定义指令（v-click-outside）
+└── assets/                  # 图标资源（iconfont SVG Sprite 等）
+
+docs/
+├── components/<kebab-case>.md   # 组件文档（自动扫描进侧边栏）
+└── .vitepress/config.ts         # 侧边栏分类登记（三集合）
 ```
 
 ---
 
-## 二、快速添加组件（推荐方式）
+## 二、快速添加组件
 
-### 2.1 一键生成（最推荐）
-
-使用脚手架脚本，一行命令生成组件所有文件并自动注册：
+### 方式一：脚手架生成（适合全新组件）
 
 ```bash
 pnpm gen modal 模态框
 ```
 
-脚本会自动完成：
+脚本（`scripts/gen-component.mjs`）自动完成：
 
-1. 创建 `packages/components/src/modal/` 目录及文件
+1. 创建 `packages/components/src/modal/`（Modal.vue / types.ts / index.ts / style.scss）
 2. 生成 `docs/components/modal.md` 文档模板
-3. 自动更新 `packages/components/src/index.ts`
-4. 侧边栏自动扫描，无需手动修改 `config.ts`
+3. 自动运行 `pnpm gen:index` 更新全量入口
+4. 侧边栏自动扫描，无需手动配置
 
-::: tip 说明
-`pnpm gen` 是 `node scripts/gen-component.mjs` 的快捷命令，定义在根目录 `package.json` 中。
-:::
+生成后仍需：补充组件逻辑、编写单测、在侧边栏集合登记（见第四章）、走完整验证链。
 
-### 2.2 复制已有组件（手动）
+### 方式二：沉淀业务源码（CB UI 的主要来源）
 
-如果不想用脚本，可以复制已有组件目录手动修改：
+业务项目组件落地为本库组件的标准流程：
+
+```
+1. 原样粘贴源码 → packages/components/src/<name>/
+2. 最小必要修正（逐条记录）
+3. 补 index.ts（barrel，供 gen:index 扫描）
+4. 写 <Name>.spec.ts 单测
+5. 写 docs/components/<name>.md 文档
+6. config.ts 三集合登记 + pnpm gen:index
+7. 验证链全绿 + 浏览器实测
+8. 交付：改动说明 + 验证清单 + 组件数
+```
+
+**常见最小修正类型**（历史案例）：
+
+| 修正 | 场景 | 案例 |
+| --- | --- | --- |
+| 类型导入源替换 | 业务用 `@repo/tdesign-ui` 别名，本库无此包 | CbPublicTable → 改为 `tdesign-vue-next` |
+| `defineModel` 泛型补齐 | vue-tsc 报无匹配重载 | `defineModel<number[]>(...)` |
+| 组件名去重/兼容 | 副本组件与原组件同名 | checkTag.vue 内部 name `CbStatusTag` |
+| TSX → `h()` 渲染 | eslint 的 vue parser 不解析 `.vue` 内 JSX | `sortIcon: () => h('cb-icon', {...})` |
+| 补缺失类型定义 | 业务源码引用了未粘贴的定义 | interface.ts 补 `SearchItem` |
+| 模板类型收窄 | prop 可 undefined 传给必填类型 | `:typeList="highSearchList \|\| []"` |
+
+### 方式三：手动创建
+
+复制已有组件目录作为模板，修改后运行 `pnpm gen:index`：
 
 ```bash
-# 复制 button 目录作为模板
 cp -r packages/components/src/button packages/components/src/modal
-
-# 然后修改里面的文件内容
+# 修改 Modal.vue / types.ts / index.ts 内容
+pnpm gen:index   # 自动更新全量入口
 ```
 
-**复制后需要修改的文件**：
-
-1. `Modal.vue`：组件实现
-2. `types.ts`：类型定义
-3. `index.ts`：导出入口
-
-**修改完成后，记得运行以下命令自动更新入口**：
-
-```bash
-pnpm gen:index
-```
-
-**Modal.vue 模板示例**：
-
-```vue
-&lt;template&gt; &lt;div class="cb-modal"&gt; &lt;slot /&gt; &lt;/div&gt; &lt;/template&gt;
-&lt;script setup lang="ts"&gt; import type { ModalProps } from './types'
-withDefaults(defineProps&lt;ModalProps&gt;(), { // 在这里设置默认值 }) &lt;/script&gt; &lt;style
-scoped lang="scss"&gt; .cb-modal { // 组件样式 } &lt;/style&gt;
-```
-
-**生成的 types.ts**：
-
-```typescript
-export interface ModalProps {
-  // 在这里定义 props
-}
-```
-
-**生成的 index.ts**：
-
-```typescript
-import Modal from './Modal.vue'
-import type { ModalProps } from './types'
-
-export { Modal }
-export type { ModalProps }
-export default Modal
-```
-
-### 2.2 手动添加组件
-
-如果脚手架脚本不可用，可以按以下步骤手动创建：
-
-#### 步骤 1：创建目录
-
-```
-packages/components/src/
-└── modal/
-    ├── Modal.vue
-    ├── types.ts
-    └── index.ts
-```
-
-#### 步骤 2：写 Modal.vue
-
-```vue
-&lt;template&gt; &lt;div class="cb-modal"&gt; &lt;slot /&gt; &lt;/div&gt; &lt;/template&gt;
-&lt;script setup lang="ts"&gt; import type { ModalProps } from './types'
-withDefaults(defineProps&lt;ModalProps&gt;(), {}) &lt;/script&gt; &lt;style scoped lang="scss"&gt;
-.cb-modal { /* 样式 */ } &lt;/style&gt;
-```
-
-#### 步骤 3：写 types.ts
-
-```typescript
-export interface ModalProps {
-  title?: string
-}
-```
-
-#### 步骤 4：写 index.ts
-
-```typescript
-import Modal from './Modal.vue'
-import type { ModalProps } from './types'
-
-export { Modal }
-export type { ModalProps }
-export default Modal
-```
-
-#### 步骤 5：在总入口注册
-
-编辑 `packages/components/src/index.ts`，加 3 行：
-
-```typescript
-// 顶部导入区追加
-import { Modal } from './modal'
-
-// 导出组件区追加
-export { Modal }
-
-// 导出类型区追加
-export type { ModalProps } from './modal'
-
-// 组件列表追加
-const components = [Button, Input, Card, Modal]
-```
-
-#### 步骤 6：写组件文档 `docs/components/modal.md`
-
-这是最麻烦的一步。下面是模板，复制粘贴即可：
-
-````markdown
----
-title: Modal 模态框
-description: 在浮层中显示内容。
 ---
 
-# Modal 模态框
+## 三、组件源码规范
 
-在浮层中显示内容。
+### 3.1 组件命名
 
-## 基础用法
+| 类型 | 规则 | 示例 |
+| --- | --- | --- |
+| 目录名 | kebab-case | `public-table` |
+| 组件文件名 | PascalCase | `PublicTable.vue` |
+| 组件 name | 前缀 + PascalCase | `CbPublicTable` |
+| 模板使用 | 前缀 + PascalCase | `<CbPublicTable>` |
+| CSS 类 | `cb-` 前缀 + kebab | `.cb-public-table` |
+| 类型接口 | PascalCase + Props/Emits | `PublicTableProps` |
 
-&lt;DemoBlock&gt;
-&lt;CbModal title="标题"&gt;内容&lt;/CbModal&gt;
-
-&lt;template #code&gt;
+### 3.2 SFC 骨架
 
 ```vue
-&lt;template&gt; &lt;CbModal title="标题"&gt;内容&lt;/CbModal&gt; &lt;/template&gt;
-```
-````
+<template>
+  <div class="cb-xxx">
+    <slot />
+  </div>
+</template>
 
-&lt;/template&gt;
-&lt;/DemoBlock&gt;
+<script setup lang="ts">
+defineOptions({ name: 'CbXxx' })
+import type { XxxProps } from './types'
+withDefaults(defineProps<XxxProps>(), {})
+</script>
+
+<style scoped lang="scss">
+@use "@cb-ui/theme/src/variables" as *;
+
+.cb-xxx {
+  // 组件样式
+}
+</style>
+```
+
+### 3.3 index.ts（barrel）规范
+
+```typescript
+import Xxx from './Xxx.vue'
+import type { XxxProps, XxxEmits, XxxSlots } from './types'
+
+export { Xxx }
+export type { XxxProps, XxxEmits, XxxSlots }
+export default Xxx
+```
+
+> `pnpm gen:index` 会扫描每个组件目录的 `index.ts`，正则提取 `export { Name }` 与 `export type { ... }`，自动写入全量入口。**入口文件 `src/index.ts` 勿手改。**
+
+---
+
+## 四、侧边栏分类登记
+
+侧边栏由 `docs/.vitepress/config.ts` 自动扫描 `docs/components/` 生成，但组件归属哪个分组由三个集合决定：
+
+| 集合 | 判定标准 | 示例 |
+| --- | --- | --- |
+| `BASE_SUBGROUPS` | 基础组件，按功能再分 4 子组 | 按钮与操作 / 输入与选择 / 数据展示 / 布局与容器 |
+| `MEDIA_TOOL_COMPONENTS` | 媒体与工具：有独立能力、不依赖业务 | audio-player / video-player / copy / count-up-number / image-secret / render-component |
+| `BUSINESS_COMPONENTS` | 业务组件：依赖业务场景或数据服务 | upload / public-table / permission-tree / dynamic-form-generator 等 |
+
+新增组件时在对应集合登记（或按分类标准新增集合），**新增/修改 md 后需重启 `pnpm dev`** 侧边栏才刷新。
+
+---
+
+## 五、文档编写规范
+
+组件文档位于 `docs/components/<name>.md`，结构：
+
+frontmatter 与章节骨架：
+
+```markdown
+---
+title: Xxx 组件名
+---
+
+# Xxx 组件名
+
+一句话说明用途。
 
 ## API
 
 ### Props
 
 | 属性 | 说明 | 类型 | 默认值 |
-| ---- | ---- | ---- | ------ |
+| --- | --- | --- | --- |
 
 ### Events
 
 | 事件名 | 说明 | 回调参数 |
-| ------ | ---- | -------- |
-
-### Slots
-
-| 插槽名  | 说明     |
-| ------- | -------- |
-| default | 默认内容 |
-
-````
-
-#### 步骤 7：更新侧边栏
-
-编辑 `docs/.vitepress/config.ts`，在 sidebar 数组中添加：
-
-```typescript
-{ text: 'Modal 模态框', link: '/components/modal' },
-````
-
-#### 步骤 8：预览
-
-```bash
-pnpm dev
-# 访问 http://localhost:5173/components/modal
+| --- | --- | --- |
 ```
 
----
+演示示例（`DemoBlock` 渲染 + `#code` 展示源码）：
 
-## 三、创建组件文档
+```markdown
+<DemoBlock>
+  <CbXxx />
 
-复制已有组件的文档模板（如 `button.md`），修改内容：
-
-```bash
-# 复制 button.md 作为模板
-cp docs/components/button.md docs/components/modal.md
-# 然后修改里面的内容
+  <template #code>
+    <!-- 将下方 Vue 源码示例写入此处 -->
+  </template>
+</DemoBlock>
 ```
-
-**文档模板结构**：
-
-````markdown
----
-title: Modal 模态框
-description: 在浮层中显示内容。
----
-
-# Modal 模态框
-
-在浮层中显示内容。
-
-## 基础用法
-
-&lt;DemoBlock&gt;
-&lt;CbModal title="标题"&gt;内容&lt;/CbModal&gt;
-
-&lt;template #code&gt;
 
 ```vue
-&lt;template&gt; &lt;CbModal title="标题"&gt;内容&lt;/CbModal&gt; &lt;/template&gt;
+<template>
+  <CbXxx />
+</template>
 ```
-````
 
-&lt;/template&gt;
-&lt;/DemoBlock&gt;
+> 注意：`DemoBlock` 与其 `#code` 插槽写在 markdown 正文；展示的 Vue 代码放进独立的 fenced code block。**不要在同一个代码块内部再嵌套另一个代码块标记**，否则内层标记会提前终止外层块，后续 `</template>` 等会被 Vue 编译器当作真实标签解析并报 "Element is missing end tag"。
 
-## API
+**规范要点**：
 
-### Props
-
-| 属性 | 说明 | 类型 | 默认值 |
-| ---- | ---- | ---- | ------ |
-
-### Events
-
-| 事件名 | 说明 | 回调参数 |
-| ------ | ---- | -------- |
-
-### Slots
-
-| 插槽名  | 说明     |
-| ------- | -------- |
-| default | 默认内容 |
-
-````
+- `<script setup>` 中带 TS 类型必须写 `lang="ts"`，否则 Vue 编译器报错
+- 演示使用**真实数据**，不编造占位
+- 依赖父容器高度的组件（如 CbPublicTable）演示容器需显式给高度
+- markdown 中展示 Vue 代码时，`<template>` / `<script>` 等标签在部分场景需转义为 `&lt;template&gt;`，避免被当作真实组件解析
+- API 表格可先用 `pnpm extract:props` 生成草稿（输出到 `docs/.vitepress/generated/`），再复制到文档手动维护
 
 ---
 
-## 四、修改组件
+## 六、单测规范
 
-修改组件文件后，VitePress 会自动热更新。
+每个组件配套 `&lt;Name&gt;.spec.ts`，覆盖：渲染、事件 emit、props 联动、条件分支（如分页显隐）。
 
-| 修改内容 | 位置 |
-|---|---|
-| 组件逻辑 | `Component.vue` 的 `<script>` 部分 |
-| 组件样式 | `Component.vue` 的 `<style>` 部分 |
-| 组件类型 | `types.ts` |
-| 样式变量 | `packages/theme/src/variables.scss` |
+```typescript
+import { describe, it, expect } from 'vitest'
+import { mount } from '@vue/test-utils'
+import Xxx from './Xxx.vue'
+import TDesign from 'tdesign-vue-next'
+
+describe('CbXxx', () => {
+  it('渲染基础内容', () => {
+    const wrapper = mount(Xxx, {
+      global: { plugins: [TDesign], stubs: { 'cb-icon': true } },
+    })
+    expect(wrapper.text()).toContain('...')
+  })
+})
+```
+
+**已知测试坑**：
+
+- TDesign 组件的运行时具名导出可能是 undefined → 用 `findAllComponents({ name: 'TCheckbox' })` 选择器
+- 组件内部 `immediate` watch 会吞掉首轮 emit → `await nextTick()` 两次后再断言
+- 依赖网络/上传服务的组件在测试中 stub 掉对应子组件
+
+运行：`npx vitest run packages/components/src/<name>` 或全量 `pnpm test`。
 
 ---
 
-## 五、删除组件
+## 七、验证链（交付前必跑）
+
+| 步骤 | 命令 | 通过标准 |
+| --- | --- | --- |
+| 1. 类型检查 | `npx vue-tsc --noEmit -p packages/components/tsconfig.json` | 0 error |
+| 2. 代码规范 | `pnpm lint` | 0 errors（any 基线 warning 可接受） |
+| 3. 单元测试 | `npx vitest run packages/components/src/<name>` | 全过 |
+| 4. 全量回归 | `pnpm test` | 28 files / 160 tests |
+| 5. 组件库构建 | `pnpm build:lib` | dist 产物生成 |
+| 6. 文档站构建 | 先停 dev → `pnpm build:docs` | 构建通过、legacy 警告 0 |
+| 7. 浏览器实测 | `pnpm dev` → 访问 `/components/<name>.html` | 渲染 + 交互正常 |
+
+**关键坑位**：
+
+- `build:docs` 与 `dev` 共用 `docs/.vitepress/.temp`，**构建前必须停 dev**（`netstat -ano | findstr :5173` 找 PID → `taskkill /PID <id> /F`）
+- Sass 已配置 `api: 'modern-compiler'` 消除 legacy-js-api 弃用警告，**不要回退**
+- Windows PowerShell 对 `&&` / 管道不友好，长命令用 `cmd /c "..."` 包裹
+
+---
+
+## 八、修改 / 删除组件
+
+**修改**：改源码后 dev 热更新即时生效；改文档/登记后需重启 dev；改 `src/index.ts` 或 `resolver.ts` 后重启 dev。
+
+**删除**：
 
 ```bash
 # 1. 删除组件目录
 rm -rf packages/components/src/modal
 
-# 2. 在 packages/components/src/index.ts 中删除相关 import / export
-# 3. 删除文档
+# 2. 删除文档
 rm docs/components/modal.md
-# 4. 在 docs/.vitepress/config.ts 侧边栏中删除对应项
-````
 
----
+# 3. 侧边栏集合移除登记项（如已登记）
 
-## 六、配置组件前缀（Cb）
-
-### 6.1 前缀在哪里配置
-
-前缀配置在 `packages/components/src/resolver.ts` 中。
-
-**完整源码**：
-
-```typescript
-/**
- * 组件解析器接口
- * 与 unplugin-vue-components 的 ComponentResolver 接口一致
- */
-export interface ComponentResolver {
-  type?: 'component' | 'directive'
-  resolve: (name: string) =>
-    | {
-        name: string
-        from: string
-        sideEffects?: string
-      }
-    | undefined
-}
-
-/**
- * CB UI Resolver 选项
- */
-export interface CBUIResolverOptions {
-  /** 是否自动导入样式 @default true */
-  importStyle?: boolean
-  /** 组件名前缀 @default 'Cb' */
-  prefix?: string
-  /** 组件库名称 @default '@cb-ui/components' */
-  libraryName?: string
-  /** 样式文件后缀 @default 'scss' */
-  styleSuffix?: 'scss' | 'css'
-}
-
-export function CBUIResolver(options: CBUIResolverOptions = {}): ComponentResolver {
-  const {
-    importStyle = true,
-    prefix = 'Cb', // ← 前缀默认值在这里
-    libraryName = '@cb-ui/components',
-    styleSuffix = 'scss',
-  } = options
-
-  return {
-    type: 'component',
-    resolve: (name: string) => {
-      if (!name.startsWith(prefix)) return // 检查是否以前缀开头
-      const partialName = name.slice(prefix.length) // 去掉前缀
-      const kebabName = partialName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
-      const result: any = {
-        name: partialName,
-        from: `${libraryName}/${kebabName}`,
-      }
-      if (importStyle) {
-        result.sideEffects = `${libraryName}/${kebabName}/style.${styleSuffix}`
-      }
-      return result
-    },
-  }
-}
-```
-
-### 6.2 方式一：修改默认前缀（影响所有使用者）
-
-编辑 `resolver.ts` 第 57 行：
-
-```typescript
-// 原来
-const { prefix = 'Cb' } = options
-
-// 改成 'My'
-const { prefix = 'My' } = options
-```
-
-修改后，组件使用方式变为 `<MyButton>`、`<MyModal>`。
-
-### 6.3 方式二：使用时动态配置（推荐，灵活）
-
-在业务项目的 `vite.config.ts` 中配置：
-
-```typescript
-// vite.config.ts
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import Components from 'unplugin-vue-components/vite'
-import { CBUIResolver } from '@cb-ui/components/resolver'
-
-export default defineConfig({
-  plugins: [
-    vue(),
-    Components({
-      resolvers: [
-        CBUIResolver({
-          prefix: 'Cb', // 文档站用 Cb 前缀
-        }),
-      ],
-    }),
-  ],
-})
-```
-
-### 6.4 方式三：业务项目自定义前缀
-
-如果某个业务项目想用自己的前缀（如 `My`）：
-
-```typescript
-// 业务项目的 vite.config.ts
-import { CBUIResolver } from '@cb-ui/components/resolver'
-
-export default defineConfig({
-  plugins: [
-    Components({
-      resolvers: [
-        CBUIResolver({
-          prefix: 'My', // 业务项目用 My 前缀
-        }),
-      ],
-    }),
-  ],
-})
-```
-
-这样业务项目里就能这样使用：
-
-```vue
-&lt;template&gt; &lt;MyButton&gt;按钮&lt;/MyButton&gt; &lt;MyModal
-title="标题"&gt;内容&lt;/MyModal&gt; &lt;/template&gt;
-```
-
-不需要修改组件库源代码，组件库本身仍然以 Cb 前缀发布。
-
-### 6.5 前缀工作原理
-
-```
-用户在模板写：&lt;CbButton&gt;
-                    ↓
-Resolver 收到 'CbButton'
-                    ↓
-1. 'CbButton'.startsWith('Cb') ? → true
-2. 去掉前缀 → 'Button'
-3. 转为 kebab-case → 'button'
-4. 返回：
-   {
-     name: 'Button',
-     from: '@cb-ui/components/button',
-     sideEffects: '@cb-ui/components/button/style.scss'
-   }
-                    ↓
-自动生成 import 语句
+# 4. 重生成全量入口
+pnpm gen:index
 ```
 
 ---
 
-## 七、命名规范速查
+## 九、检查清单
 
-| 类型       | 规则                           | 示例                                                  |
-| ---------- | ------------------------------ | ----------------------------------------------------- |
-| 目录名     | kebab-case                     | `button`、`input-group`                               |
-| 组件文件名 | PascalCase                     | `Button.vue`、`InputGroup.vue`                        |
-| 组件名     | PascalCase                     | `Button`、`InputGroup`                                |
-| 模板中使用 | 前缀 + PascalCase              | `<CbButton>`、`<CbInputGroup>`                        |
-| CSS 类     | BEM                            | `.cb-button`、`cb-button__icon`、`cb-button--primary` |
-| 类型接口   | PascalCase + Props/Emits/Slots | `ButtonProps`                                         |
+新增/沉淀一个组件，逐项核对：
 
----
-
-## 八、检查清单
-
-新增一个组件（如 Modal）需要做：
-
-**方式一：一键生成（推荐）**
-
-- [ ] 运行 `pnpm gen modal 模态框`
-- [ ] 补充 `Modal.vue` 的组件逻辑
-- [ ] 补充 `types.ts` 的 Props 定义
-- [ ] 补充 `docs/components/modal.md` 的 API 表格和示例
-- [ ] 运行 `pnpm dev` 验证
-
-**方式二：手动创建**
-
-- [ ] 在 `packages/components/src/modal/` 创建四个文件
-- [ ] 运行 `pnpm gen:index` 自动更新入口
-- [ ] 创建 `docs/components/modal.md`（API 表格手动编写，或用脚本辅助生成后复制）
-- [ ] 运行 `pnpm dev` 验证
-
----
-
-## 九、Props 文档辅助生成
-
-> **当前方式**：API 表格采用**手动编写**，脚本仅作为辅助生成工具。
-> 如需快速生成 API 表格草稿，可先运行脚本，再复制内容到组件文档中。
-
-### 9.1 使用步骤
-
-1. 运行脚本生成 API 表格草稿：
-
-```bash
-pnpm extract:props
-```
-
-2. 查看生成的文件 `docs/.vitepress/generated/<component>-api.md`
-
-3. 复制表格内容，粘贴到 `docs/components/<component>.md` 的 API 章节中
-
-4. 根据需要手动调整格式
-
-### 9.2 示例
-
-运行 `pnpm extract:props` 后，生成的 `button-api.md` 内容：
-
-```markdown
-### Props
-
-| 属性 | 说明     | 类型                                 | 默认值    |
-| ---- | -------- | ------------------------------------ | --------- |
-| type | 按钮类型 | `'primary' \| 'default' \| 'danger'` | 'default' |
-| size | 按钮尺寸 | `'small' \| 'medium' \| 'large'`     | 'medium'  |
-```
-
-直接复制到 `button.md` 中即可。
-
-### 9.3 脚本位置
-
-| 文件                                                                                                                         | 作用                                          |
-| ---------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| [packages/components/scripts/extract-props.mjs](file:///d:/domexiangm720/CBUi/packages/components/scripts/extract-props.mjs) | 提取脚本入口                                  |
-| `docs/.vitepress/generated/<component>-api.md`                                                                               | 自动生成的 API 草稿（已在 .gitignore 中忽略） |
+- [ ] 组件目录文件齐全：`Xxx.vue` / `types.ts` / `index.ts` / `Xxx.spec.ts`（+ `style.scss`）
+- [ ] `defineOptions({ name: 'CbXxx' })` 命名正确
+- [ ] `index.ts` 按 barrel 规范导出组件与类型
+- [ ] 源码按"一字不改"原则落地，修正项逐条记录
+- [ ] 单测覆盖核心逻辑且全过
+- [ ] 文档含基础用法 + API（Props/Events/Slots），script 带 `lang="ts"`
+- [ ] 侧边栏三集合登记 + `pnpm gen:index` 重跑
+- [ ] 验证链 7 步全绿
+- [ ] 交付说明：改动说明 + 验证清单 + 组件总数
