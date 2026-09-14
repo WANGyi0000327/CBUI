@@ -5,7 +5,7 @@ for (const name of ['sass', 'sass-embedded', 'vite', 'vitepress']) {
   try {
     const p = JSON.parse(fs.readFileSync(`node_modules/${name}/package.json`, 'utf8'))
     console.log(`${name}:`, p.version)
-  } catch (e) {
+  } catch {
     console.log(`${name}:`, 'not found')
   }
 }

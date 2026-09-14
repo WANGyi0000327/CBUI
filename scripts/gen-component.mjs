@@ -202,7 +202,7 @@ console.log(`  - docs/components/${dirName}.md`)
 console.log(`[gen-component] 正在更新组件库入口...`)
 try {
   execSync('node scripts/generate-index.mjs', { cwd: ROOT, stdio: 'inherit' })
-} catch (e) {
+} catch {
   console.error('[gen-component] 入口更新失败，请手动运行：node scripts/generate-index.mjs')
 }
 

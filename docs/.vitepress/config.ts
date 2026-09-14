@@ -169,6 +169,7 @@ export default defineConfig({
           items: [
             { text: '介绍', link: '/guide/intro' },
             { text: '快速上手', link: '/guide/quickstart' },
+            { text: '新组件开发', link: '/guide/new-component' },
             { text: '组件开发指南', link: '/guide/component-guide' },
             { text: '常见问题', link: '/guide/faq' },
           ],

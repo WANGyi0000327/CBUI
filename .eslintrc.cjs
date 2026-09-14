@@ -27,6 +27,16 @@ module.exports = {
     ],
     'no-console': 'off',
   },
+  overrides: [
+    {
+      // scripts/*.cjs 是故意用 CommonJS 编写的 Node 工具脚本，
+      // require() 是其正常用法，不适用 TS 的 no-require-imports 规则
+      files: ['**/*.cjs'],
+      rules: {
+        '@typescript-eslint/no-require-imports': 'off',
+      },
+    },
+  ],
   ignorePatterns: [
     'dist',
     'node_modules',

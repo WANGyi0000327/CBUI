@@ -15,7 +15,9 @@ function findPkg(name, from) {
 try {
   const dp = JSON.parse(fs.readFileSync('docs/package.json', 'utf8'))
   console.log('docs deps:', JSON.stringify(dp.dependencies || {}), JSON.stringify(dp.devDependencies || {}))
-} catch (e) { console.log('no docs/package.json') }
+} catch {
+  console.log('no docs/package.json')
+}
 // 从 docs 目录向上找
 console.log('vitepress:', findPkg('vitepress', 'docs'))
 console.log('vite:', findPkg('vite', 'docs'))
