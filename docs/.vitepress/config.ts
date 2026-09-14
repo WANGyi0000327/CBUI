@@ -125,9 +125,15 @@ function getComponentSidebarItems() {
       .filter((i) => i)
       .map(({ text, link }) => ({ text, link })),
   }))
+  // 未登记进任何子分组的基础组件 → 归入「未分组」（避免新增组件在侧边栏无处显示）
+  const groupedKeys = new Set(BASE_SUBGROUPS.flatMap((g) => g.keys))
+  const unGroupedBase = baseItems.filter((i) => !groupedKeys.has(i._base))
+  const baseSidebarItems = unGroupedBase.length
+    ? [...baseGroups, { text: '未分组', items: unGroupedBase }]
+    : baseGroups
 
   return [
-    { text: '基础组件', items: baseGroups },
+    { text: '基础组件', items: baseSidebarItems },
     { text: '媒体与工具', items: mediaItems },
     { text: '业务组件', items: businessItems },
   ]

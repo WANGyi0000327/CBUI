@@ -336,7 +336,7 @@ pnpm gen:index
 | `MEDIA_TOOL_COMPONENTS` | 有独立能力、不依赖业务服务的中间层 | audio-player / video-player / copy / count-up-number |
 | `BUSINESS_COMPONENTS` | 依赖业务场景或数据服务 | upload / public-table / permission-tree / dynamic-form-generator |
 
-**不改 config.ts 的默认行为**：不属于任何集合的组件自动进"基础组件"（但不进子分组）。
+**不改 config.ts 的默认行为**：不属于任何集合的组件自动进"基础组件"的 **「未分组」** 区（config.ts 已兜底显示，不会消失）；建议按功能补进 `BASE_SUBGROUPS` 对应子分组，侧边栏更规整。
 
 改法（`MEDIA_TOOL_COMPONENTS` 示例，业务/基础同理）：
 

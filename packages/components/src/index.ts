@@ -11,6 +11,7 @@ import type { App } from 'vue'
 import { CbAudioPlayer } from './audio-player'
 import { Button } from './button'
 import { ButtonFold } from './button-fold'
+import { Cbname } from './cbname'
 import { ColControl } from './col-control'
 import { CollapseSidebar } from './collapse-sidebar'
 import { ColumnControl } from './column-control'
@@ -57,12 +58,13 @@ import { VoiceToText } from './voice-to-text'
 import { clickOutside as vClickOutside } from './directives/clickOutside'
 
 // 导出组件
-export { CbAudioPlayer, Button, ButtonFold, ColControl, CollapseSidebar, ColumnControl, CommonDialog, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, DynamicFormGenerator, FilePreview, FilePreviewV2, FilterPopup, GoodMainImage, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PermissionTree, PreviewImage, PublicTable, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, Upload, CbVideoPlayer, VoiceToText }
+export { CbAudioPlayer, Button, ButtonFold, Cbname, ColControl, CollapseSidebar, ColumnControl, CommonDialog, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, DynamicFormGenerator, FilePreview, FilePreviewV2, FilterPopup, GoodMainImage, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PermissionTree, PreviewImage, PublicTable, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, Upload, CbVideoPlayer, VoiceToText }
 
 // 导出类型
 export type { AudioPlayerProps } from './audio-player'
 export type { ButtonProps, ButtonEmits, ButtonSlots, ButtonType, ButtonSize, ButtonNativeType } from './button'
 export type { ButtonFoldProps, ButtonFoldType } from './button-fold'
+export type { CbnameProps, CbnameEmits, CbnameSlots } from './cbname'
 export type { CbColControlProps, ColControlColumn } from './col-control'
 export type { CbCollapseSidebarProps } from './collapse-sidebar'
 export type { TableColumn, ColumnOption, ColumnConfig, ColumnControlProps } from './column-control'
@@ -101,7 +103,7 @@ export type { AudioTranscriptHookProps, TranscriptItem } from './voice-to-text'
 export { CBUIResolver } from './resolver'
 export type { CBUIResolverOptions, ComponentResolver } from './resolver'
 
-const components = [CbAudioPlayer, Button, ButtonFold, ColControl, CollapseSidebar, ColumnControl, CommonDialog, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, DynamicFormGenerator, FilePreview, FilePreviewV2, FilterPopup, GoodMainImage, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PermissionTree, PreviewImage, PublicTable, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, Upload, CbVideoPlayer, VoiceToText]
+const components = [CbAudioPlayer, Button, ButtonFold, Cbname, ColControl, CollapseSidebar, ColumnControl, CommonDialog, Copy, CountUpNumber, CurrencyInput, DateRangeConfirmPicker, DynamicFormGenerator, FilePreview, FilePreviewV2, FilterPopup, GoodMainImage, GridLayout, Icon, ImageSecret, MorePopup, MultipleSelect, NumericInput, OverBtns, OverLimitInputNumber, OverflowInput, PageLayout, Pagination, PermissionTree, PreviewImage, PublicTable, RenderComponent, Search, SearchFilter, SearchInput, StatusTag, Tabs, TagBar, TagImg, Tags, TimeSelect, TimeSelectLine, Upload, CbVideoPlayer, VoiceToText]
 
 export const CBUI = {
   install(app: App) {
