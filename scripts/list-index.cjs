@@ -1,5 +1,0 @@
-const fs = require('fs')
-const idx = fs.readFileSync('packages/components/src/index.ts', 'utf8')
-idx.split('\n')
-  .filter((l) => l.includes("from './") || l.includes('from "./'))
-  .forEach((l) => console.log(l.trim()))
