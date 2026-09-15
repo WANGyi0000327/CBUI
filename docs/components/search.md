@@ -77,15 +77,15 @@ const onSearch = (val: string) => {
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| modelValue | 关键词（`v-model` 绑定） | `string` | `''` |
-| inputWidth | 输入框整体宽度 | `string` | `'300px'` |
-| placeholder | 占位提示文案 | `string` | `'请输入内容'` |
-| clearable | 是否显示清空按钮 | `boolean` | `true` |
+| 属性        | 说明                     | 类型      | 默认值         |
+| ----------- | ------------------------ | --------- | -------------- |
+| modelValue  | 关键词（`v-model` 绑定） | `string`  | `''`           |
+| inputWidth  | 输入框整体宽度           | `string`  | `'300px'`      |
+| placeholder | 占位提示文案             | `string`  | `'请输入内容'` |
+| clearable   | 是否显示清空按钮         | `boolean` | `true`         |
 
 ### Events
 
-| 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
+| 事件名 | 说明               | 回调参数                     |
+| ------ | ------------------ | ---------------------------- |
 | search | 点击搜索按钮时触发 | `(value: string)` 当前关键词 |

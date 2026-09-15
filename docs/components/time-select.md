@@ -78,25 +78,25 @@ const arrayValue = ref()
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| modelValue | 选中值（对象或数组格式，二者兼容输入） | `Partial<TimeFilterValue> \| TimeFilterArrayValue` | `{}` |
-| type | 初始模式：current 定位当前月 / default 定位 1 月 | `'current' \| 'default'` | `'current'` |
-| title | 标题文案 | `string` | `'时间'` |
-| isLastMonth | 是否锁定在上个月模式 | `boolean` | `false` |
-| supportFullYear | 是否支持全年选择（month 为 null） | `boolean` | `false` |
-| future | 是否支持未来时间选择（当前年月 +10 年） | `boolean` | `false` |
-| formatType | 返回数据格式 | `'object' \| 'array'` | `'object'` |
+| 属性            | 说明                                             | 类型                                               | 默认值      |
+| --------------- | ------------------------------------------------ | -------------------------------------------------- | ----------- |
+| modelValue      | 选中值（对象或数组格式，二者兼容输入）           | `Partial<TimeFilterValue> \| TimeFilterArrayValue` | `{}`        |
+| type            | 初始模式：current 定位当前月 / default 定位 1 月 | `'current' \| 'default'`                           | `'current'` |
+| title           | 标题文案                                         | `string`                                           | `'时间'`    |
+| isLastMonth     | 是否锁定在上个月模式                             | `boolean`                                          | `false`     |
+| supportFullYear | 是否支持全年选择（month 为 null）                | `boolean`                                          | `false`     |
+| future          | 是否支持未来时间选择（当前年月 +10 年）          | `boolean`                                          | `false`     |
+| formatType      | 返回数据格式                                     | `'object' \| 'array'`                              | `'object'`  |
 
 ### Events
 
-| 事件 | 说明 | 参数 |
-| --- | --- | --- |
+| 事件              | 说明                        | 参数                                      |
+| ----------------- | --------------------------- | ----------------------------------------- |
 | update:modelValue | 值变化（格式随 formatType） | `TimeFilterValue \| TimeFilterArrayValue` |
-| change | 值变化 | 同上 |
+| change            | 值变化                      | 同上                                      |
 
 ### Expose
 
-| 方法 | 说明 |
-| --- | --- |
+| 方法        | 说明                                             |
+| ----------- | ------------------------------------------------ |
 | handleReset | 重置到默认（当前年月 / 上个月 / 1 月）并触发更新 |

@@ -7,10 +7,7 @@
           v-for="(item, index) in transcripts"
           :key="index"
           :ref="(el) => setItemRef(el, index)"
-          :class="[
-            'message-wrapper',
-            item.SpeakerId === '0' ? 'message-left' : 'message-right',
-          ]"
+          :class="['message-wrapper', item.SpeakerId === '0' ? 'message-left' : 'message-right']"
           @click="handleTranscriptClick(item.BeginTime)"
         >
           <!-- 对话头像 -->
@@ -18,12 +15,7 @@
             {{ item.SpeakerId === '0' ? 'A' : 'B' }}
           </div>
           <!-- 消息气泡 -->
-          <div
-            :class="[
-              'message-bubble',
-              { active: currentTranscriptIndex === index },
-            ]"
-          >
+          <div :class="['message-bubble', { active: currentTranscriptIndex === index }]">
             {{ item.Text }}
           </div>
         </div>
@@ -49,15 +41,10 @@ defineOptions({
 import AudioPlayer from '../audio-player/index.vue'
 import { computed, ref } from 'vue'
 import { useAudioTranscript } from './hooks/index'
-import type {
-  AudioPlayerMethods,
-  AudioTranscriptHookProps,
-} from './types/toText'
+import type { AudioPlayerMethods, AudioTranscriptHookProps } from './types/toText'
 const props = defineProps<AudioTranscriptHookProps>()
 const emit = defineEmits(['close'])
-const internalAudioId = computed(
-  () => props.audioId || `transcript-audio-${Date.now()}`
-)
+const internalAudioId = computed(() => props.audioId || `transcript-audio-${Date.now()}`)
 const audioPlayerRef = ref<AudioPlayerMethods | null>(null)
 // 使用 audio transcript hooks
 const {
@@ -76,11 +63,7 @@ console.log(props.audioSrc, internalAudioId)
 // 处理转文字点击事件
 const handleTranscriptClick = (time: number) => {
   if (!audioPlayerRef.value) return
-  onTranscriptClick(
-    time,
-    audioPlayerRef.value.seekTo,
-    audioPlayerRef.value.play
-  )
+  onTranscriptClick(time, audioPlayerRef.value.seekTo, audioPlayerRef.value.play)
 }
 const onDurationChange = (duration: number) => {
   console.log('🌵-----duration-----', duration)

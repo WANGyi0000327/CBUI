@@ -41,10 +41,7 @@ const attachImages = [
 
 ```vue
 <template>
-  <CbFilePreviewV2
-    :image-names="images"
-    @delete-image="(i) => console.log('删除第', i, '张')"
-  />
+  <CbFilePreviewV2 :image-names="images" @delete-image="(i) => console.log('删除第', i, '张')" />
 </template>
 
 <script setup lang="ts">
@@ -73,12 +70,7 @@ const images = ['/demo-img.jpg', '/demo-img.jpg', '/demo-img.jpg']
 
 ```vue
 <template>
-  <CbFilePreviewV2
-    :image-names="images"
-    single
-    width="96px"
-    height="96px"
-  />
+  <CbFilePreviewV2 :image-names="images" single width="96px" height="96px" />
 </template>
 
 <script setup lang="ts">
@@ -102,10 +94,7 @@ const images = ['/demo-img.jpg', '/demo-img.jpg', '/demo-img.jpg']
 
 ```vue
 <template>
-  <CbFilePreviewV2
-    :image-names="files"
-    :show-only-images="false"
-  />
+  <CbFilePreviewV2 :image-names="files" :show-only-images="false" />
 </template>
 
 <script setup lang="ts">
@@ -160,27 +149,27 @@ const files = [
 
 ### Props
 
-| 参数 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| imageNames | `string[]` | — | 必填。图片模式下为图片路径/名称数组；附件模式下为 `{ url, fileName }` 数组 |
-| showOnlyImages | `boolean` | `true` | true=图片网格预览（t-image-viewer）；false=附件模式（CbFilepreview 弹窗） |
-| single | `boolean` | `false` | 单图模式，仅渲染第一张并显示 `+N` 角标 |
-| width | `string` | `'56px'` | 单图宽度 |
-| height | `string` | `'56px'` | 单图高度 |
-| isShowDeleteIcon | `boolean` | `false` | 是否显示删除图标（预留） |
+| 参数             | 类型       | 默认值   | 说明                                                                       |
+| ---------------- | ---------- | -------- | -------------------------------------------------------------------------- |
+| imageNames       | `string[]` | —        | 必填。图片模式下为图片路径/名称数组；附件模式下为 `{ url, fileName }` 数组 |
+| showOnlyImages   | `boolean`  | `true`   | true=图片网格预览（t-image-viewer）；false=附件模式（CbFilepreview 弹窗）  |
+| single           | `boolean`  | `false`  | 单图模式，仅渲染第一张并显示 `+N` 角标                                     |
+| width            | `string`   | `'56px'` | 单图宽度                                                                   |
+| height           | `string`   | `'56px'` | 单图高度                                                                   |
+| isShowDeleteIcon | `boolean`  | `false`  | 是否显示删除图标（预留）                                                   |
 
 ### Events
 
-| 事件名 | 参数 | 说明 |
-| --- | --- | --- |
+| 事件名      | 参数            | 说明                               |
+| ----------- | --------------- | ---------------------------------- |
 | deleteImage | `index: number` | 点击缩略图关闭按钮触发，传图片下标 |
 
 ### Slots
 
-| 插槽名 | 说明 |
-| --- | --- |
-| trigger | 附件模式自定义触发入口 |
-| empty | 无图片时的空态内容（默认 `t-empty`） |
+| 插槽名  | 说明                                 |
+| ------- | ------------------------------------ |
+| trigger | 附件模式自定义触发入口               |
+| empty   | 无图片时的空态内容（默认 `t-empty`） |
 
 ### 说明
 

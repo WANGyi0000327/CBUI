@@ -23,10 +23,7 @@ type ID = string | number
 // 获取选中树
 function getCheckedTreeNodes(tree: BackendTreeNode[]): BackendTreeNode[] {
   if (!tree) return []
-  const traverse = (
-    nodes: BackendTreeNode[],
-    level: number = 0
-  ): BackendTreeNode[] => {
+  const traverse = (nodes: BackendTreeNode[], level: number = 0): BackendTreeNode[] => {
     return nodes.map((node, index) => {
       // 递归处理子节点
       const children = node.children || []
@@ -61,9 +58,7 @@ function getCheckedTreeNodes(tree: BackendTreeNode[]): BackendTreeNode[] {
   const trees = tree
     .map((node) => {
       // 处理子节点
-      const children = node.children
-        ? getCheckedTreeNodes(node.children)
-        : undefined
+      const children = node.children ? getCheckedTreeNodes(node.children) : undefined
       // 如果当前节点选中，或者有选中的子节点，则保留
       if (node.checked || (children && children.length > 0)) {
         return {
@@ -86,10 +81,7 @@ export function initializeTreeWithState(
   const nodeAccessor = createNodeAccessor(keys)
   // 深度拷贝树数据
   const treeWithState = JSON.parse(JSON.stringify(tree))
-  const traverse = (
-    nodes: BackendTreeNode[],
-    level: number = 0
-  ): BackendTreeNode[] => {
+  const traverse = (nodes: BackendTreeNode[], level: number = 0): BackendTreeNode[] => {
     return nodes.map((node, index) => {
       const nodeId = nodeAccessor.getId(node)
       const isChecked = checkedKeys.includes(nodeId)
@@ -170,10 +162,7 @@ export function updateNodeWithCascade(
   /**
    * 更新所有子节点的选中状态
    */
-  const updateAllChildren = (
-    children: BackendTreeNode[],
-    parentChecked: boolean
-  ) => {
+  const updateAllChildren = (children: BackendTreeNode[], parentChecked: boolean) => {
     for (const child of children) {
       if (!child.disabled) {
         child.checked = parentChecked
@@ -187,9 +176,7 @@ export function updateNodeWithCascade(
   /**
    * 2. 向上级联更新父节点的选中
    */
-  const updateParentStates = (
-    nodes: BackendTreeNode[]
-  ): { checked: boolean } => {
+  const updateParentStates = (nodes: BackendTreeNode[]): { checked: boolean } => {
     for (const node of nodes) {
       let nodeChecked = node.checked || false
       // 如果有子节点，基于子节点计算状态
@@ -198,9 +185,7 @@ export function updateNodeWithCascade(
         const childrenStates = node.children.map((child: BackendTreeNode) =>
           updateParentStates([child])
         )
-        const someChecked = childrenStates.some(
-          (state: BackendTreeNode) => state.checked
-        )
+        const someChecked = childrenStates.some((state: BackendTreeNode) => state.checked)
         // 更新父节点状态只有选中状态才可以更改父节点
         if (someChecked) nodeChecked = someChecked
       }

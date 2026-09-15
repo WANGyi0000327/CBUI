@@ -63,33 +63,33 @@ import { ref } from 'vue'
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| src | 音频文件地址 | `string` | `-` |
-| audioId | 音频唯一标识（多实例互斥管理） | `string` | `audio-{Date.now()}-{random}` |
-| progressHeight | 进度条高度 | `string` | `'8px'` |
-| IconSize | 播放/暂停图标尺寸 | `string` | `'32px'` |
-| styletype | 样式类型：`'1'` 完整 / `'2'` 精简 | `string` | `'1'` |
-| name | 名称（预留） | `string` | `'通话录音'` |
+| 属性           | 说明                              | 类型     | 默认值                        |
+| -------------- | --------------------------------- | -------- | ----------------------------- |
+| src            | 音频文件地址                      | `string` | `-`                           |
+| audioId        | 音频唯一标识（多实例互斥管理）    | `string` | `audio-{Date.now()}-{random}` |
+| progressHeight | 进度条高度                        | `string` | `'8px'`                       |
+| IconSize       | 播放/暂停图标尺寸                 | `string` | `'32px'`                      |
+| styletype      | 样式类型：`'1'` 完整 / `'2'` 精简 | `string` | `'1'`                         |
+| name           | 名称（预留）                      | `string` | `'通话录音'`                  |
 
 ### Events
 
-| 事件 | 说明 | 参数 |
-| --- | --- | --- |
-| timeupdate | 播放进度更新 | `time: number`（毫秒） |
+| 事件           | 说明               | 参数                       |
+| -------------- | ------------------ | -------------------------- |
+| timeupdate     | 播放进度更新       | `time: number`（毫秒）     |
 | durationchange | 音频元数据加载完成 | `duration: number`（毫秒） |
-| ended | 播放结束 | `-` |
-| play | 开始播放 | `-` |
-| pause | 暂停 | `-` |
+| ended          | 播放结束           | `-`                        |
+| play           | 开始播放           | `-`                        |
+| pause          | 暂停               | `-`                        |
 
 ### Expose
 
-| 方法/属性 | 说明 |
-| --- | --- |
-| play | 播放 |
-| pause | 暂停 |
-| seekTo | 跳转到指定时间（毫秒） |
-| togglePlay | 切换播放/暂停 |
-| isPlaying | 是否播放中 |
+| 方法/属性                                       | 说明                    |
+| ----------------------------------------------- | ----------------------- |
+| play                                            | 播放                    |
+| pause                                           | 暂停                    |
+| seekTo                                          | 跳转到指定时间（毫秒）  |
+| togglePlay                                      | 切换播放/暂停           |
+| isPlaying                                       | 是否播放中              |
 | duration / durationDisplay / currentTimeDisplay | 时长（毫秒 / 显示文本） |
-| playbackRate / setPlaybackRate | 倍速（0.5~4 有效） |
+| playbackRate / setPlaybackRate                  | 倍速（0.5~4 有效）      |

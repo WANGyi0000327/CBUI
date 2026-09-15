@@ -70,18 +70,18 @@ describe('CbColumnControl', () => {
   it('head_disabled 列开关禁用', async () => {
     mountCtrl()
     const popup = await getPopup()
-    const statusItem = Array.from(
-      popup.querySelectorAll('.column-item')
-    ).find((el) => el.textContent.includes('状态')) as HTMLElement
+    const statusItem = Array.from(popup.querySelectorAll('.column-item')).find((el) =>
+      el.textContent.includes('状态')
+    ) as HTMLElement
     expect(statusItem.querySelector('.t-switch.t-is-disabled')).toBeTruthy()
   })
 
   it('开关切换同步 v-model:columnConfig', async () => {
     const wrapper = mountCtrl()
     const popup = await getPopup()
-    const nameItem = Array.from(
-      popup.querySelectorAll('.column-item')
-    ).find((el) => el.textContent.includes('姓名')) as HTMLElement
+    const nameItem = Array.from(popup.querySelectorAll('.column-item')).find((el) =>
+      el.textContent.includes('姓名')
+    ) as HTMLElement
     nameItem.querySelector('.t-switch')!.click()
     await new Promise((r) => setTimeout(r, 50))
     const emitted = wrapper.emitted('update:columnConfig')
@@ -94,9 +94,7 @@ describe('CbColumnControl', () => {
   it('closeoperation=false 时不显示操作行', async () => {
     mountCtrl({ closeoperation: false })
     const popup = await getPopup()
-    const items = Array.from(
-      popup.querySelectorAll('.column-item')
-    ).map((el) => el.textContent)
+    const items = Array.from(popup.querySelectorAll('.column-item')).map((el) => el.textContent)
     expect(items.every((t) => !t.includes('操作'))).toBe(true)
     expect(popup.textContent).toContain('姓名')
   })
@@ -125,9 +123,7 @@ describe('CbColumnControl', () => {
       y: 0,
       toJSON: () => ({}),
     } as DOMRect
-    const rectSpy = vi
-      .spyOn(ageEl, 'getBoundingClientRect')
-      .mockReturnValue(mockRect)
+    const rectSpy = vi.spyOn(ageEl, 'getBoundingClientRect').mockReturnValue(mockRect)
     const mkEv = (type: string, x: number, y: number) =>
       new MouseEvent(type, {
         bubbles: true,

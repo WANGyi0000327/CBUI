@@ -1,7 +1,9 @@
 <template>
   <div class="w-full h-full flex items-center justify-center">
-    <div :style="`width:${screenWidth<1880?640:1280}px;height:${screenWidth<1880?360:720}px`">
-      <CbVideoPlayer  :src="src"></CbVideoPlayer>
+    <div
+      :style="`width:${screenWidth < 1880 ? 640 : 1280}px;height:${screenWidth < 1880 ? 360 : 720}px`"
+    >
+      <CbVideoPlayer :src="src"></CbVideoPlayer>
     </div>
   </div>
 </template>
@@ -22,5 +24,4 @@ defineProps({
 })
 const { width: screenWidth } = useWindowSize()
 </script>
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

@@ -1,11 +1,6 @@
 import { ref, nextTick, watch } from 'vue'
-import type {
-  AudioTranscriptHookProps,
-  AudioTranscriptHookReturn,
-} from '../types/toText'
-export const useAudioTranscript = (
-  props: AudioTranscriptHookProps
-): AudioTranscriptHookReturn => {
+import type { AudioTranscriptHookProps, AudioTranscriptHookReturn } from '../types/toText'
+export const useAudioTranscript = (props: AudioTranscriptHookProps): AudioTranscriptHookReturn => {
   // 转文字相关状态
   const transcriptContainer = ref<HTMLElement | null>(null)
   const itemRefs = ref<(HTMLElement | null)[]>([])
@@ -38,9 +33,7 @@ export const useAudioTranscript = (
       scrollToTranscript(index)
     } else if (index === -1) {
       // 如果在两个片段之间，查找下一个转文字
-      const nextIndex = props.transcripts.findIndex(
-        (item) => currentMs < item.BeginTime
-      )
+      const nextIndex = props.transcripts.findIndex((item) => currentMs < item.BeginTime)
       if (nextIndex !== -1 && nextIndex !== currentTranscriptIndex.value) {
         currentTranscriptIndex.value = nextIndex
         scrollToTranscript(nextIndex)
@@ -67,11 +60,7 @@ export const useAudioTranscript = (
     })
   }
   // 跳转到指定时间并播放
-  const onTranscriptClick = (
-    time: number,
-    seekTo: (time: number) => void,
-    play: () => void
-  ) => {
+  const onTranscriptClick = (time: number, seekTo: (time: number) => void, play: () => void) => {
     seekTo(time)
     play()
   }

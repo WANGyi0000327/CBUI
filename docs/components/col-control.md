@@ -39,12 +39,7 @@ const visibleKeys = computed(() => visibleColumns.value.map((item) => item.colKe
 
 ```vue
 <template>
-  <CbColControl
-    label="列设置"
-    :options="columns"
-    app-code="demo-app"
-    table-code="demo-table"
-  />
+  <CbColControl label="列设置" :options="columns" app-code="demo-app" table-code="demo-table" />
 </template>
 
 <script setup lang="ts">
@@ -106,9 +101,7 @@ const columns = ref([
   { colKey: 'operation', title: '操作', visible: true },
 ])
 const visibleColumns = ref([])
-const visibleKeys = computed(() =>
-  visibleColumns.value.map((item) => item.colKey)
-)
+const visibleKeys = computed(() => visibleColumns.value.map((item) => item.colKey))
 </script>
 ```
 
@@ -119,29 +112,29 @@ const visibleKeys = computed(() =>
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| label | 左侧文案 | string | `'操作'` |
-| options | 列配置项（见下方列配置字段） | `ColControlColumn[]` | `[]` |
-| appCode | 应用编码（远程配置保存） | string | 必传 |
-| tableCode | 表格编码（远程配置保存） | string | 必传 |
-| popupProps | 透传给 `t-popup` 的额外属性 | `Record<string, any>` | `{}` |
+| 属性       | 说明                         | 类型                  | 默认值   |
+| ---------- | ---------------------------- | --------------------- | -------- |
+| label      | 左侧文案                     | string                | `'操作'` |
+| options    | 列配置项（见下方列配置字段） | `ColControlColumn[]`  | `[]`     |
+| appCode    | 应用编码（远程配置保存）     | string                | 必传     |
+| tableCode  | 表格编码（远程配置保存）     | string                | 必传     |
+| popupProps | 透传给 `t-popup` 的额外属性  | `Record<string, any>` | `{}`     |
 
 ### v-model
 
-| 值 | 说明 |
-| --- | --- |
+| 值         | 说明                                       |
+| ---------- | ------------------------------------------ |
 | modelValue | 当前展示列数组（`visible !== false` 的列） |
 
 ### 列配置字段
 
-| 字段 | 说明 |
-| --- | --- |
-| colKey | 列唯一标识（必传） |
-| title / displayName / dispalyTitle | 展示名称（依次取非空值，缺省显示 colKey） |
-| fixed | `'left'` 左固定 / `'right'` 右固定（`operation` 视为右固定） |
-| visible | 是否默认展示（未配置时默认展示） |
-| disabled | 是否禁止切换显示（可编辑列生效） |
+| 字段                               | 说明                                                         |
+| ---------------------------------- | ------------------------------------------------------------ |
+| colKey                             | 列唯一标识（必传）                                           |
+| title / displayName / dispalyTitle | 展示名称（依次取非空值，缺省显示 colKey）                    |
+| fixed                              | `'left'` 左固定 / `'right'` 右固定（`operation` 视为右固定） |
+| visible                            | 是否默认展示（未配置时默认展示）                             |
+| disabled                           | 是否禁止切换显示（可编辑列生效）                             |
 
 ### 远程配置
 

@@ -19,10 +19,7 @@ export function useAudioManager() {
    * @param id 音频唯一标识
    * @param controls 音频控制方法
    */
-  const register = (
-    id: string,
-    controls: { pause: () => void; play: () => void }
-  ) => {
+  const register = (id: string, controls: { pause: () => void; play: () => void }) => {
     audioInstances.set(id, controls)
   }
   /**

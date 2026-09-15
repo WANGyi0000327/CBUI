@@ -7,10 +7,7 @@
  * （见 src/directives/clickOutside.ts 与 generate-index.mjs 的 install 模板）
  */
 import DateRangeConfirmPicker from './DateRangeConfirmPicker.vue'
-import type {
-  DateRangeConfirmPickerProps,
-  DateRangeConfirmPickerEmits,
-} from './types'
+import type { DateRangeConfirmPickerProps, DateRangeConfirmPickerEmits } from './types'
 
 export { DateRangeConfirmPicker }
 export type { DateRangeConfirmPickerProps, DateRangeConfirmPickerEmits }

@@ -41,12 +41,8 @@ describe('CbVideoPlayer', () => {
 
   it('点击播放按钮调用 play / pause', async () => {
     const wrapper = mountPlayer()
-    const play = HTMLMediaElement.prototype.play as unknown as ReturnType<
-      typeof vi.fn
-    >
-    const pause = HTMLMediaElement.prototype.pause as unknown as ReturnType<
-      typeof vi.fn
-    >
+    const play = HTMLMediaElement.prototype.play as unknown as ReturnType<typeof vi.fn>
+    const pause = HTMLMediaElement.prototype.pause as unknown as ReturnType<typeof vi.fn>
     // happy-dom 默认 paused=true -> 第一次点击调用 play
     await wrapper.find('.play-btn').trigger('click')
     expect(play).toHaveBeenCalled()

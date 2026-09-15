@@ -8,14 +8,8 @@
     @change="(value: InputNumberValue, context: ChangeContext) => handleChange(value, context)"
   >
     <!-- 传递具名插槽 -->
-    <template
-      v-for="(_, name) in $slots"
-      #[name]="slotProps"
-    >
-      <slot
-        :name="name"
-        v-bind="slotProps"
-      ></slot>
+    <template v-for="(_, name) in $slots" #[name]="slotProps">
+      <slot :name="name" v-bind="slotProps"></slot>
     </template>
   </t-input-number>
 </template>
@@ -80,18 +74,9 @@ const handleChange = (value: InputNumberValue, context: ChangeContext) => {
     let truncatedValue = value
     // min 值不能大于 0 大于等于0时 不开启截断 因为会导致输入框不能输入部分数字
     // 计算截断后的值
-    if (
-      min !== undefined &&
-      min !== -Infinity &&
-      min <= 0 &&
-      (truncatedValue as number) <= min
-    ) {
+    if (min !== undefined && min !== -Infinity && min <= 0 && (truncatedValue as number) <= min) {
       truncatedValue = min
-    } else if (
-      max !== undefined &&
-      max !== Infinity &&
-      (truncatedValue as number) > max
-    ) {
+    } else if (max !== undefined && max !== Infinity && (truncatedValue as number) > max) {
       truncatedValue = max
     }
     // 发出change事件

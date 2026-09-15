@@ -66,13 +66,21 @@ const customChecked = ref([])
 
 <script setup lang="ts">
 const treeData = [
-  { key: '1', label: '系统管理', children: [
-    { key: '1-1', label: '用户管理', children: [
-      { key: '1-1-1', label: '新增用户' },
-      { key: '1-1-2', label: '删除用户' },
-    ]},
-    { key: '1-2', label: '角色管理' },
-  ]},
+  {
+    key: '1',
+    label: '系统管理',
+    children: [
+      {
+        key: '1-1',
+        label: '用户管理',
+        children: [
+          { key: '1-1-1', label: '新增用户' },
+          { key: '1-1-2', label: '删除用户' },
+        ],
+      },
+      { key: '1-2', label: '角色管理' },
+    ],
+  },
 ]
 </script>
 ```
@@ -101,13 +109,21 @@ const treeData = [
 import { ref } from 'vue'
 
 const treeData = [
-  { key: '1', label: '系统管理', children: [
-    { key: '1-1', label: '用户管理', children: [
-      { key: '1-1-1', label: '新增用户' },
-      { key: '1-1-2', label: '删除用户' },
-    ]},
-    { key: '1-2', label: '角色管理' },
-  ]},
+  {
+    key: '1',
+    label: '系统管理',
+    children: [
+      {
+        key: '1-1',
+        label: '用户管理',
+        children: [
+          { key: '1-1-1', label: '新增用户' },
+          { key: '1-1-2', label: '删除用户' },
+        ],
+      },
+      { key: '1-2', label: '角色管理' },
+    ],
+  },
 ]
 const checkedKeys = ref<string[]>(['1-1'])
 </script>
@@ -170,17 +186,27 @@ const checkedKeys = ref<string[]>(['1-1'])
 
 ```vue
 <template>
-  <CbPermissionTree v-model="customChecked" :data="customKeyData" :keys="customKeys" checkable expand-all />
+  <CbPermissionTree
+    v-model="customChecked"
+    :data="customKeyData"
+    :keys="customKeys"
+    checkable
+    expand-all
+  />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const customKeyData = [
-  { id: 'a', title: '数据权限', childList: [
-    { id: 'a-1', title: '查看全部' },
-    { id: 'a-2', title: '查看本人' },
-  ]},
+  {
+    id: 'a',
+    title: '数据权限',
+    childList: [
+      { id: 'a-1', title: '查看全部' },
+      { id: 'a-2', title: '查看本人' },
+    ],
+  },
 ]
 const customKeys = { value: 'id', label: 'title', children: 'childList' }
 const customChecked = ref<string[]>([])
@@ -214,16 +240,16 @@ const customChecked = ref<string[]>([])
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| data | 树数据（默认取 `key / label / children` 字段） | `BackendTreeNode[]` | `[]` |
-| keys | 字段名映射（`value` / `label` / `children`） | `CustomTreeKey` | `{ value: 'key', label: 'label', children: 'children' }` |
-| v-model | 选中的 key 列表 | `string[]` | `[]` |
-| disabled | 禁用的节点 key 列表 | `(string \| number)[]` | `[]` |
-| checkable | 是否显示复选框 | `boolean` | `false` |
-| checkStrictly | 严格模式（不级联） | `boolean` | `false` |
-| expandAll | 默认展开全部层级 | `boolean` | `false` |
-| showChecked | 只渲染选中节点及其祖先链 | `boolean` | `false` |
+| 属性          | 说明                                           | 类型                   | 默认值                                                   |
+| ------------- | ---------------------------------------------- | ---------------------- | -------------------------------------------------------- |
+| data          | 树数据（默认取 `key / label / children` 字段） | `BackendTreeNode[]`    | `[]`                                                     |
+| keys          | 字段名映射（`value` / `label` / `children`）   | `CustomTreeKey`        | `{ value: 'key', label: 'label', children: 'children' }` |
+| v-model       | 选中的 key 列表                                | `string[]`             | `[]`                                                     |
+| disabled      | 禁用的节点 key 列表                            | `(string \| number)[]` | `[]`                                                     |
+| checkable     | 是否显示复选框                                 | `boolean`              | `false`                                                  |
+| checkStrictly | 严格模式（不级联）                             | `boolean`              | `false`                                                  |
+| expandAll     | 默认展开全部层级                               | `boolean`              | `false`                                                  |
+| showChecked   | 只渲染选中节点及其祖先链                       | `boolean`              | `false`                                                  |
 
 ### 类型
 

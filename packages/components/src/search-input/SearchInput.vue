@@ -15,20 +15,12 @@
     </template>
     <template #suffix>
       <div @click.stop="handleClear">
-        <cb-icon
-          v-if="modelValue && modelValue.length >= 1"
-          name="cuowu"
-          class="input-close"
-        />
+        <cb-icon v-if="modelValue && modelValue.length >= 1" name="cuowu" class="input-close" />
       </div>
       <!-- <t-loading size="small" showOverlay :loading="loading"> -->
-        <div
-          class="search-suffix"
-          :class="{ disabled }"
-          @click="handleSearchClick"
-        >
-          <span>搜索</span>
-        </div>
+      <div class="search-suffix" :class="{ disabled }" @click="handleSearchClick">
+        <span>搜索</span>
+      </div>
       <!-- </t-loading> -->
     </template>
   </t-input>

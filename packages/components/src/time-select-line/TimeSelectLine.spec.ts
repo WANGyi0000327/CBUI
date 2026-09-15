@@ -66,9 +66,7 @@ describe('CbTimeSelectLine', () => {
       timeRanges: ['202401', '202402'],
       showMoreMonth: false,
     })
-    const yearNode = wrapper.findAll('.cb-time-item').find((i) =>
-      i.text().includes('年')
-    )!
+    const yearNode = wrapper.findAll('.cb-time-item').find((i) => i.text().includes('年'))!
     await yearNode.trigger('click')
     expect(wrapper.emitted('change')).toBeUndefined()
   })
@@ -79,9 +77,7 @@ describe('CbTimeSelectLine', () => {
       showMoreMonth: false,
       modelValue: '202402',
     })
-    const active = wrapper.findAll('.cb-time-item').find((i) =>
-      i.classes().includes('actived')
-    )!
+    const active = wrapper.findAll('.cb-time-item').find((i) => i.classes().includes('actived'))!
     expect(active.text()).toContain('2月')
   })
 

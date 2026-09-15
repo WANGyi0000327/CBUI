@@ -3,25 +3,37 @@
     <!-- 图片展示区域 -->
     <div ref="imageBoxRef" class="image-box">
       <img
-ref="imageRef" class="image" :src="imgUrl" :style="{
-        transform: `rotate(${rotateDeg}deg) scale(${scale}) translate(${position.x}px, ${position.y}px)`,
-        opacity: `${opacity}`,
-        transformOrigin: 'center center'
-      }" @load="handleImageLoad" @error="handleImageError" @mousedown="startDrag" @mousemove="onDrag"
-        @mouseup="endDrag" @mouseleave="endDrag" @wheel="handleWheel" />
+        ref="imageRef"
+        class="image"
+        :src="imgUrl"
+        :style="{
+          transform: `rotate(${rotateDeg}deg) scale(${scale}) translate(${position.x}px, ${position.y}px)`,
+          opacity: `${opacity}`,
+          transformOrigin: 'center center',
+        }"
+        @load="handleImageLoad"
+        @error="handleImageError"
+        @mousedown="startDrag"
+        @mousemove="onDrag"
+        @mouseup="endDrag"
+        @mouseleave="endDrag"
+        @wheel="handleWheel"
+      />
     </div>
     <!-- 控制按钮 -->
     <div class="controls">
       <div v-for="s in butArr" :key="s.name" @click="handleButClick(s.name)">
         <t-button
-theme="default" variant="base"
-          class="p-[8px] mr-[8px] CbButton but_box" :style="{
-              background: AlphaBgColor(),
-              color: 'var(--td-brand-color)',
-            }">
+          theme="default"
+          variant="base"
+          class="p-[8px] mr-[8px] CbButton but_box"
+          :style="{
+            background: AlphaBgColor(),
+            color: 'var(--td-brand-color)',
+          }"
+        >
           <cb-icon v-if="s.icon" :name="s.icon" color="text-white" class="cursor-pointer"></cb-icon>
-          <div>{{ s.name
-          }}</div>
+          <div>{{ s.name }}</div>
         </t-button>
       </div>
     </div>
@@ -268,7 +280,7 @@ watch(
     }
   }
   .color {
-    background: #268AFF;
+    background: #268aff;
     color: #fff;
   }
 }

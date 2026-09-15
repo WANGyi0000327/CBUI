@@ -38,9 +38,5 @@ export interface AudioTranscriptHookReturn {
   onEnded: () => void
   updateCurrentTranscript: () => void
   scrollToTranscript: (index: number) => Promise<void>
-  onTranscriptClick: (
-    time: number,
-    seekTo: (time: number) => void,
-    play: () => void
-  ) => void
+  onTranscriptClick: (time: number, seekTo: (time: number) => void, play: () => void) => void
 }

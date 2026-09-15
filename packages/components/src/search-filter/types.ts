@@ -22,13 +22,7 @@ export interface FormItem {
   /**
    * 字段类型
    */
-  type:
-    | 'input'
-    | 'select'
-    | 'radio'
-    | 'checkbox'
-    | 'dateRangePicker'
-    | 'cascader'
+  type: 'input' | 'select' | 'radio' | 'checkbox' | 'dateRangePicker' | 'cascader'
   /**
    * 占位符（输入框）
    */

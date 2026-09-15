@@ -5,13 +5,9 @@
     class="!mb-[16px] radiogroup"
     @change="tab_chk"
   >
-    <t-radio-button
-      v-for="item in type_tab"
-      :key="item.id"
-      :value="item.id"
+    <t-radio-button v-for="item in type_tab" :key="item.id" :value="item.id"
       >{{ item.label }}
-      <slot name="value" :item="item">
-      </slot>
+      <slot name="value" :item="item"> </slot>
     </t-radio-button>
   </t-radio-group>
 </template>

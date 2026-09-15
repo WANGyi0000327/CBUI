@@ -52,10 +52,7 @@ const onInput = (val: InputEvent | string) => {
   if (parts.length > 2) s = parts[0] + '.' + parts.slice(1).join('')
   if (s && s.includes('.') && props.decimalPlaces >= 0) {
     const [int = '', dec = ''] = s.split('.')
-    s =
-      props.decimalPlaces === 0
-        ? int
-        : `${int}.${dec?.slice(0, props.decimalPlaces)}`
+    s = props.decimalPlaces === 0 ? int : `${int}.${dec?.slice(0, props.decimalPlaces)}`
   }
   displayString.value = s
   const num = parseFloat(s)

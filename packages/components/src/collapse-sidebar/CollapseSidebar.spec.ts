@@ -17,10 +17,7 @@ describe('CbCollapseSidebar', () => {
   })
 
   it('渲染 side-left / theme-light 默认类与内容插槽', () => {
-    const wrapper = mountSidebar(
-      {},
-      { slots: { default: '<div class="side-content">菜单</div>' } }
-    )
+    const wrapper = mountSidebar({}, { slots: { default: '<div class="side-content">菜单</div>' } })
     expect(wrapper.classes()).toContain('side-left')
     expect(wrapper.classes()).toContain('theme-light')
     expect(wrapper.text()).toContain('菜单')

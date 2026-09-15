@@ -38,12 +38,7 @@
             @click="close"
             >{{ closeBtnText }}</t-button
           >
-          <t-button
-            v-if="confirmBtn"
-            class="!w-[72px]"
-            :loading="loading"
-            @click="confirm"
-          >
+          <t-button v-if="confirmBtn" class="!w-[72px]" :loading="loading" @click="confirm">
             {{ confirmBtnText }}
           </t-button>
         </slot>
@@ -66,11 +61,10 @@ import type { DialogProps } from 'tdesign-vue-next'
 // AlphaBgColor 原实现位于业务包 @repo/tdesign-ui（库内不存在），
 // 已落地为库内工具 #/utils/alphaBgColor（SSR 安全 + hex 兜底）。
 import { AlphaBgColor } from '#/utils/alphaBgColor'
-interface BaseDialogProps
-  extends Omit<
-    DialogProps,
-    'title' | 'showHeader' | 'showFooter' | 'visible' | 'confirmBtn'
-  > {
+interface BaseDialogProps extends Omit<
+  DialogProps,
+  'title' | 'showHeader' | 'showFooter' | 'visible' | 'confirmBtn'
+> {
   placement?: DialogProps['placement'] /** 弹窗位置（可选，默认为 'center'） */
   closeBtnText?: string /** 取消按钮文本（可选，默认为 '取消'） */
   confirmBtnText?: string /** 确定按钮文本（可选，默认为 '确定'） */

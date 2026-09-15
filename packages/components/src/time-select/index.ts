@@ -8,11 +8,7 @@
  * 提供，此处同时从 types.ts 再导出以统一类型入口。
  */
 import TimeSelect from './TimeSelect.vue'
-import type {
-  CbTimeSelectProps,
-  TimeFilterValue,
-  TimeFilterArrayValue,
-} from './types'
+import type { CbTimeSelectProps, TimeFilterValue, TimeFilterArrayValue } from './types'
 
 export { TimeSelect }
 export type { CbTimeSelectProps, TimeFilterValue, TimeFilterArrayValue }

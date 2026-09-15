@@ -40,12 +40,25 @@ onMounted(() => { nextTick(() => { ready.value = true }) })
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
 const ready = ref(false)
-onMounted(() => { nextTick(() => { ready.value = true }) })
+onMounted(() => {
+  nextTick(() => {
+    ready.value = true
+  })
+})
 </script>
 
 <style scoped>
-.grid-host { width: 100%; }
-.card { background: #e8f3ff; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
+.grid-host {
+  width: 100%;
+}
+.card {
+  background: #e8f3ff;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
 </style>
 ```
 
@@ -83,15 +96,15 @@ onMounted(() => { nextTick(() => { ready.value = true }) })
 
 ### Props
 
-| 属性             | 说明                   | 类型       | 默认值 |
-| -------------- | -------------------- | -------- | --- |
-| card-container | 外层盒子的元素选择器（用于读取容器宽度） | `string` | ''  |
-| min-card-width | 单个卡片最小宽度（px）         | `number` | 375 |
-| gap            | 卡片间距（px）             | `number` | 8   |
-| min-col        | 最小列数                 | `number` | 3   |
+| 属性           | 说明                                     | 类型     | 默认值 |
+| -------------- | ---------------------------------------- | -------- | ------ |
+| card-container | 外层盒子的元素选择器（用于读取容器宽度） | `string` | ''     |
+| min-card-width | 单个卡片最小宽度（px）                   | `number` | 375    |
+| gap            | 卡片间距（px）                           | `number` | 8      |
+| min-col        | 最小列数                                 | `number` | 3      |
 
 ### Slots
 
-| 插槽名     | 说明         |
-| ------- | ---------- |
+| 插槽名  | 说明                 |
+| ------- | -------------------- |
 | default | 网格中排列的卡片内容 |

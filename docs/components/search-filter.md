@@ -114,47 +114,47 @@ const onSubmit = (data: Record<string, any>) => {
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| visible | 弹层显隐（`v-model:visible`） | `boolean` | `false` |
-| list | 动态表单字段配置 | `FormItem[]` | `[]` |
-| popupwidth | 弹层内容宽度 | `string` | `'auto'` |
-| filterNumber | 当前筛选条件数量 | `number` | `0` |
-| btnWidth | 筛选按钮最小宽度 | `string` | — |
-| filterForm | 初始表单数据 | `Record<string, unknown>` | `{}` |
-| showTotal | 是否显示合计（预留） | `boolean` | `false` |
-| total | 合计数量（预留） | `number` | `0` |
-| destroyOnClose | 关闭时销毁弹层内容 | `boolean` | `false` |
-| formDataProp | 表单初始数据（作为重置基准值） | `Record<string, unknown>` | — |
-| formRules | t-form 校验规则 | `FormRules` | — |
-| hide | 是否隐藏按钮背景色 | `boolean` | `false` |
+| 属性           | 说明                           | 类型                      | 默认值   |
+| -------------- | ------------------------------ | ------------------------- | -------- |
+| visible        | 弹层显隐（`v-model:visible`）  | `boolean`                 | `false`  |
+| list           | 动态表单字段配置               | `FormItem[]`              | `[]`     |
+| popupwidth     | 弹层内容宽度                   | `string`                  | `'auto'` |
+| filterNumber   | 当前筛选条件数量               | `number`                  | `0`      |
+| btnWidth       | 筛选按钮最小宽度               | `string`                  | —        |
+| filterForm     | 初始表单数据                   | `Record<string, unknown>` | `{}`     |
+| showTotal      | 是否显示合计（预留）           | `boolean`                 | `false`  |
+| total          | 合计数量（预留）               | `number`                  | `0`      |
+| destroyOnClose | 关闭时销毁弹层内容             | `boolean`                 | `false`  |
+| formDataProp   | 表单初始数据（作为重置基准值） | `Record<string, unknown>` | —        |
+| formRules      | t-form 校验规则                | `FormRules`               | —        |
+| hide           | 是否隐藏按钮背景色             | `boolean`                 | `false`  |
 
 ### FormItem 字段配置
 
-| 属性 | 说明 | 类型 |
-| --- | --- | --- |
-| label | 字段标签 | `string` |
-| name | 字段名（formData 的 key） | `string` |
-| type | 字段类型 | `'input' \| 'select' \| 'radio' \| 'checkbox' \| 'dateRangePicker' \| 'cascader'` |
-| placeholder | 占位符（input） | `string` |
-| options | 选项（select/radio/checkbox/cascader） | `{ label, value }[]` |
-| required | 是否必填 | `boolean` |
-| width | 字段宽度 | `string` |
-| config | 透传 t-date-range-picker 配置 | `Record<string, unknown>` |
-| multiple | 是否多选（select/cascader） | `boolean` |
-| keys | 选项字段映射（select） | `Record<string, string>` |
+| 属性        | 说明                                   | 类型                                                                              |
+| ----------- | -------------------------------------- | --------------------------------------------------------------------------------- |
+| label       | 字段标签                               | `string`                                                                          |
+| name        | 字段名（formData 的 key）              | `string`                                                                          |
+| type        | 字段类型                               | `'input' \| 'select' \| 'radio' \| 'checkbox' \| 'dateRangePicker' \| 'cascader'` |
+| placeholder | 占位符（input）                        | `string`                                                                          |
+| options     | 选项（select/radio/checkbox/cascader） | `{ label, value }[]`                                                              |
+| required    | 是否必填                               | `boolean`                                                                         |
+| width       | 字段宽度                               | `string`                                                                          |
+| config      | 透传 t-date-range-picker 配置          | `Record<string, unknown>`                                                         |
+| multiple    | 是否多选（select/cascader）            | `boolean`                                                                         |
+| keys        | 选项字段映射（select）                 | `Record<string, string>`                                                          |
 
 ### Events
 
-| 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
-| reset | 点击重置/清空时触发 | `(data, type)` type 为 `false`（重置初始值）或 `true`（清空） |
-| submit | 点击确定且校验通过时触发 | `(data)` 当前表单数据 |
-| cancel | 关闭弹层时触发（预留，取消按钮已注释） | — |
+| 事件名 | 说明                                   | 回调参数                                                      |
+| ------ | -------------------------------------- | ------------------------------------------------------------- |
+| reset  | 点击重置/清空时触发                    | `(data, type)` type 为 `false`（重置初始值）或 `true`（清空） |
+| submit | 点击确定且校验通过时触发               | `(data)` 当前表单数据                                         |
+| cancel | 关闭弹层时触发（预留，取消按钮已注释） | —                                                             |
 
 ### Expose
 
-| 方法 | 说明 |
-| --- | --- |
-| validate | 触发 t-form 校验，返回是否通过 |
-| clearValidate | 清除校验状态 |
+| 方法          | 说明                           |
+| ------------- | ------------------------------ |
+| validate      | 触发 t-form 校验，返回是否通过 |
+| clearValidate | 清除校验状态                   |

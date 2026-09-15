@@ -13,22 +13,19 @@ const CbIconStub = defineComponent({
 const CbImageSecretStub = defineComponent({
   name: 'CbImageSecret',
   props: { tempUrl: String },
-  setup: (props) => () =>
-    h('img', { class: 'image-secret-stub', alt: props.tempUrl || '' }),
+  setup: (props) => () => h('img', { class: 'image-secret-stub', alt: props.tempUrl || '' }),
 })
 
 const TImageViewerStub = defineComponent({
   name: 'TImageViewer',
   props: { defaultIndex: Number, images: Array },
-  setup: (props, { slots }) => () => {
-    const trigger = slots.trigger
-    const open = () => h('div', { class: 'viewer-opened' })
-    return h(
-      'div',
-      { class: 't-image-viewer-stub' },
-      trigger ? trigger({ open }) : []
-    )
-  },
+  setup:
+    (props, { slots }) =>
+    () => {
+      const trigger = slots.trigger
+      const open = () => h('div', { class: 'viewer-opened' })
+      return h('div', { class: 't-image-viewer-stub' }, trigger ? trigger({ open }) : [])
+    },
 })
 
 const TEmptyStub = defineComponent({

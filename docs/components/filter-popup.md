@@ -34,11 +34,7 @@ const onQuery = () => console.log('触发查询', JSON.stringify(formData.value)
 
 ```vue
 <template>
-  <CbFilterPopup
-    :fields="fields"
-    v-model:formData="formData"
-    @query="onQuery"
-  />
+  <CbFilterPopup :fields="fields" v-model:formData="formData" @query="onQuery" />
 </template>
 
 <script setup lang="ts">
@@ -46,10 +42,15 @@ import { ref } from 'vue'
 
 const fields = [
   { key: 'name', label: '姓名', type: 'input' },
-  { key: 'status', label: '状态', type: 'select', options: [
-    { label: '启用', value: 'enabled' },
-    { label: '禁用', value: 'disabled' },
-  ] },
+  {
+    key: 'status',
+    label: '状态',
+    type: 'select',
+    options: [
+      { label: '启用', value: 'enabled' },
+      { label: '禁用', value: 'disabled' },
+    ],
+  },
   { key: 'date', label: '日期', type: 'date' },
 ]
 const formData = ref({ name: '', status: '', date: '' })
@@ -94,23 +95,23 @@ const onQuery = () => {
 
 ### Props
 
-| 参数 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| fields | `FormField[]` | — | 表单项配置（复用 CbDynamicFormGenerator 字段协议：key/label/type/options/rules/showWhen 等） |
-| formData | `FormValues` | — | 表单值（`v-model:formData` 双向绑定，必填） |
-| disabled | `boolean` | `false` | 禁用筛选按钮 |
-| loading | `boolean` | `false` | 按钮加载中 |
+| 参数     | 类型          | 默认值  | 说明                                                                                         |
+| -------- | ------------- | ------- | -------------------------------------------------------------------------------------------- |
+| fields   | `FormField[]` | —       | 表单项配置（复用 CbDynamicFormGenerator 字段协议：key/label/type/options/rules/showWhen 等） |
+| formData | `FormValues`  | —       | 表单值（`v-model:formData` 双向绑定，必填）                                                  |
+| disabled | `boolean`     | `false` | 禁用筛选按钮                                                                                 |
+| loading  | `boolean`     | `false` | 按钮加载中                                                                                   |
 
 ### Events
 
-| 事件名 | 说明 |
-| --- | --- |
-| query | 点击"确定"/"重置"/清除图标后触发，此时 formData 已同步为最新值，父组件在此发起查询 |
+| 事件名 | 说明                                                                               |
+| ------ | ---------------------------------------------------------------------------------- |
+| query  | 点击"确定"/"重置"/清除图标后触发，此时 formData 已同步为最新值，父组件在此发起查询 |
 
 ### Slots
 
-| 插槽名 | 说明 |
-| --- | --- |
+| 插槽名  | 说明                                                           |
+| ------- | -------------------------------------------------------------- |
 | content | 自定义弹层主体（默认：CbDynamicFormGenerator + 重置/确定按钮） |
 
 ### 说明

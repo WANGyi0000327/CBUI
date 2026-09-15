@@ -63,11 +63,11 @@ pnpm build:docs
 
 ## Q8: 修改组件后没生效？
 
-| 改动内容 | 处理方式 |
-| --- | --- |
-| 组件源码 / 样式 | dev 热更新即时生效，刷新页面 |
-| 组件文档 md / 侧边栏登记 | **重启 `pnpm dev`** |
-| `src/index.ts` / `resolver.ts` | **重启 `pnpm dev`** |
+| 改动内容                       | 处理方式                     |
+| ------------------------------ | ---------------------------- |
+| 组件源码 / 样式                | dev 热更新即时生效，刷新页面 |
+| 组件文档 md / 侧边栏登记       | **重启 `pnpm dev`**          |
+| `src/index.ts` / `resolver.ts` | **重启 `pnpm dev`**          |
 
 ## Q9: markdown 文档里写 Vue 代码报 "Element is missing end tag"？
 

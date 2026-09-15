@@ -7,11 +7,7 @@
     <!-- PDF 画布容器 -->
     <div class="content-wrapper">
       <!-- 缩略图侧边栏 -->
-      <div
-        v-show="showThumbnails"
-        ref="thumbnailSidebar"
-        class="thumbnail-sidebar"
-      >
+      <div v-show="showThumbnails" ref="thumbnailSidebar" class="thumbnail-sidebar">
         <div ref="thumbnailList" class="thumbnail-list">
           <div
             v-for="(_page, index) in numPages"
@@ -19,10 +15,7 @@
             :ref="(el) => (thumbnailRefs[index] = el)"
             @click="goToPage(index + 1)"
           >
-            <div
-              :class="{ active: currentPage === index + 1 }"
-              class="thumbnail-item"
-            >
+            <div :class="{ active: currentPage === index + 1 }" class="thumbnail-item">
               <canvas
                 :ref="(el) => (thumbCanvasRefs[index] = el)"
                 class="thumbnail-canvas"
@@ -46,10 +39,7 @@
                 marginTop: isPortraitOrientation(rotate),
               }"
             >
-              <canvas
-                :ref="(el) => (pageCanvasRefs[index] = el)"
-                class="pdf-canvas"
-              ></canvas>
+              <canvas :ref="(el) => (pageCanvasRefs[index] = el)" class="pdf-canvas"></canvas>
             </div>
           </div>
         </div>
@@ -84,14 +74,7 @@
 <script setup lang="ts">
 // AlphaBgColor 原实现位于业务包 @repo/tdesign-ui（库内不存在），落地为库内工具 #/utils/alphaBgColor
 import { AlphaBgColor } from '#/utils/alphaBgColor'
-import {
-  ref,
-  watch,
-  nextTick,
-  onMounted,
-  onBeforeUnmount,
-  shallowRef,
-} from 'vue'
+import { ref, watch, nextTick, onMounted, onBeforeUnmount, shallowRef } from 'vue'
 import * as pdfjsLib from 'pdfjs-dist'
 // 原源码为 import * as pdfjsLib from 'pdfjs-dist/build/pdf'：
 // pdfjs-dist@3.x 的类型声明在主入口（package.json types: types/src/pdf.d.ts），
@@ -127,8 +110,7 @@ const firstPageOrientation = ref<'1' | '2'>('2') // 1:横向 2:纵向
 const butname = ref<ButtonItem['name'] | null>(null)
 const scrollDebounceTimer = ref()
 // SSR 安全：build:docs 服务端渲染时 window 不存在（原源码直接取 window.devicePixelRatio）
-const devicePixelRatio =
-  typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1
+const devicePixelRatio = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1
 // 元素引用（替代Vue2的$refs）
 const mainContent = ref<HTMLDivElement | null>(null)
 const thumbnailSidebar = ref<HTMLDivElement | null>(null)
@@ -298,8 +280,7 @@ const butfun = async (name: ButtonItem['name']) => {
 }
 // 渲染单页PDF
 const renderPage = async (pageNum: number) => {
-  if (!pdfDoc || isLoading.value || pageNum < 1 || pageNum > numPages.value)
-    return
+  if (!pdfDoc || isLoading.value || pageNum < 1 || pageNum > numPages.value) return
   // 取消该页面现有渲染任务
   if (pageRenderTasks.value[pageNum]) {
     pageRenderTasks.value[pageNum]?.cancel()
@@ -439,25 +420,18 @@ const updateCurrentPageFromScroll = () => {
 }
 // 确保当前页缩略图可见
 const ensureThumbnailVisible = (pageNum: number) => {
-  if (!showThumbnails.value || !thumbnailSidebar.value || !thumbnailList.value)
-    return
+  if (!showThumbnails.value || !thumbnailSidebar.value || !thumbnailList.value) return
   const thumbnailIndex = pageNum - 1
   const thumbnailEl = thumbnailRefs.value[thumbnailIndex]
   if (!thumbnailEl) return
   const sidebarRect = thumbnailSidebar.value.getBoundingClientRect()
   const thumbnailRect = thumbnailEl.getBoundingClientRect()
   // 缩略图不在可视区域时滚动
-  if (
-    thumbnailRect.top < sidebarRect.top ||
-    thumbnailRect.bottom > sidebarRect.bottom
-  ) {
+  if (thumbnailRect.top < sidebarRect.top || thumbnailRect.bottom > sidebarRect.bottom) {
     const listRect: any = thumbnailList.value.getBoundingClientRect()
     const relativeTop = thumbnailRect.top - listRect.top
     thumbnailList.value.scrollTop =
-      listRect.scrollTop +
-      relativeTop -
-      sidebarRect.height / 2 +
-      thumbnailRect.height / 2
+      listRect.scrollTop + relativeTop - sidebarRect.height / 2 + thumbnailRect.height / 2
   }
 }
 // 滚动到当前激活的缩略图
@@ -474,10 +448,7 @@ const scrollToActiveThumbnail = (pageNum: number) => {
 // 判断旋转后的marginTop
 const isPortraitOrientation = (rotateDeg: number): string => {
   const normalizedDeg = (rotateDeg + 360) % 360
-  if (
-    (normalizedDeg === 90 || normalizedDeg === 270) &&
-    firstPageOrientation.value === '1'
-  ) {
+  if ((normalizedDeg === 90 || normalizedDeg === 270) && firstPageOrientation.value === '1') {
     return '320px'
   }
   return '10px'

@@ -156,7 +156,10 @@ const fields = [
     key: 'needEmail',
     label: '需要邮箱',
     type: 'radio',
-    options: [{ label: '是', value: 'yes' }, { label: '否', value: 'no' }],
+    options: [
+      { label: '是', value: 'yes' },
+      { label: '否', value: 'no' },
+    ],
   },
   {
     key: 'email',
@@ -216,34 +219,34 @@ const customData = reactive({ amount: '100' })
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| fields | 字段配置数组（见下方字段配置） | `FormField[]` | `-` |
+| 属性   | 说明                           | 类型          | 默认值 |
+| ------ | ------------------------------ | ------------- | ------ |
+| fields | 字段配置数组（见下方字段配置） | `FormField[]` | `-`    |
 
 ### v-model
 
-| 值 | 说明 |
-| --- | --- |
+| 值       | 说明                                                |
+| -------- | --------------------------------------------------- |
 | formData | 表单数据对象（字段 key 为键），字段输入变化实时同步 |
 
 ### Exposed
 
-| 方法 | 说明 |
-| --- | --- |
+| 方法     | 说明                          |
+| -------- | ----------------------------- |
 | validate | 校验全部字段，通过返回 `true` |
-| reset | 重置表单为初始值 |
+| reset    | 重置表单为初始值              |
 
 ### 字段配置
 
-| 字段 | 说明 |
-| --- | --- |
-| key | 字段标识（必传，对应 formData 的键） |
-| label | 展示文案，可为字符串或渲染函数 |
-| type | `input` / `select` / `checkbox` / `radio` / `date` / `dateRange`，缺省为 `input` |
-| props | 透传给控件（`t-input` 等）的额外属性 |
-| options | `select` / `checkbox` / `radio` 的选项 `{ label, value }[]` |
-| rules | TDesign 校验规则数组 |
-| hidden | 是否隐藏字段 |
-| disabled | 是否禁用字段 |
-| showWhen | 条件显示函数 `(values) => boolean`，返回 false 不渲染 |
-| content | 自定义渲染函数 `({ modelValue, field, onUpdate }) => VNode`（与默认控件互斥） |
+| 字段     | 说明                                                                             |
+| -------- | -------------------------------------------------------------------------------- |
+| key      | 字段标识（必传，对应 formData 的键）                                             |
+| label    | 展示文案，可为字符串或渲染函数                                                   |
+| type     | `input` / `select` / `checkbox` / `radio` / `date` / `dateRange`，缺省为 `input` |
+| props    | 透传给控件（`t-input` 等）的额外属性                                             |
+| options  | `select` / `checkbox` / `radio` 的选项 `{ label, value }[]`                      |
+| rules    | TDesign 校验规则数组                                                             |
+| hidden   | 是否隐藏字段                                                                     |
+| disabled | 是否禁用字段                                                                     |
+| showWhen | 条件显示函数 `(values) => boolean`，返回 false 不渲染                            |
+| content  | 自定义渲染函数 `({ modelValue, field, onUpdate }) => VNode`（与默认控件互斥）    |

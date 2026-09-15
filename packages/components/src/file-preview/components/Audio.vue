@@ -1,9 +1,9 @@
 <template>
-<div class="w-full h-full flex items-center justify-center">
-   <div :style="`width:${screenWidth<1880?640:1280}px;`" class="audio">
-  <CbAudioPlayer  :src="src"></CbAudioPlayer>
-   </div>
-</div>
+  <div class="w-full h-full flex items-center justify-center">
+    <div :style="`width:${screenWidth < 1880 ? 640 : 1280}px;`" class="audio">
+      <CbAudioPlayer :src="src"></CbAudioPlayer>
+    </div>
+  </div>
 </template>
 <script setup lang="ts">
 // 业务源码 import CbAudioPlayer from '../../CbAudioPlayer/index.vue'，组件库内对应 audio-player 目录
@@ -22,11 +22,11 @@ defineProps({
 const { width: screenWidth } = useWindowSize()
 </script>
 <style scoped lang="scss">
-.audio{
+.audio {
   height: 56px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 56px;
-  padding:0 16px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: center;

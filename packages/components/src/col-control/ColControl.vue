@@ -1,12 +1,7 @@
 <template>
   <div class="cb-col-control">
     <span>{{ label }}</span>
-    <t-popup
-      trigger="click"
-      destroy-on-close
-      placement="bottom-left"
-      v-bind="popupProps"
-    >
+    <t-popup trigger="click" destroy-on-close placement="bottom-left" v-bind="popupProps">
       <template #content>
         <div class="cb-col-control-content">
           <div class="cb-col-control-title">
@@ -30,11 +25,7 @@
             handle=".drag-handle"
             :animation="200"
           >
-            <div
-              v-for="item in draggableList"
-              :key="item.colKey"
-              class="cb-col-control-item"
-            >
+            <div v-for="item in draggableList" :key="item.colKey" class="cb-col-control-item">
               <div class="drag-handle">
                 <CbIcon size="16px" name="tuozhuai" />
                 {{ getTitle(item) }}
@@ -84,10 +75,8 @@ const isSystemCol = (item: any) =>
   ['row-select', 'drag', 'serial-number'].includes(item.colKey) ||
   (!item.title && !item.dispalyTitle && !item.displayName)
 const isLeftFixed = (item: any) => item.fixed === 'left' && !isSystemCol(item)
-const isRightFixed = (item: any) =>
-  item.fixed === 'right' || item.colKey === 'operation'
-const isEdit = (item: any) =>
-  !isSystemCol(item) && !isLeftFixed(item) && !isRightFixed(item)
+const isRightFixed = (item: any) => item.fixed === 'right' || item.colKey === 'operation'
+const isEdit = (item: any) => !isSystemCol(item) && !isLeftFixed(item) && !isRightFixed(item)
 const getTitle = (item: any) => {
   return (
     item.displayName ||
@@ -96,9 +85,7 @@ const getTitle = (item: any) => {
   )
 }
 const syncToParent = (shouldSave = false) => {
-  const visibleCols = localColumns.value.filter(
-    (item) => item.visible !== false
-  )
+  const visibleCols = localColumns.value.filter((item) => item.visible !== false)
   modelValue.value = [...visibleCols]
   if (shouldSave) {
     debounceSave()
@@ -148,30 +135,21 @@ const fetchRemoteConfig = async () => {
 const combineConfig = (remoteColumns: any[], showColumnKeys: string[]) => {
   const optionsMap = new Map(props.options.map((item) => [item.colKey, item]))
   const remoteMiddles = remoteColumns
-    .filter(
-      (rc) => optionsMap.has(rc.colKey) && isEdit(optionsMap.get(rc.colKey))
-    )
+    .filter((rc) => optionsMap.has(rc.colKey) && isEdit(optionsMap.get(rc.colKey)))
     .map((rc) => rc.colKey)
   const newMiddles = props.options
-    .filter(
-      (opt) =>
-        isEdit(opt) && !remoteColumns.some((rc) => rc.colKey === opt.colKey)
-    )
+    .filter((opt) => isEdit(opt) && !remoteColumns.some((rc) => rc.colKey === opt.colKey))
     .map((opt) => opt.colKey)
   const finalMiddleKeys = [...remoteMiddles, ...newMiddles]
   const systems = props.options.filter(isSystemCol)
   const lefts = props.options.filter(isLeftFixed)
   const rights = props.options.filter(isRightFixed)
   const middles = finalMiddleKeys.map((key) => optionsMap.get(key))
-  const newLocalColumns = [...systems, ...lefts, ...middles, ...rights].map(
-    (col) => ({
-      ...col,
-      visible:
-        showColumnKeys.length > 0
-          ? showColumnKeys.includes(col.colKey)
-          : col.visible !== false,
-    })
-  )
+  const newLocalColumns = [...systems, ...lefts, ...middles, ...rights].map((col) => ({
+    ...col,
+    visible:
+      showColumnKeys.length > 0 ? showColumnKeys.includes(col.colKey) : col.visible !== false,
+  }))
   localColumns.value = newLocalColumns
   const isStrictMatch =
     remoteColumns.length === newLocalColumns.length &&

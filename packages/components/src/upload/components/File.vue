@@ -1,14 +1,7 @@
 <template>
-  <div
-    class="custom-upload-file"
-    tabindex="0"
-    style="outline: none"
-  >
+  <div class="custom-upload-file" tabindex="0" style="outline: none">
     <div class="custom-upload-content">
-      <div
-        class="custom-upload-trigger"
-        :class="{ 'custom-upload-drag': theme === 'file-drag' }"
-      >
+      <div class="custom-upload-trigger" :class="{ 'custom-upload-drag': theme === 'file-drag' }">
         <template v-if="theme === 'file-drag'">
           <div
             :class="{ 'is-dragover': isDragging }"
@@ -18,25 +11,18 @@
           >
             <div class="custom-upload-trigger">
               <div class="custom-upload-icon">
-                <cb-icon
-                  name="xiazai"
-                  size="45px"
-                  color="var(--td-brand-color)"
-                ></cb-icon>
+                <cb-icon name="xiazai" size="45px" color="var(--td-brand-color)"></cb-icon>
               </div>
               <div>
                 {{ isDragging ? '松开上传文件' : '点击或将文件拖拽到这里上传' }}
               </div>
-              <div
-                v-if="showTips"
-                class="tips"
-              >
+              <div v-if="showTips" class="tips">
                 {{ tips }}
               </div>
               <input
-                type="file"
-                ref="inputFileRef"
                 id="file"
+                ref="inputFileRef"
+                type="file"
                 :multiple="multiple"
                 :accept="effectiveAccept"
                 name="file"
@@ -54,40 +40,34 @@
             >{{ buttonText }}</t-button
           >
           <input
-            type="file"
-            ref="inputFileRef"
             id="file"
+            ref="inputFileRef"
+            type="file"
             :multiple="multiple"
             :accept="effectiveAccept"
             name="file"
             style="display: none"
-            @change="handleFilesChange"
             class="cursor-pointer"
+            @change="handleFilesChange"
           />
-          <div
-            class="custom-upload-tips"
-            v-if="showTips"
-          >
+          <div v-if="showTips" class="custom-upload-tips">
             {{ tips }}
           </div>
         </template>
         <template v-else>
           <t-button @click="triggerSelectFile">{{ buttonText }}</t-button>
           <input
-            type="file"
-            ref="inputFileRef"
             id="file"
+            ref="inputFileRef"
+            type="file"
             :multiple="multiple"
             :accept="effectiveAccept"
             name="file"
             style="display: none"
-            @change="handleFilesChange"
             class="cursor-pointer"
+            @change="handleFilesChange"
           />
-          <div
-            class="custom-upload-tips"
-            v-if="showTips"
-          >
+          <div v-if="showTips" class="custom-upload-tips">
             {{ tips }}
           </div>
         </template>
@@ -96,19 +76,10 @@
     <template v-if="fileList?.length && theme !== 'file-loading'">
       <div class="custom-upload-file-list">
         <template v-for="(item, idx) in fileList" :key="item.name + idx">
-          <div
-            class="custom-upload-file-list-item"
-            :class="item.status"
-          >
-            <CbFilePreviewV2
-              :image-names="[{ url: item.previewUrl }]"
-              :showOnlyImages="false"
-            >
+          <div class="custom-upload-file-list-item" :class="item.status">
+            <CbFilePreviewV2 :image-names="[{ url: item.previewUrl }]" :show-only-images="false">
               <template #trigger>
-                <div
-                  class="custom-upload-file-list-item_name"
-                  :title="item.name"
-                >
+                <div class="custom-upload-file-list-item_name" :title="item.name">
                   <cb-icon name="fujian" />
                   {{ getFileNameFromUrl(item.name) }}
                 </div>
@@ -116,29 +87,14 @@
             </CbFilePreviewV2>
             <div class="custom-upload-file-operation">
               <template v-if="item.status === 'fail'">
-                <cb-icon
-                  name="chongxin"
-                  size="16px"
-                  @click="handleFileReUpload(idx)"
-                />
-                <cb-icon
-                  name="shanchu"
-                  size="16px"
-                  @click="handleFileDel(idx)"
-                />
+                <cb-icon name="chongxin" size="16px" @click="handleFileReUpload(idx)" />
+                <cb-icon name="shanchu" size="16px" @click="handleFileDel(idx)" />
               </template>
               <template v-if="item.status === 'success'">
-                <cb-icon
-                  name="shanchu"
-                  size="16px"
-                  @click="handleFileDel(idx)"
-                />
+                <cb-icon name="shanchu" size="16px" @click="handleFileDel(idx)" />
               </template>
               <template v-if="item.status === 'waiting'">
-                <t-loading
-                  color="var(--td-brand-color)"
-                  size="16px"
-                />
+                <t-loading color="var(--td-brand-color)" size="16px" />
                 {{ item.percent }}%
               </template>
             </div>
@@ -157,9 +113,7 @@ import { EXTENSION_ALIASES, MIME_TYPE_MAP } from '../config'
 const props = defineProps(uploadProps)
 const emits = defineEmits(['delete', 're-upload', 'upload'])
 const isDragging = ref(false)
-const effectiveAccept = computed(() =>
-  props.zipMode ? `${props.accept},.zip` : props.accept
-)
+const effectiveAccept = computed(() => (props.zipMode ? `${props.accept},.zip` : props.accept))
 const handleDragOver = () => {
   isDragging.value = true
 }
@@ -202,9 +156,7 @@ const validateFiles = (files: File[]): boolean => {
     const mimeExt = MIME_TYPE_MAP[file.type] || ''
     return acceptList.some((acceptedItem) => {
       const validExtensions = EXTENSION_ALIASES[acceptedItem] || [acceptedItem]
-      return (
-        validExtensions.includes(fileExt) || validExtensions.includes(mimeExt)
-      )
+      return validExtensions.includes(fileExt) || validExtensions.includes(mimeExt)
     })
   })
   if (!allValid) {
@@ -248,8 +200,7 @@ const handleFilesChange = (e: Event) => {
         : extension
     //用于判断docx格式上传
     const isFileType2 =
-      isFileType ===
-      '.vnd.openxmlformats-officedocument.wordprocessingml.document'
+      isFileType === '.vnd.openxmlformats-officedocument.wordprocessingml.document'
         ? '.docx'
         : isFileType
     if (accept.indexOf(isFileType2) === -1) {
@@ -273,14 +224,12 @@ const handleExternalFiles = (files: File[]) => {
   for (let i = 0; i < files.length; i++) {
     const extension = '.' + files[i]?.name.split('.').pop()?.toLowerCase()
     const isFileType =
-      files[i]?.type ===
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+      files[i]?.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
       files[i]?.type === 'application/vnd.ms-excel'
         ? '.xlsx'
         : extension
     const isFileType2 =
-      isFileType ===
-      '.vnd.openxmlformats-officedocument.wordprocessingml.document'
+      isFileType === '.vnd.openxmlformats-officedocument.wordprocessingml.document'
         ? '.docx'
         : isFileType
     if (accept.indexOf(isFileType2) === -1) {
@@ -302,103 +251,103 @@ defineExpose({
 })
 </script>
 <style scoped lang="scss">
-  .custom-upload-file {
-    .custom-upload-content {
-      display: flex;
-      align-items: end;
-      gap: 8px;
-      width: 100%;
-      .custom-upload-trigger {
+.custom-upload-file {
+  .custom-upload-content {
+    display: flex;
+    align-items: end;
+    gap: 8px;
+    width: 100%;
+    .custom-upload-trigger {
+      cursor: pointer;
+      position: relative;
+      .t-button {
+        background-color: var(--td-brand-color-10);
+        font-size: 14px;
+        color: var(--td-brand-color);
+      }
+      input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
         cursor: pointer;
-        position: relative;
-        .t-button {
-          background-color: var(--td-brand-color-10);
-          font-size: 14px;
-          color: var(--td-brand-color);
-        }
-        input {
-          position: absolute;
+        opacity: 0;
+        top: 0;
+        left: 0;
+      }
+      &.custom-upload-drag {
+        width: 100%;
+        height: 200px;
+        background-color: #fbfbfb;
+        border: 1px dashed #d9d9d9;
+        > div {
           width: 100%;
           height: 100%;
-          cursor: pointer;
-          opacity: 0;
-          top: 0;
-          left: 0;
         }
-        &.custom-upload-drag {
+        .custom-upload-trigger {
           width: 100%;
-          height: 200px;
-          background-color: #fbfbfb;
-          border: 1px dashed #d9d9d9;
-          > div {
-            width: 100%;
-            height: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          color: var(--td-text-color-6);
+          .custom-upload-icon {
+            margin-bottom: 16px;
           }
-          .custom-upload-trigger {
+          .tips {
+            max-width: 60%;
+            text-align: center;
+            font-size: 12px;
+            color: var(--td-text-color-9);
+            margin-top: 7px;
+          }
+          input {
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--td-text-color-6);
-            .custom-upload-icon {
-              margin-bottom: 16px;
-            }
-            .tips {
-              max-width: 60%;
-              text-align: center;
-              font-size: 12px;
-              color: var(--td-text-color-9);
-              margin-top: 7px;
-            }
-            input {
-              width: 100%;
-              height: 100%;
-            }
           }
         }
-      }
-      .custom-upload-tips {
-        font-size: 12px;
-        margin-top: 10px;
-        color: var(--td-color-gray-c);
       }
     }
-    .custom-upload-file-list {
-      margin-top: 20px;
+    .custom-upload-tips {
+      font-size: 12px;
+      margin-top: 10px;
+      color: var(--td-color-gray-c);
+    }
+  }
+  .custom-upload-file-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    .custom-upload-file-list-item {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--td-text-color-6);
       gap: 8px;
-      .custom-upload-file-list-item {
+      .custom-upload-file-list-item_name {
         display: flex;
-        justify-content: space-between;
-        font-size: 12px;
-        color: var(--td-text-color-6);
+        align-items: center;
         gap: 8px;
-        .custom-upload-file-list-item_name {
-          display: flex;
-          align-items: center;
-          gap: 8px;
+        cursor: pointer;
+        flex-grow: 1;
+      }
+      .custom-upload-file-operation {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        .svg-icon {
           cursor: pointer;
-          flex-grow: 1;
         }
-        .custom-upload-file-operation {
-          flex-shrink: 0;
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          .svg-icon {
-            cursor: pointer;
-          }
-        }
-        &.fail {
-          color: var(--td-color-danger);
-        }
-        &:hover {
-          color: var(--td-brand-color);
-        }
+      }
+      &.fail {
+        color: var(--td-color-danger);
+      }
+      &:hover {
+        color: var(--td-brand-color);
       }
     }
   }
+}
 </style>

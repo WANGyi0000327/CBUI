@@ -14,11 +14,7 @@
 import type { CustomTreeKey, BackendTreeNode } from './index.d'
 import TreeNode from './components/TreeNode.vue'
 import { nextTick, type PropType, ref, watch } from 'vue'
-import {
-  initializeTreeWithState,
-  updateNodeWithCascade,
-  getCheckedTreeIds,
-} from './tree'
+import { initializeTreeWithState, updateNodeWithCascade, getCheckedTreeIds } from './tree'
 const modeValue = defineModel<string[]>()
 defineOptions({
   name: 'CbPermissionTree',
@@ -70,12 +66,7 @@ const initData = () => {
   )
 }
 const handleNodeStateUpdate = (id: string | number, checked: boolean) => {
-  state.value = updateNodeWithCascade(
-    state.value,
-    id,
-    checked,
-    props.checkStrictly
-  )
+  state.value = updateNodeWithCascade(state.value, id, checked, props.checkStrictly)
 }
 const isUpdating = ref(false)
 watch(

@@ -14,12 +14,12 @@ CB UI 是基于 **TDesign** 二次封装的组件库，底层依赖 `tdesign-vue
 
 ## 一、环境要求
 
-| 依赖 | 版本要求 | 说明 |
-| --- | --- | --- |
-| Node.js | >= 18.0.0 | 运行时 |
-| pnpm | >= 9.0.0 | 包管理器（monorepo 必需） |
-| Vue | ^3.4.0 | 组件运行框架 |
-| TDesign Vue Next | ^1.16.1 | 底层组件库 |
+| 依赖             | 版本要求  | 说明                      |
+| ---------------- | --------- | ------------------------- |
+| Node.js          | >= 18.0.0 | 运行时                    |
+| pnpm             | >= 9.0.0  | 包管理器（monorepo 必需） |
+| Vue              | ^3.4.0    | 组件运行框架              |
+| TDesign Vue Next | ^1.16.1   | 底层组件库                |
 
 ---
 
@@ -75,7 +75,7 @@ your-project/
 
 ```scss
 // 业务项目 vite.config.ts 或全局样式入口
-@use "你的路径/variables" as *;
+@use '你的路径/variables' as *;
 ```
 
 或使用 Tailwind preset（`packages/theme/src/tailwind.preset.js`）保持设计 token 一致。
@@ -158,16 +158,16 @@ import '@cb-ui/components/dist/style.css'
 
 ## 四、常用命令
 
-| 命令 | 作用 | 说明 |
-| --- | --- | --- |
-| `pnpm dev` | 启动文档站 | 热更新，访问 5173 |
-| `pnpm build:docs` | 构建文档站 | **先停 dev**（共用 `.temp` 目录） |
-| `pnpm build:lib` | 构建组件库产物 | Vite library 模式 → `packages/components/dist` |
-| `pnpm gen <name> [中文名]` | 一键生成新组件 | 目录 + 文件 + 文档 + 自动 gen:index |
-| `pnpm gen:index` | 重生成全量入口 | 扫描 `src/` 下组件目录，勿手改 `index.ts` |
-| `pnpm test` | 全量单测 | Vitest，44 files / 240 tests |
-| `pnpm lint` | ESLint 检查+修复 | 0 errors 基线 |
-| `pnpm extract:props` | 生成 API 表格草稿 | 输出到 `docs/.vitepress/generated/` |
+| 命令                       | 作用              | 说明                                           |
+| -------------------------- | ----------------- | ---------------------------------------------- |
+| `pnpm dev`                 | 启动文档站        | 热更新，访问 5173                              |
+| `pnpm build:docs`          | 构建文档站        | **先停 dev**（共用 `.temp` 目录）              |
+| `pnpm build:lib`           | 构建组件库产物    | Vite library 模式 → `packages/components/dist` |
+| `pnpm gen <name> [中文名]` | 一键生成新组件    | 目录 + 文件 + 文档 + 自动 gen:index            |
+| `pnpm gen:index`           | 重生成全量入口    | 扫描 `src/` 下组件目录，勿手改 `index.ts`      |
+| `pnpm test`                | 全量单测          | Vitest，44 files / 240 tests                   |
+| `pnpm lint`                | ESLint 检查+修复  | 0 errors 基线                                  |
+| `pnpm extract:props`       | 生成 API 表格草稿 | 输出到 `docs/.vitepress/generated/`            |
 
 ---
 

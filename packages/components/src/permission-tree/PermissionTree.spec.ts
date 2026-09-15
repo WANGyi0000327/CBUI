@@ -3,11 +3,7 @@ import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
 import PermissionTree from './PermissionTree.vue'
 import TDesign from 'tdesign-vue-next'
-import {
-  initializeTreeWithState,
-  updateNodeWithCascade,
-  getCheckedTreeIds,
-} from './tree'
+import { initializeTreeWithState, updateNodeWithCascade, getCheckedTreeIds } from './tree'
 
 const keys = { value: 'key', label: 'label', children: 'children' }
 const tree = [
@@ -48,7 +44,8 @@ const mountTree = (props = {}, model = []) =>
       ...props,
     },
     attrs: {
-      'onUpdate:modelValue': (v: string[]) => (model.length ? model.splice(0, model.length, ...v) : model.push(...v)),
+      'onUpdate:modelValue': (v: string[]) =>
+        model.length ? model.splice(0, model.length, ...v) : model.push(...v),
     },
   })
 
@@ -69,13 +66,7 @@ describe('tree.ts 纯函数', () => {
   })
 
   it('initializeTreeWithState：checkedKeys 与 disabledIds 生效', () => {
-    const state = initializeTreeWithState(
-      tree,
-      keys,
-      ['1-1-1'],
-      ['1-1'],
-      false
-    )
+    const state = initializeTreeWithState(tree, keys, ['1-1-1'], ['1-1'], false)
     expect(state[0].children[0].checked).toBe(true)
     expect(state[0].children[0].children[0].disabled).toBe(true)
     expect(state[0].children[0].children[0].checked).toBe(false)
@@ -169,10 +160,7 @@ describe('CbPermissionTree 组件', () => {
 
   it('disabled 节点点击不改变选中', async () => {
     const model: string[] = []
-    const wrapper = mountTree(
-      { checkable: true, expandAll: true, disabled: ['1-1-1'] },
-      model
-    )
+    const wrapper = mountTree({ checkable: true, expandAll: true, disabled: ['1-1-1'] }, model)
     await nextTick()
     await nextTick()
     // 勾选父节点"用户管理"：禁用子节点不选中

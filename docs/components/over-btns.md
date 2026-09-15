@@ -47,6 +47,7 @@ const permissionBtnList = [
 基于 **TDesign `t-button` / `t-popup`** 封装的操作按钮组：前 `maxShownNum` 个按钮直接展示，超出部分折叠进"更多"弹出层，常用于表格行操作（编辑 / 删除 / 更多）。
 
 > 特性说明：
+>
 > - **权限隐藏**：`enablehide` 支持布尔值或函数（接收 `row`），为 `true` 时该按钮不渲染。
 > - **禁用控制**：`disabled` 支持布尔值或函数，禁用时按钮不可点且不应用自定义 `style`。
 > - **动态文案**：`label` 支持字符串或函数（接收 `row` 返回文案）。
@@ -148,28 +149,28 @@ const permissionBtnList: OverBtn[] = [
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| btnList | 操作按钮配置列表 | `OverBtn[]` | `[]` |
-| maxShownNum | 直接展示的按钮数量，超出折叠进弹出层 | `number` | `2` |
-| row | 当前行数据（传给 label / disabled / clickHandler / enablehide 等） | `object` | `{}` |
-| iconStyle | 折叠图标触发器样式 | `object` | `{ width: '30px' }` |
+| 属性        | 说明                                                               | 类型        | 默认值              |
+| ----------- | ------------------------------------------------------------------ | ----------- | ------------------- |
+| btnList     | 操作按钮配置列表                                                   | `OverBtn[]` | `[]`                |
+| maxShownNum | 直接展示的按钮数量，超出折叠进弹出层                               | `number`    | `2`                 |
+| row         | 当前行数据（传给 label / disabled / clickHandler / enablehide 等） | `object`    | `{}`                |
+| iconStyle   | 折叠图标触发器样式                                                 | `object`    | `{ width: '30px' }` |
 
 ### OverBtn 配置项
 
-| 字段 | 说明 | 类型 |
-| --- | --- | --- |
-| label | 按钮文案，支持动态函数 | `string \| ((row) => string)` |
-| type | 按钮类型标识 | `string` |
-| clickHandler | 点击回调 | `(type: string, row) => void` |
-| colorType | 是否红色字体（`1` = 红色） | `number` |
-| disabled | 是否禁用，支持动态函数 | `boolean \| ((row) => boolean)` |
-| enablehide | 是否隐藏（权限控制），支持动态函数 | `boolean \| ((row?) => boolean)` |
-| enablehide_hide | 保留字段（权限控制） | `boolean \| ((row?) => boolean)` |
-| style | 自定义按钮样式（禁用时不生效） | `Record<string, string>` |
-| theme | 是否使用主题颜色（保留字段） | `boolean` |
-| isPermission | 按钮权限（保留字段） | `boolean \| (() => boolean)` |
-| class | 自定义类名（保留字段） | `Record<string, string>` |
+| 字段            | 说明                               | 类型                             |
+| --------------- | ---------------------------------- | -------------------------------- |
+| label           | 按钮文案，支持动态函数             | `string \| ((row) => string)`    |
+| type            | 按钮类型标识                       | `string`                         |
+| clickHandler    | 点击回调                           | `(type: string, row) => void`    |
+| colorType       | 是否红色字体（`1` = 红色）         | `number`                         |
+| disabled        | 是否禁用，支持动态函数             | `boolean \| ((row) => boolean)`  |
+| enablehide      | 是否隐藏（权限控制），支持动态函数 | `boolean \| ((row?) => boolean)` |
+| enablehide_hide | 保留字段（权限控制）               | `boolean \| ((row?) => boolean)` |
+| style           | 自定义按钮样式（禁用时不生效）     | `Record<string, string>`         |
+| theme           | 是否使用主题颜色（保留字段）       | `boolean`                        |
+| isPermission    | 按钮权限（保留字段）               | `boolean \| (() => boolean)`     |
+| class           | 自定义类名（保留字段）             | `Record<string, string>`         |
 
 ## 使用须知
 

@@ -102,9 +102,7 @@ function getComponentSidebarItems() {
   // 分类
   const baseItems = items
     .filter(
-      (item) =>
-        !MEDIA_TOOL_COMPONENTS.has(item._base) &&
-        !BUSINESS_COMPONENTS.has(item._base)
+      (item) => !MEDIA_TOOL_COMPONENTS.has(item._base) && !BUSINESS_COMPONENTS.has(item._base)
     )
     .sort((a, b) => a.text.localeCompare(b.text, 'zh-CN'))
   const mediaItems = items

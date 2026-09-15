@@ -15,7 +15,7 @@
         </div>
       </template>
       <div class="flex gap-[4px] items-center">
-        <div v-if="dot" class="dotbox" :style="{backgroundColor:currentType.color}"></div>
+        <div v-if="dot" class="dotbox" :style="{ backgroundColor: currentType.color }"></div>
         <template v-if="hasContent">
           <slot name="name" :row="currentType"> </slot>
           <slot name="default" :row="currentType"> </slot>
@@ -26,8 +26,11 @@
         </div>
       </div>
     </t-tag>
-    <span v-else-if="currentType && showType === 'text'" :style="{ color: currentType.color, ...tagStyle }" >
-      {{ currentType?.name || currentType?.label  || '-'}}
+    <span
+      v-else-if="currentType && showType === 'text'"
+      :style="{ color: currentType.color, ...tagStyle }"
+    >
+      {{ currentType?.name || currentType?.label || '-' }}
     </span>
     <span v-else>-</span>
   </div>
@@ -64,17 +67,15 @@ const props = withDefaults(defineProps<tagProps>(), {
   tagStyle: () => ({}),
 })
 const currentType = computed(() => {
-  return props.typeList.find(
-    (item) => item.id === props.status || item.value === props.status
-  )
+  return props.typeList.find((item) => item.id === props.status || item.value === props.status)
 })
 </script>
 <style lang="scss" scoped>
-:deep(.t-tag.t-size-l){
+:deep(.t-tag.t-size-l) {
   padding: 0 4px !important;
   height: 24px !important;
 }
-.dotbox{
+.dotbox {
   width: 6px;
   height: 6px;
   border-radius: 50%;

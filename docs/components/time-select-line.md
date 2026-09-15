@@ -35,11 +35,7 @@ const completedTime = '20240331'
 
 ```vue
 <template>
-  <CbTimeSelectLine
-    v-model="activeKey"
-    :time-ranges="timeRanges"
-    :completed-time="completedTime"
-  />
+  <CbTimeSelectLine v-model="activeKey" :time-ranges="timeRanges" :completed-time="completedTime" />
 </template>
 
 <script setup lang="ts">
@@ -65,24 +61,24 @@ const completedTime = '20240331'
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| height | 容器高度 | `string` | `'435px'` |
-| timeRanges | 数据范围 `[开始, 结束]`（YYYYMM） | `string[]` | `[]` |
-| completedTime | 已完成截止时间 | `string \| null` | `null` |
-| completedIcon | 已完成图标名（cb-icon） | `string` | `'zhengque'` |
-| progressIcon | 进行中图标名（cb-icon） | `string` | `'ddai'` |
-| showMoreMonth | 范围外扩展 4 个月（不可点） | `boolean` | `true` |
-| v-model | 当前选中节点 key | `string` | `-` |
+| 属性          | 说明                              | 类型             | 默认值       |
+| ------------- | --------------------------------- | ---------------- | ------------ |
+| height        | 容器高度                          | `string`         | `'435px'`    |
+| timeRanges    | 数据范围 `[开始, 结束]`（YYYYMM） | `string[]`       | `[]`         |
+| completedTime | 已完成截止时间                    | `string \| null` | `null`       |
+| completedIcon | 已完成图标名（cb-icon）           | `string`         | `'zhengque'` |
+| progressIcon  | 进行中图标名（cb-icon）           | `string`         | `'ddai'`     |
+| showMoreMonth | 范围外扩展 4 个月（不可点）       | `boolean`        | `true`       |
+| v-model       | 当前选中节点 key                  | `string`         | `-`          |
 
 ### Events
 
-| 事件 | 说明 | 参数 |
-| --- | --- | --- |
-| change | 点击可点节点时触发 | `-` |
+| 事件   | 说明               | 参数 |
+| ------ | ------------------ | ---- |
+| change | 点击可点节点时触发 | `-`  |
 
 ### Expose
 
-| 方法 | 说明 |
-| --- | --- |
+| 方法    | 说明               |
+| ------- | ------------------ |
 | refresh | 滚动到当前选中节点 |

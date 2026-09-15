@@ -23,6 +23,7 @@ const mappedOptions = [
 基于 **TDesign `t-select`** 二次开发的多选下拉组件，在原生多选能力基础上，于面板顶部内置**全选 / 半选**复选框（全选逻辑自动跳过 `disabled` 的选项），并支持通过 `keys` 自定义选项字段映射。
 
 > 特性说明：
+>
 > - 全选状态为**受控推导**：全选 → 复选框勾选；部分选中 → 半选态（indeterminate）；清空 → 未勾选。
 > - 通过 `defineModel` 实现 `v-model` 双向绑定，默认值为空数组。
 
@@ -107,19 +108,19 @@ const mappedOptions = [
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| v-model | 已选值数组（`defineModel`） | `Array<string \| number>` | `[]` |
-| list | 选项数据列表（泛型 `T`） | `T[]` | `undefined` |
-| keys | 选项字段映射：`value` / `label` / `disabled` | `KeysType` | `{ value: 'value', label: 'label', disabled: 'disabled' }` |
-| multiple | 多选模式（组件固定开启） | `boolean` | `true` |
-| clearable | 是否可清空 | `boolean` | `true` |
-| （其余属性） | 全部通过 `v-bind="$attrs"` 透传给 [TDesign Select](https://tdesign.tencent.com/vue-next/components/select)，如 `placeholder`、`disabled`、`size` 等 | - | - |
+| 属性         | 说明                                                                                                                                                | 类型                      | 默认值                                                     |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- | ---------------------------------------------------------- |
+| v-model      | 已选值数组（`defineModel`）                                                                                                                         | `Array<string \| number>` | `[]`                                                       |
+| list         | 选项数据列表（泛型 `T`）                                                                                                                            | `T[]`                     | `undefined`                                                |
+| keys         | 选项字段映射：`value` / `label` / `disabled`                                                                                                        | `KeysType`                | `{ value: 'value', label: 'label', disabled: 'disabled' }` |
+| multiple     | 多选模式（组件固定开启）                                                                                                                            | `boolean`                 | `true`                                                     |
+| clearable    | 是否可清空                                                                                                                                          | `boolean`                 | `true`                                                     |
+| （其余属性） | 全部通过 `v-bind="$attrs"` 透传给 [TDesign Select](https://tdesign.tencent.com/vue-next/components/select)，如 `placeholder`、`disabled`、`size` 等 | -                         | -                                                          |
 
 ### Expose
 
-| 方法名 | 说明 |
-| --- | --- |
+| 方法名          | 说明                                                               |
+| --------------- | ------------------------------------------------------------------ |
 | handleToggleAll | 手动触发全选切换，参数 `val: boolean`（`true`=全选，`false`=清空） |
 
 ## 使用须知

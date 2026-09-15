@@ -15,6 +15,7 @@ const renderTag = (h) =>
 以**组件方式**接收 `render` 回调（返回 VNode）并动态渲染任意组件/内容的包装器。适用于：业务侧习惯用 `render` 函数注入 UI（如列配置、动态表单），又希望以组件标签形式接入的场景。
 
 > 特性说明：
+>
 > - 接收 `render: (h) => VNode`，在内部组件 `render()` 中调用并输出；
 > - 每次渲染都会重新执行 `render` 回调，动态内容可响应式更新；
 > - 已声明 `update:value` 事件（供 `v-model:value` 使用），当前为预留状态。
@@ -40,8 +41,7 @@ import type { VNode } from 'vue'
 
 // 注意：render 回调必须使用组件对象（h(TInput)），
 // 字符串写法 h('t-input') 不会解析全局注册组件（会被当作原生元素）
-const renderInput = (h: any): VNode =>
-  h(TInput, { placeholder: 'render 函数渲染的输入框' })
+const renderInput = (h: any): VNode => h(TInput, { placeholder: 'render 函数渲染的输入框' })
 </script>
 ```
 
@@ -61,8 +61,7 @@ const renderInput = (h: any): VNode =>
 <script setup lang="ts">
 import { Button as TButton } from 'tdesign-vue-next'
 
-const renderBtn = (h: any) =>
-  h(TButton, { theme: 'primary' }, '渲染的按钮')
+const renderBtn = (h: any) => h(TButton, { theme: 'primary' }, '渲染的按钮')
 </script>
 ```
 
@@ -73,15 +72,15 @@ const renderBtn = (h: any) =>
 
 ### Props
 
-| 属性 | 说明 | 类型 |
-| --- | --- | --- |
+| 属性   | 说明                                          | 类型                |
+| ------ | --------------------------------------------- | ------------------- |
 | render | 渲染回调，返回要渲染的 VNode（接收 `h` 参数） | `(h: any) => VNode` |
 
 ### Events
 
-| 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
-| update:value | value 更新（配合 `v-model:value`） | `any` |
+| 事件名       | 说明                               | 回调参数 |
+| ------------ | ---------------------------------- | -------- |
+| update:value | value 更新（配合 `v-model:value`） | `any`    |
 
 ## 使用须知
 

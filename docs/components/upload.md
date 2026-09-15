@@ -123,35 +123,35 @@ const mockUpload = (file: File) =>
 
 ### Props
 
-| 参数 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| v-model | `string \| string[]` | `''` | 成功文件 URL（单文件 string，多文件 string[]） |
-| v-model:detailfiles | `DetailFiles[]` | — | 成功文件明细（name/url/previewUrl/date/size/source） |
-| v-model:loading | `boolean` | `false` | 是否有文件上传中 |
-| theme | `'file' \| 'file-drag' \| 'file-loading' \| 'image'` | `'file'` | 主题 |
-| multiple | `boolean` | `false` | 是否多选 |
-| max | `number` | `Infinity` | 最大文件数（多选时） |
-| accept | `string` | `'.png,.jpg,.jpeg'` | 接受的文件类型 |
-| size | `number` | — | 单文件大小上限 MB（file 默认 10，其余 5） |
-| requestMethod | `(file: File) => Promise<UploadResponse>` | — | 自定义上传函数（返回 `{ status, response: { fileUrl, previewUrl } }`） |
-| showTips | `boolean` | `true` | 是否显示提示文案 |
-| tips | `string` | — | 提示文案 |
-| fileName | `string` | — | 文件名（file 主题） |
-| isXlsxMaxNumber | `number` | `0` | xlsx 单次导入行数上限（0 不限制） |
-| fileList | `UploadFile[]` | — | 外部文件列表（回显辅助） |
-| disabled | `boolean` | `false` | 是否禁用 |
-| isShowFileList | `boolean` | `true` | 是否展示文件列表 |
-| buttonText | `string` | `'点击上传附件'` | 按钮文案 |
-| buttonIcon | `string` | — | 按钮图标 |
-| uploadPastedFiles | `boolean` | `true` | 是否支持粘贴上传 |
-| zipMode | `boolean` | `false` | zip 模式：压缩包按 accept 解压展开 |
+| 参数                | 类型                                                 | 默认值              | 说明                                                                   |
+| ------------------- | ---------------------------------------------------- | ------------------- | ---------------------------------------------------------------------- |
+| v-model             | `string \| string[]`                                 | `''`                | 成功文件 URL（单文件 string，多文件 string[]）                         |
+| v-model:detailfiles | `DetailFiles[]`                                      | —                   | 成功文件明细（name/url/previewUrl/date/size/source）                   |
+| v-model:loading     | `boolean`                                            | `false`             | 是否有文件上传中                                                       |
+| theme               | `'file' \| 'file-drag' \| 'file-loading' \| 'image'` | `'file'`            | 主题                                                                   |
+| multiple            | `boolean`                                            | `false`             | 是否多选                                                               |
+| max                 | `number`                                             | `Infinity`          | 最大文件数（多选时）                                                   |
+| accept              | `string`                                             | `'.png,.jpg,.jpeg'` | 接受的文件类型                                                         |
+| size                | `number`                                             | —                   | 单文件大小上限 MB（file 默认 10，其余 5）                              |
+| requestMethod       | `(file: File) => Promise<UploadResponse>`            | —                   | 自定义上传函数（返回 `{ status, response: { fileUrl, previewUrl } }`） |
+| showTips            | `boolean`                                            | `true`              | 是否显示提示文案                                                       |
+| tips                | `string`                                             | —                   | 提示文案                                                               |
+| fileName            | `string`                                             | —                   | 文件名（file 主题）                                                    |
+| isXlsxMaxNumber     | `number`                                             | `0`                 | xlsx 单次导入行数上限（0 不限制）                                      |
+| fileList            | `UploadFile[]`                                       | —                   | 外部文件列表（回显辅助）                                               |
+| disabled            | `boolean`                                            | `false`             | 是否禁用                                                               |
+| isShowFileList      | `boolean`                                            | `true`              | 是否展示文件列表                                                       |
+| buttonText          | `string`                                             | `'点击上传附件'`    | 按钮文案                                                               |
+| buttonIcon          | `string`                                             | —                   | 按钮图标                                                               |
+| uploadPastedFiles   | `boolean`                                            | `true`              | 是否支持粘贴上传                                                       |
+| zipMode             | `boolean`                                            | `false`             | zip 模式：压缩包按 accept 解压展开                                     |
 
 ### Expose
 
-| 方法 | 说明 |
-| --- | --- |
+| 方法       | 说明                       |
+| ---------- | -------------------------- |
 | clearFiles | 清空文件列表与 detailfiles |
-| getFiles | 获取当前 fileList |
+| getFiles   | 获取当前 fileList          |
 
 ### 说明
 

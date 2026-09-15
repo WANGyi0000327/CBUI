@@ -6,10 +6,7 @@
  * 供 gen:index 扫描与 resolver 按需加载。
  */
 import VoiceToText from './VoiceToText.vue'
-import type {
-  AudioTranscriptHookProps,
-  TranscriptItem,
-} from './types/toText'
+import type { AudioTranscriptHookProps, TranscriptItem } from './types/toText'
 
 export { VoiceToText }
 export type { AudioTranscriptHookProps, TranscriptItem }

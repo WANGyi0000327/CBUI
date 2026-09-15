@@ -46,10 +46,7 @@ const audioSrc = '/demo-voice.wav'
 
 ```vue
 <template>
-  <CbVoiceToText
-    :transcripts="transcripts"
-    :audio-src="audioSrc"
-  />
+  <CbVoiceToText :transcripts="transcripts" :audio-src="audioSrc" />
 </template>
 
 <script setup lang="ts">
@@ -88,27 +85,27 @@ const audioSrc = '/demo-voice.wav'
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| transcripts | 转文字数据数组 | `TranscriptItem[]` | `[]` |
-| audioSrc | 音频文件地址 | `string` | `-` |
-| audioId | 音频唯一标识（多实例管理） | `string` | `transcript-audio-{Date.now()}` |
-| isShowAudio | 是否展示音频播放器（预留） | `boolean` | `false` |
+| 属性        | 说明                       | 类型               | 默认值                          |
+| ----------- | -------------------------- | ------------------ | ------------------------------- |
+| transcripts | 转文字数据数组             | `TranscriptItem[]` | `[]`                            |
+| audioSrc    | 音频文件地址               | `string`           | `-`                             |
+| audioId     | 音频唯一标识（多实例管理） | `string`           | `transcript-audio-{Date.now()}` |
+| isShowAudio | 是否展示音频播放器（预留） | `boolean`          | `false`                         |
 
 ### TranscriptItem
 
-| 字段 | 说明 | 类型 |
-| --- | --- | --- |
-| ChannelId | 频道 ID | `number` |
-| Text | 文本内容 | `string` |
-| EmotionValue | 情绪值 | `number` |
-| SilenceDuration | 静默时长 | `number` |
-| BeginTime | 开始时间（毫秒） | `number` |
-| EndTime | 结束时间（毫秒） | `number` |
-| SpeakerId | 说话人：`'0'` 代表 A | `string` |
+| 字段            | 说明                 | 类型     |
+| --------------- | -------------------- | -------- |
+| ChannelId       | 频道 ID              | `number` |
+| Text            | 文本内容             | `string` |
+| EmotionValue    | 情绪值               | `number` |
+| SilenceDuration | 静默时长             | `number` |
+| BeginTime       | 开始时间（毫秒）     | `number` |
+| EndTime         | 结束时间（毫秒）     | `number` |
+| SpeakerId       | 说话人：`'0'` 代表 A | `string` |
 
 ### Events
 
-| 事件 | 说明 |
-| --- | --- |
+| 事件  | 说明                     |
+| ----- | ------------------------ |
 | close | 关闭（预留，供业务扩展） |

@@ -54,10 +54,7 @@ describe('CbTimeSelect', () => {
   it('formatType=array 时输出数组格式', async () => {
     const wrapper = mountTs({ formatType: 'array' })
     await wrapper.findAll('.month-item')[0].trigger('click')
-    const last = wrapper.emitted('update:modelValue')!.at(-1)![0] as [
-      string,
-      string,
-    ]
+    const last = wrapper.emitted('update:modelValue')!.at(-1)![0] as [string, string]
     expect(Array.isArray(last)).toBe(true)
     expect(last[0]).toContain('00:00:00')
     expect(last[1]).toContain('23:59:59')
@@ -100,9 +97,7 @@ describe('CbTimeSelect', () => {
   it('isLastMonth 模式初始定位上个月', () => {
     const wrapper = mountTs({ isLastMonth: true })
     const lastMonthDate = new Date(Y, M - 2, 1)
-    expect(wrapper.find('.year-text').text()).toBe(
-      String(lastMonthDate.getFullYear())
-    )
+    expect(wrapper.find('.year-text').text()).toBe(String(lastMonthDate.getFullYear()))
     const val = wrapper.emitted('update:modelValue')![0][0] as {
       month: number | null
     }

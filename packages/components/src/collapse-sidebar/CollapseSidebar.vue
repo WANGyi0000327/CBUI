@@ -28,9 +28,7 @@
       :class="visible ? 'btn-right' : 'btn-left'"
       @click="handleToggle"
     >
-      <cb-icon
-        :name="side === 'right' ? 'sanjiaojiantou_zuo' : 'sanjiaojiantou_you'"
-      />
+      <cb-icon :name="side === 'right' ? 'sanjiaojiantou_zuo' : 'sanjiaojiantou_you'" />
     </div>
   </div>
 </template>

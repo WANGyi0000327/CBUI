@@ -7,8 +7,10 @@ import Upload from './Upload.vue'
 const TButtonStub = defineComponent({
   name: 'TButton',
   props: ['loading', 'icon'],
-  setup: (_props, { slots, attrs }) => () =>
-    h('button', attrs, slots.default ? slots.default() : []),
+  setup:
+    (_props, { slots, attrs }) =>
+    () =>
+      h('button', attrs, slots.default ? slots.default() : []),
 })
 const TLoadingStub = defineComponent({
   name: 'TLoading',

@@ -70,30 +70,30 @@ const typeList = [
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| typeList | 状态配置列表（按 id / value 匹配 status） | `tagType[]` | `[]` |
-| status | 当前状态值 | `string \| number` | `''` |
-| tagStyle | 标签自定义样式 | `Record<string, any>` | `{}` |
-| size | 标签尺寸 | `string` | `'large'` |
-| showType | 展示形式 | `'tag' \| 'text'` | `'tag'` |
-| dot | 是否显示前置圆点 | `boolean` | — |
+| 属性     | 说明                                      | 类型                  | 默认值    |
+| -------- | ----------------------------------------- | --------------------- | --------- |
+| typeList | 状态配置列表（按 id / value 匹配 status） | `tagType[]`           | `[]`      |
+| status   | 当前状态值                                | `string \| number`    | `''`      |
+| tagStyle | 标签自定义样式                            | `Record<string, any>` | `{}`      |
+| size     | 标签尺寸                                  | `string`              | `'large'` |
+| showType | 展示形式                                  | `'tag' \| 'text'`     | `'tag'`   |
+| dot      | 是否显示前置圆点                          | `boolean`             | —         |
 
 ### tagType
 
-| 属性 | 说明 | 类型 |
-| --- | --- | --- |
-| id | 状态 id（匹配 status） | `string \| number` |
-| name | 状态名称 | `string` |
-| color | 状态颜色 | `string` |
-| label | 状态标签（name 的备选） | `string` |
-| value | 状态值（匹配 status，可与 id 二选一） | `boolean \| string \| number` |
-| variant | t-tag 变体 | `string \| 'dark'` |
+| 属性    | 说明                                  | 类型                          |
+| ------- | ------------------------------------- | ----------------------------- |
+| id      | 状态 id（匹配 status）                | `string \| number`            |
+| name    | 状态名称                              | `string`                      |
+| color   | 状态颜色                              | `string`                      |
+| label   | 状态标签（name 的备选）               | `string`                      |
+| value   | 状态值（匹配 status，可与 id 二选一） | `boolean \| string \| number` |
+| variant | t-tag 变体                            | `string \| 'dark'`            |
 
 ### Slots
 
-| 插槽 | 说明 |
-| --- | --- |
-| tagIcon | 标签图标（有值时标签左侧显示） |
+| 插槽           | 说明                                                 |
+| -------------- | ---------------------------------------------------- |
+| tagIcon        | 标签图标（有值时标签左侧显示）                       |
 | name / default | 自定义内容（作用域插槽，参数为当前匹配的 `tagType`） |
-| tagSufix | 标签后缀内容 |
+| tagSufix       | 标签后缀内容                                         |

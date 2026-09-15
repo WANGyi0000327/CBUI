@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="custom-upload"
-    ref="customUploadRef"
-  >
+  <div ref="customUploadRef" class="custom-upload">
     <File
       v-if="theme === 'file' || theme === 'file-drag' || theme === 'file-loading'"
       ref="uploadFileRef"
@@ -13,9 +10,9 @@
       :tips="tips"
       :loading="loading"
       :file-list="fileList"
-      :fileName="fileName"
-      :buttonText="buttonText"
-      :buttonIcon="buttonIcon"
+      :file-name="fileName"
+      :button-text="buttonText"
+      :button-icon="buttonIcon"
       :zip-mode="zipMode"
       @delete="handleFileDel"
       @re-upload="handleFileReUpload"
@@ -29,7 +26,7 @@
       :multiple="multiple"
       :accept="accept"
       :show-tips="showTips"
-      :hideImage="hideImage"
+      :hide-image="hideImage"
       :tips="tips"
       :file-list="fileList"
       :max="max"
@@ -50,11 +47,7 @@ import { countExcelData } from './hook'
 import { uploadProps } from './usePropsHooks'
 import { isZipFile, unZipByAccept } from './utils/index'
 import dayjs from 'dayjs'
-import {
-  useElementVisibility,
-  useEventListener,
-  useElementHover,
-} from '@vueuse/core'
+import { useElementVisibility, useEventListener, useElementHover } from '@vueuse/core'
 defineOptions({
   name: 'CbUpload',
 })
@@ -67,9 +60,7 @@ interface DetailFiles {
   size: number
 }
 const props = defineProps(uploadProps)
-const actualSize = computed(() =>
-  props.size ? props.size : props.theme === 'file' ? 10 : 5
-)
+const actualSize = computed(() => (props.size ? props.size : props.theme === 'file' ? 10 : 5))
 const maxSize = computed(() => {
   return actualSize.value * 1024 * 1024
 })
@@ -80,9 +71,9 @@ const modelValue = defineModel<string[] | string>()
 const detailfiles = defineModel<DetailFiles[]>('detailfiles')
 const loading = defineModel<boolean>('loading')
 const fileList = ref<UploadFile[]>([])
-const upload = (props.requestMethod ||
-  serviceManager?.getHttp().upload ||
-  (() => {})) as (file: File) => Promise<any>
+const upload = (props.requestMethod || serviceManager?.getHttp().upload || (() => {})) as (
+  file: File
+) => Promise<any>
 const uploadFileRef = ref()
 const uploadImageRef = ref()
 const handleFilesChange = async (e: Event) => {
@@ -152,10 +143,7 @@ const handleFilesChange = async (e: Event) => {
 }
 const handleUploadFile = (files: UploadFile[]) => {
   let startIdx = fileList.value.length
-  if (
-    (props.theme === 'file' || props.theme === 'file-loading') &&
-    !props.multiple
-  ) {
+  if ((props.theme === 'file' || props.theme === 'file-loading') && !props.multiple) {
     fileList.value = [...files]
     startIdx = 0
   } else {
@@ -300,11 +288,7 @@ watch(
 useEventListener(document, 'paste', (event: ClipboardEvent) => {
   if (!isVisible.value || !isHovered.value) return
   const target = event.target as HTMLElement
-  if (
-    target.tagName === 'INPUT' ||
-    target.tagName === 'TEXTAREA' ||
-    target.isContentEditable
-  ) {
+  if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
     return
   }
   const clipboardFiles = event.clipboardData?.files

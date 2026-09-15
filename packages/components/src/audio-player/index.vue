@@ -1,35 +1,15 @@
 <template>
   <div class="w-full">
-    <div
-      v-if="styletype === '1'"
-      class="audio-player"
-    >
+    <div v-if="styletype === '1'" class="audio-player">
       <!-- 播放/暂停按钮 -->
-      <div
-        class="play-btn"
-        @click="togglePlay"
-      >
-        <CbIcon
-          v-if="!isPlaying"
-          :size="IconSize"
-          :name="'bofang'"
-        />
-        <CbIcon
-          v-else
-          :size="IconSize"
-          :name="'zanting'"
-        />
+      <div class="play-btn" @click="togglePlay">
+        <CbIcon v-if="!isPlaying" :size="IconSize" :name="'bofang'" />
+        <CbIcon v-else :size="IconSize" :name="'zanting'" />
       </div>
       <!-- 进度条区域 -->
-      <div
-        class="progress-wrapper"
-        @click="seekByClick"
-      >
+      <div class="progress-wrapper" @click="seekByClick">
         <div class="progress-bar">
-          <div
-            class="progress-filled"
-            :style="{ width: progressPercent + '%' }"
-          ></div>
+          <div class="progress-filled" :style="{ width: progressPercent + '%' }"></div>
           <div
             class="progress-handle"
             :style="{ left: progressPercent + '%' }"
@@ -60,18 +40,12 @@
           </Select>
         </div>
         <t-divider layout="vertical" />
-        <div
-          class="cursor-pointer w-[16px] ml-[8px]"
-          @click="downLoadXMLFile(src)"
-        >
+        <div class="cursor-pointer w-[16px] ml-[8px]" @click="downLoadXMLFile(src)">
           <CloudDownloadIcon />
         </div>
       </div>
     </div>
-    <div
-      v-else
-      class="audio-player2"
-    >
+    <div v-else class="audio-player2">
       <!-- 进度条区域 -->
       <!-- <div class="progress-wrapper" @click="seekByClick">
         <div class="progress-bar">
@@ -83,20 +57,9 @@
       </div> -->
       <div class="play_bottom">
         <!-- 播放/暂停按钮 -->
-        <div
-          class="play-btn"
-          @click="togglePlay"
-        >
-          <CbIcon
-            v-if="!isPlaying"
-            :size="IconSize"
-            :name="'bofang'"
-          />
-          <CbIcon
-            v-else
-            :size="IconSize"
-            :name="'zanting'"
-          />
+        <div class="play-btn" @click="togglePlay">
+          <CbIcon v-if="!isPlaying" :size="IconSize" :name="'bofang'" />
+          <CbIcon v-else :size="IconSize" :name="'zanting'" />
         </div>
         <!-- 时间显示 -->
         <div class="time-display">

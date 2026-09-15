@@ -1,6 +1,1 @@
-export type {
-  TableColumn,
-  ColumnOption,
-  ColumnConfig,
-  ColumnControlProps,
-} from './table'
+export type { TableColumn, ColumnOption, ColumnConfig, ColumnControlProps } from './table'

@@ -73,23 +73,23 @@ const onSearch = (val: string) => {
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| modelValue | 输入值（`v-model` 绑定，自动 trim） | `string` | — |
-| loading | 加载中（预留） | `boolean` | `false` |
-| disabled | 是否禁用 | `boolean` | `false` |
-| searchwidth | 输入框宽度 | `string` | `'300px'` |
+| 属性        | 说明                                | 类型      | 默认值    |
+| ----------- | ----------------------------------- | --------- | --------- |
+| modelValue  | 输入值（`v-model` 绑定，自动 trim） | `string`  | —         |
+| loading     | 加载中（预留）                      | `boolean` | `false`   |
+| disabled    | 是否禁用                            | `boolean` | `false`   |
+| searchwidth | 输入框宽度                          | `string`  | `'300px'` |
 
 > 其余属性透传给 t-input（如 `placeholder`、`maxlength` 等）。
 
 ### Events
 
-| 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
+| 事件名 | 说明                              | 回调参数                                      |
+| ------ | --------------------------------- | --------------------------------------------- |
 | search | 回车或点击搜索按钮/清空图标时触发 | `(value?: string)` 当前关键词（清空时无参数） |
 
 ### Expose
 
-| 方法 | 说明 |
-| --- | --- |
+| 方法        | 说明       |
+| ----------- | ---------- |
 | handleFocus | 聚焦输入框 |

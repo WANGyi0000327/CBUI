@@ -15,7 +15,7 @@
   >
     <div class="fileView_body" @contextmenu="handleContextMenu">
       <div class="header">
-        <div>{{ title || "" }}</div>
+        <div>{{ title || '' }}</div>
         <div class="close" @click="close">
           <cb-icon name="guanbi" color="#666666" size="26px"></cb-icon>
         </div>
@@ -30,10 +30,7 @@
             @click="handleClick(item.url, item.name, item.fileName)"
           >
             <img :src="getTopPic(item.url)" alt="" />
-            <div
-              class="fvd-tab-item-name"
-              :title="item.fileName || getName(item.url)"
-            >
+            <div class="fvd-tab-item-name" :title="item.fileName || getName(item.url)">
               <div class="textname">
                 {{ item.fileName || getName(item.url) }}
               </div>
@@ -58,19 +55,10 @@
           <CbVideo v-else-if="fileType === 'video'" :src="videoUrl"></CbVideo>
           <div v-else class="no-support">
             <p>抱歉，当前文件类型暂不支持在线预览</p>
-            <t-button
-              block
-              theme="primary"
-              variant="base"
-              class="w-[100px]!"
-              @click="download()"
-            >
+            <t-button block theme="primary" variant="base" class="w-[100px]!" @click="download()">
               <template #icon>
                 <cb-icon
-                  style="
-                    font-size: 18px !important;
-                    margin-right: 4px !important;
-                  "
+                  style="font-size: 18px !important; margin-right: 4px !important"
                   name="xiazai"
                 />
               </template>
@@ -167,8 +155,7 @@ watch(
     console.log('🚀 ~ newVal:', newVal)
     if (newVal) {
       nextTick(() => {
-        const openUrl =
-          props.nowUrl || (props.fileList[0] && props.fileList[0].url) || ''
+        const openUrl = props.nowUrl || (props.fileList[0] && props.fileList[0].url) || ''
         const openname = props.nowname || props.fileList[0]?.name || ''
         const openfileName = props.fileName || props.fileList[0]?.fileName || ''
         setView(openUrl, openname, openfileName)
@@ -274,8 +261,7 @@ const getFileType = (url: string, getType = false): string => {
     return 'html'
   }
   // const fileExt = url.split('.').pop()?.toLowerCase() || ''
-  const fileExt =
-    url?.split(/[?#]/)[0]?.split('.').pop()?.trim().toLowerCase() || ''
+  const fileExt = url?.split(/[?#]/)[0]?.split('.').pop()?.trim().toLowerCase() || ''
   if (getType) {
     return fileExt
   }
@@ -303,16 +289,14 @@ defineExpose({
 })
 </script>
 <style lang="scss">
- .t-dialog__ctx.cb-file-preview-dialog{
-  .t-dialog{
-    padding: 0 16px 24px!important;
-    .t-dialog__body{
-      padding: 0!important;
+.t-dialog__ctx.cb-file-preview-dialog {
+  .t-dialog {
+    padding: 0 16px 24px !important;
+    .t-dialog__body {
+      padding: 0 !important;
     }
-    
   }
 }
- 
 </style>
 <style lang="scss" scoped>
 .fileView_body {
@@ -329,7 +313,7 @@ defineExpose({
     justify-content: space-between;
     align-items: center;
     color: #666666;
-    font-family: "PingFang SC";
+    font-family: 'PingFang SC';
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
@@ -350,7 +334,7 @@ defineExpose({
     display: flex;
     .Exhibit {
       width: calc(100% - 300px);
-      height:100%;
+      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;

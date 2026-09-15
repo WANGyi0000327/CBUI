@@ -7,13 +7,7 @@
  *
  * 原始 ButtonFold.vue 保持用户代码不动，所有"对外适配"在此层处理
  */
-import {
-  defineComponent,
-  getCurrentInstance,
-  h,
-  type Component,
-  type PropType,
-} from 'vue'
+import { defineComponent, getCurrentInstance, h, type Component, type PropType } from 'vue'
 import RawButtonFold from './ButtonFold.vue'
 import Icon from '../icon'
 import type { ButtonFoldProps, ButtonFoldType } from './types'

@@ -29,9 +29,7 @@ describe('CbPagination', () => {
 
   it('默认 pageSizeOptions 为 30/50/100', () => {
     const wrapper = mountPage()
-    expect(wrapper.find('.stub-options').text()).toBe(
-      '30 条/页|50 条/页|100 条/页'
-    )
+    expect(wrapper.find('.stub-options').text()).toBe('30 条/页|50 条/页|100 条/页')
   })
 
   it('支持自定义 pageSizeOptions', () => {
@@ -46,8 +44,6 @@ describe('CbPagination', () => {
 
   it('透传 total 到分页组件', () => {
     const wrapper = mountPage({ total: 300 })
-    expect(wrapper.find('.stub-tpagination').attributes('data-total')).toBe(
-      '300'
-    )
+    expect(wrapper.find('.stub-tpagination').attributes('data-total')).toBe('300')
   })
 })

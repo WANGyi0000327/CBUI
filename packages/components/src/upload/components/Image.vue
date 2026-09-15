@@ -2,8 +2,8 @@
   <div class="custom-upload">
     <template v-for="(item, idx) in fileList" :key="item.name + idx">
       <div
-        class="custom-upload-preview custom-upload-success"
         v-if="item.status === 'success' && !props.hideImage"
+        class="custom-upload-preview custom-upload-success"
       >
         <!-- <img :src="item.previewUrl" /> -->
         <template v-if="isPdfFile(item.name)">
@@ -14,12 +14,7 @@
         </template>
         <div class="custom-upload-operation">
           <div class="close">
-            <cb-icon
-              color="#fff"
-              name="guanbi"
-              size="14px"
-              @click="handleFileDel(idx)"
-            />
+            <cb-icon color="#fff" name="guanbi" size="14px" @click="handleFileDel(idx)" />
           </div>
           <t-image-viewer v-model:visible="visible" :images="previewImg">
             <template #trigger>
@@ -33,54 +28,38 @@
           </t-image-viewer>
         </div>
       </div>
-      <div
-        class="custom-upload-preview custom-upload-fail"
-        v-if="item.status === 'fail'"
-      >
+      <div v-if="item.status === 'fail'" class="custom-upload-preview custom-upload-fail">
         <cb-icon size="20px" name="cuowu" color="var(--td-color-danger)" />
         <p>上传错误</p>
         <div class="custom-upload-operation">
           <div class="close">
-            <cb-icon
-              color="#fff"
-              name="guanbi"
-              size="14px"
-              @click="handleFileDel(idx)"
-            />
+            <cb-icon color="#fff" name="guanbi" size="14px" @click="handleFileDel(idx)" />
           </div>
-          <cb-icon
-            name="chongxin"
-            color="#fff"
-            size="16px"
-            @click="handleFileReUpload(idx)"
-          />
+          <cb-icon name="chongxin" color="#fff" size="16px" @click="handleFileReUpload(idx)" />
         </div>
       </div>
-      <div
-        class="custom-upload-preview custom-upload-waiting"
-        v-if="item.status === 'waiting'"
-      >
+      <div v-if="item.status === 'waiting'" class="custom-upload-preview custom-upload-waiting">
         <t-loading size="20px" color="var(--td-brand-color)" />
         <p>上传中 {{ item.percent }}%</p>
       </div>
     </template>
-    <div class="custom-upload-trigger" v-if="showUploadTrigger">
+    <div v-if="showUploadTrigger" class="custom-upload-trigger">
       <cb-icon name="tianjiatupian" />
       <p>上传图片</p>
       <input
-        type="file"
-        ref="inputFileRef"
         id="file"
+        ref="inputFileRef"
+        type="file"
         :multiple="multiple"
         :accept="accept"
         name="file"
         @change="handleFilesChange"
       />
     </div>
-    <div class="custom-upload-tips" v-if="showTips">{{ tips }}</div>
+    <div v-if="showTips" class="custom-upload-tips">{{ tips }}</div>
     <CbFilepreview
-      v-model:dialogVisible="dialogVisible"
-      :fileList="previewImages"
+      v-model:dialog-visible="dialogVisible"
+      :file-list="previewImages"
     ></CbFilepreview>
   </div>
 </template>

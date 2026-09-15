@@ -68,12 +68,7 @@ const width = ref(274)
 ```vue
 <template>
   <div style="display: flex; height: 220px;">
-    <CbCollapseSidebar
-      v-model:width="width"
-      resizable
-      theme="brand"
-      :init-width="274"
-    >
+    <CbCollapseSidebar v-model:width="width" resizable theme="brand" :init-width="274">
       <div style="padding: 16px;">可拖拽侧边栏</div>
     </CbCollapseSidebar>
     <div style="flex: 1;">内容区域（当前宽度：{{ width }}px）</div>
@@ -125,18 +120,18 @@ const width = ref(274)
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| side | 侧边栏位置 | `'left' \| 'right'` | `'left'` |
-| theme | 主题：`light` 默认 / `brand` 品牌色折叠按钮 | `'light' \| 'brand'` | `'light'` |
-| resizable | 是否可拖拽调整宽度 | `boolean` | `false` |
-| initWidth | 初始宽度（收起后展开恢复该值） | `number` | `274` |
-| minWidth | 最小宽度（拖拽） | `number` | `200` |
-| maxWidth | 最大宽度（拖拽） | `number` | `600` |
-| v-model:width | 当前宽度 | `number` | `-` |
+| 属性          | 说明                                        | 类型                 | 默认值    |
+| ------------- | ------------------------------------------- | -------------------- | --------- |
+| side          | 侧边栏位置                                  | `'left' \| 'right'`  | `'left'`  |
+| theme         | 主题：`light` 默认 / `brand` 品牌色折叠按钮 | `'light' \| 'brand'` | `'light'` |
+| resizable     | 是否可拖拽调整宽度                          | `boolean`            | `false`   |
+| initWidth     | 初始宽度（收起后展开恢复该值）              | `number`             | `274`     |
+| minWidth      | 最小宽度（拖拽）                            | `number`             | `200`     |
+| maxWidth      | 最大宽度（拖拽）                            | `number`             | `600`     |
+| v-model:width | 当前宽度                                    | `number`             | `-`       |
 
 ### Slots
 
-| 插槽 | 说明 |
-| --- | --- |
+| 插槽    | 说明       |
+| ------- | ---------- |
 | default | 侧边栏内容 |

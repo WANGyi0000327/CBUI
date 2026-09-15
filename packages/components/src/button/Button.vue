@@ -1,5 +1,11 @@
 <template>
-  <TButton v-bind="$attrs" :type="nativeType" :theme="changeTheme" :class="effectiveTheme" :icon="renderIcon">
+  <TButton
+    v-bind="$attrs"
+    :type="nativeType"
+    :theme="changeTheme"
+    :class="effectiveTheme"
+    :icon="renderIcon"
+  >
     <!--
       传递具名插槽：用 Object.entries 后索引访问（slotEntry[0] = 插槽名），
       避免 `v-for="(_, name) in $slots"` 解构写法在 noImplicitAny 下的

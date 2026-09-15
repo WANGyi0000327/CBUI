@@ -69,14 +69,14 @@ pnpm gen modal 模态框
 
 **常见最小修正类型**（历史案例）：
 
-| 修正 | 场景 | 案例 |
-| --- | --- | --- |
-| 类型导入源替换 | 业务用 `@repo/tdesign-ui` 别名，本库无此包 | CbPublicTable → 改为 `tdesign-vue-next` |
-| `defineModel` 泛型补齐 | vue-tsc 报无匹配重载 | `defineModel<number[]>(...)` |
-| 组件名去重/兼容 | 副本组件与原组件同名 | checkTag.vue 内部 name `CbStatusTag` |
-| TSX → `h()` 渲染 | eslint 的 vue parser 不解析 `.vue` 内 JSX | `sortIcon: () => h('cb-icon', {...})` |
-| 补缺失类型定义 | 业务源码引用了未粘贴的定义 | interface.ts 补 `SearchItem` |
-| 模板类型收窄 | prop 可 undefined 传给必填类型 | `:typeList="highSearchList \|\| []"` |
+| 修正                   | 场景                                       | 案例                                    |
+| ---------------------- | ------------------------------------------ | --------------------------------------- |
+| 类型导入源替换         | 业务用 `@repo/tdesign-ui` 别名，本库无此包 | CbPublicTable → 改为 `tdesign-vue-next` |
+| `defineModel` 泛型补齐 | vue-tsc 报无匹配重载                       | `defineModel<number[]>(...)`            |
+| 组件名去重/兼容        | 副本组件与原组件同名                       | checkTag.vue 内部 name `CbStatusTag`    |
+| TSX → `h()` 渲染       | eslint 的 vue parser 不解析 `.vue` 内 JSX  | `sortIcon: () => h('cb-icon', {...})`   |
+| 补缺失类型定义         | 业务源码引用了未粘贴的定义                 | interface.ts 补 `SearchItem`            |
+| 模板类型收窄           | prop 可 undefined 传给必填类型             | `:typeList="highSearchList \|\| []"`    |
 
 ### 方式三：手动创建
 
@@ -94,14 +94,14 @@ pnpm gen:index   # 自动更新全量入口
 
 ### 3.1 组件命名
 
-| 类型 | 规则 | 示例 |
-| --- | --- | --- |
-| 目录名 | kebab-case | `public-table` |
-| 组件文件名 | PascalCase | `PublicTable.vue` |
-| 组件 name | 前缀 + PascalCase | `CbPublicTable` |
-| 模板使用 | 前缀 + PascalCase | `<CbPublicTable>` |
-| CSS 类 | `cb-` 前缀 + kebab | `.cb-public-table` |
-| 类型接口 | PascalCase + Props/Emits | `PublicTableProps` |
+| 类型       | 规则                     | 示例               |
+| ---------- | ------------------------ | ------------------ |
+| 目录名     | kebab-case               | `public-table`     |
+| 组件文件名 | PascalCase               | `PublicTable.vue`  |
+| 组件 name  | 前缀 + PascalCase        | `CbPublicTable`    |
+| 模板使用   | 前缀 + PascalCase        | `<CbPublicTable>`  |
+| CSS 类     | `cb-` 前缀 + kebab       | `.cb-public-table` |
+| 类型接口   | PascalCase + Props/Emits | `PublicTableProps` |
 
 ### 3.2 SFC 骨架
 
@@ -119,7 +119,7 @@ withDefaults(defineProps<XxxProps>(), {})
 </script>
 
 <style scoped lang="scss">
-@use "@cb-ui/theme/src/variables" as *;
+@use '@cb-ui/theme/src/variables' as *;
 
 .cb-xxx {
   // 组件样式
@@ -146,11 +146,11 @@ export default Xxx
 
 侧边栏由 `docs/.vitepress/config.ts` 自动扫描 `docs/components/` 生成，但组件归属哪个分组由三个集合决定：
 
-| 集合 | 判定标准 | 示例 |
-| --- | --- | --- |
-| `BASE_SUBGROUPS` | 基础组件，按功能再分 4 子组 | 按钮与操作 / 输入与选择 / 数据展示 / 布局与容器 |
+| 集合                    | 判定标准                           | 示例                                                                                   |
+| ----------------------- | ---------------------------------- | -------------------------------------------------------------------------------------- |
+| `BASE_SUBGROUPS`        | 基础组件，按功能再分 4 子组        | 按钮与操作 / 输入与选择 / 数据展示 / 布局与容器                                        |
 | `MEDIA_TOOL_COMPONENTS` | 媒体与工具：有独立能力、不依赖业务 | audio-player / video-player / copy / count-up-number / image-secret / render-component |
-| `BUSINESS_COMPONENTS` | 业务组件：依赖业务场景或数据服务 | upload / public-table / permission-tree / dynamic-form-generator 等 |
+| `BUSINESS_COMPONENTS`   | 业务组件：依赖业务场景或数据服务   | upload / public-table / permission-tree / dynamic-form-generator 等                    |
 
 新增组件时在对应集合登记（或按分类标准新增集合），**新增/修改 md 后需重启 `pnpm dev`** 侧边栏才刷新。
 
@@ -176,12 +176,12 @@ title: Xxx 组件名
 ### Props
 
 | 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
+| ---- | ---- | ---- | ------ |
 
 ### Events
 
 | 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
+| ------ | ---- | -------- |
 ```
 
 演示示例（`DemoBlock` 渲染 + `#code` 展示源码）：
@@ -190,9 +190,9 @@ title: Xxx 组件名
 <DemoBlock>
   <CbXxx />
 
-  <template #code>
-    <!-- 将下方 Vue 源码示例写入此处 -->
-  </template>
+<template #code>
+<!-- 将下方 Vue 源码示例写入此处 -->
+</template>
 </DemoBlock>
 ```
 
@@ -246,15 +246,15 @@ describe('CbXxx', () => {
 
 ## 七、验证链（交付前必跑）
 
-| 步骤 | 命令 | 通过标准 |
-| --- | --- | --- |
-| 1. 类型检查 | `npx vue-tsc --noEmit -p packages/components/tsconfig.json` | 0 error |
-| 2. 代码规范 | `pnpm lint` | 0 errors（any 基线 warning 可接受） |
-| 3. 单元测试 | `npx vitest run packages/components/src/<name>` | 全过 |
-| 4. 全量回归 | `pnpm test` | 28 files / 160 tests |
-| 5. 组件库构建 | `pnpm build:lib` | dist 产物生成 |
-| 6. 文档站构建 | 先停 dev → `pnpm build:docs` | 构建通过、legacy 警告 0 |
-| 7. 浏览器实测 | `pnpm dev` → 访问 `/components/<name>.html` | 渲染 + 交互正常 |
+| 步骤          | 命令                                                        | 通过标准                            |
+| ------------- | ----------------------------------------------------------- | ----------------------------------- |
+| 1. 类型检查   | `npx vue-tsc --noEmit -p packages/components/tsconfig.json` | 0 error                             |
+| 2. 代码规范   | `pnpm lint`                                                 | 0 errors（any 基线 warning 可接受） |
+| 3. 单元测试   | `npx vitest run packages/components/src/<name>`             | 全过                                |
+| 4. 全量回归   | `pnpm test`                                                 | 28 files / 160 tests                |
+| 5. 组件库构建 | `pnpm build:lib`                                            | dist 产物生成                       |
+| 6. 文档站构建 | 先停 dev → `pnpm build:docs`                                | 构建通过、legacy 警告 0             |
+| 7. 浏览器实测 | `pnpm dev` → 访问 `/components/<name>.html`                 | 渲染 + 交互正常                     |
 
 **关键坑位**：
 

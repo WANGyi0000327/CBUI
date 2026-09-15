@@ -50,22 +50,22 @@ const typeList = [
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| typeList | 状态配置列表（按 id / value 匹配 status） | `tagType[]` | `[]` |
-| status | 当前状态值 | `string \| number` | `''` |
-| variant | 变体（预留） | `string` | `''` |
+| 属性     | 说明                                      | 类型               | 默认值 |
+| -------- | ----------------------------------------- | ------------------ | ------ |
+| typeList | 状态配置列表（按 id / value 匹配 status） | `tagType[]`        | `[]`   |
+| status   | 当前状态值                                | `string \| number` | `''`   |
+| variant  | 变体（预留）                              | `string`           | `''`   |
 
 ### tagType
 
-| 属性 | 说明 | 类型 |
-| --- | --- | --- |
-| id | 状态 id（匹配 status） | `string \| number` |
-| name | 状态名称 | `string` |
-| color | 图标颜色 | `string` |
-| label | 状态标签（name 的备选） | `string` |
-| value | 状态值（匹配 status，可与 id 二选一） | `boolean \| string \| number` |
-| icon | 图标名（cb-icon name，取自库内 iconfont） | `string` |
-| textcolor | 文本颜色 | `string` |
+| 属性      | 说明                                      | 类型                          |
+| --------- | ----------------------------------------- | ----------------------------- |
+| id        | 状态 id（匹配 status）                    | `string \| number`            |
+| name      | 状态名称                                  | `string`                      |
+| color     | 图标颜色                                  | `string`                      |
+| label     | 状态标签（name 的备选）                   | `string`                      |
+| value     | 状态值（匹配 status，可与 id 二选一）     | `boolean \| string \| number` |
+| icon      | 图标名（cb-icon name，取自库内 iconfont） | `string`                      |
+| textcolor | 文本颜色                                  | `string`                      |
 
 > 图标名必须是组件库 iconfont 项目中已存在的（如 `zhengque`、`cuowu`、`yiwen` 等），否则图标不显示。

@@ -96,17 +96,14 @@ const getInitialState = () => {
     if (props.modelValue.year) {
       return {
         year: props.modelValue.year,
-        month:
-          props.modelValue.month !== undefined ? props.modelValue.month : null,
+        month: props.modelValue.month !== undefined ? props.modelValue.month : null,
       }
     }
   }
   return null
 }
 const initialState = getInitialState()
-const innerYear = ref(
-  initialState?.year || (props.isLastMonth ? lastMonthYear : currentYear)
-)
+const innerYear = ref(initialState?.year || (props.isLastMonth ? lastMonthYear : currentYear))
 const innerMonth = ref<number | null>(
   initialState
     ? initialState.month

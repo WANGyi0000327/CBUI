@@ -3,9 +3,7 @@ import { ref, computed, watch } from 'vue'
 import { serviceManager } from '#/config/api'
 // import { getTempAccessUrlMap } from "@/api/system/index";
 /** 附件项：纯 URL 字符串，或附件模式（showOnlyImages=false）下的对象 */
-export type FilePreviewImageName =
-  | string
-  | { url: string; name?: string; fileName?: string }
+export type FilePreviewImageName = string | { url: string; name?: string; fileName?: string }
 export function useFilePreview(props: {
   imageNames: Array<FilePreviewImageName>
   showOnlyImages: boolean
@@ -28,9 +26,7 @@ export function useFilePreview(props: {
     }
     loading.value = true
     // 准备参数
-    const params = props.showOnlyImages
-      ? names
-      : names.map((item: any) => item.url)
+    const params = props.showOnlyImages ? names : names.map((item: any) => item.url)
     try {
       //   const res: any = await getTempAccessUrlMap(params);
       const res: any = {}
@@ -62,8 +58,7 @@ export function useFilePreview(props: {
       return 'html'
     }
     // const fileExt = url.split('.').pop()?.toLowerCase() || ''
-    const fileExt =
-      url?.split(/[?#]/)[0]?.split('.').pop()?.trim().toLowerCase() || ''
+    const fileExt = url?.split(/[?#]/)[0]?.split('.').pop()?.trim().toLowerCase() || ''
     if (getType) {
       return fileExt
     }
@@ -129,11 +124,7 @@ export function useFilePreview(props: {
     previewImages.value[index] = previewUrl.value
     // dialogVisible.value = true
     open(index)
-    console.log(
-      '🚀 ~ openpreviewTask ~ urls:',
-      previewImages.value,
-      dialogVisible.value
-    )
+    console.log('🚀 ~ openpreviewTask ~ urls:', previewImages.value, dialogVisible.value)
   }
   const openpreview = () => {
     console.log('🦄-----previewImages.value-----', previewImages.value)

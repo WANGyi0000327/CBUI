@@ -39,9 +39,7 @@ describe('CbTagBar', () => {
 
   it('右键标签显示上下文菜单并触发 jump', async () => {
     const wrapper = mountBar({ activeTab: '/a' })
-    await wrapper
-      .findAll('.tab-item')[0]
-      .trigger('contextmenu', { pageX: 120, pageY: 80 })
+    await wrapper.findAll('.tab-item')[0].trigger('contextmenu', { pageX: 120, pageY: 80 })
     expect(wrapper.find('.context-menu').isVisible()).toBe(true)
     expect(wrapper.emitted('jump')).toBeTruthy()
   })
@@ -60,9 +58,7 @@ describe('CbTagBar', () => {
 
   it('菜单点击「关闭其他」触发 close-other', async () => {
     const wrapper = mountBar({ activeTab: '/a' })
-    await wrapper
-      .findAll('.tab-item')[0]
-      .trigger('contextmenu', { pageX: 120, pageY: 80 })
+    await wrapper.findAll('.tab-item')[0].trigger('contextmenu', { pageX: 120, pageY: 80 })
     await wrapper.findAll('.menu-item')[0].trigger('click')
     expect(wrapper.emitted('close-other')).toBeTruthy()
   })

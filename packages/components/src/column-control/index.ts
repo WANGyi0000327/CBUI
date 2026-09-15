@@ -6,12 +6,7 @@
  * 供 gen:index 扫描与 resolver 按需加载。
  */
 import ColumnControl from './ColumnControl.vue'
-import type {
-  TableColumn,
-  ColumnOption,
-  ColumnConfig,
-  ColumnControlProps,
-} from './table'
+import type { TableColumn, ColumnOption, ColumnConfig, ColumnControlProps } from './table'
 
 export { ColumnControl }
 export type { TableColumn, ColumnOption, ColumnConfig, ColumnControlProps }

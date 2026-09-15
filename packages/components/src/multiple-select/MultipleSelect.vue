@@ -1,23 +1,12 @@
 <template>
-  <t-select
-    v-model="checked"
-    :keys="keys"
-    :options="list"
-    clearable
-    v-bind="$attrs"
-    multiple
-  >
+  <t-select v-model="checked" :keys="keys" :options="list" clearable v-bind="$attrs" multiple>
     <template #panelTopContent>
       <div
         v-if="list && list.length > 0"
         :style="{ position: 'sticky', top: '0', zIndex: 1 }"
         class="cb-multiple-checkedAll"
       >
-        <t-checkbox
-          :checked="checkedAll"
-          :indeterminate="indeterminate"
-          @change="handleToggleAll"
-        >
+        <t-checkbox :checked="checkedAll" :indeterminate="indeterminate" @change="handleToggleAll">
           全选
         </t-checkbox>
       </div>
@@ -48,9 +37,7 @@ const selectableValues = computed(() => {
   if (!props.list) return []
   const vKey = innerKeys.value.value as keyof T
   const dKey = innerKeys.value.disabled as keyof T
-  return props.list
-    .filter((item) => !item[dKey])
-    .map((item) => item[vKey] as string | number)
+  return props.list.filter((item) => !item[dKey]).map((item) => item[vKey] as string | number)
 })
 const checkedAll = computed(() => {
   return (

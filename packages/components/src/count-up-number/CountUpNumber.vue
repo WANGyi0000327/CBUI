@@ -114,9 +114,7 @@ const customFormattingFn = (n: number): string => {
   if (props.formatting && n >= 10000) {
     const wVal = n / 10000
     // 如果刚好是整数（比如2w，3w），不带小数点；如果是浮点数（比如1.25w），保留最多两位小数
-    const formattedNum = Number.isInteger(wVal)
-      ? wVal.toString()
-      : wVal.toFixed(2)
+    const formattedNum = Number.isInteger(wVal) ? wVal.toString() : wVal.toFixed(2)
     return `${formattedNum}w`
   }
 
@@ -188,8 +186,7 @@ const updateCountUp = (nextValue: number): void => {
     return
   }
   /** 先更新小数位配置，再执行数值过渡。 */
-  ;(countUpInstance.options as CountUpOptions).decimalPlaces =
-    getDecimalPlaces(nextValue)
+  ;(countUpInstance.options as CountUpOptions).decimalPlaces = getDecimalPlaces(nextValue)
   countUpInstance.update(nextValue)
 }
 

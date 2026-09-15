@@ -18,7 +18,11 @@ description: 根据业务文件路径获取临时 URL 并渲染图片。
 
 ```vue
 <template>
-  <CbImageSecret temp-url="https://picsum.photos/200/120" alt="示例图片" style="width: 200px; height: 120px;" />
+  <CbImageSecret
+    temp-url="https://picsum.photos/200/120"
+    alt="示例图片"
+    style="width: 200px; height: 120px;"
+  />
 </template>
 ```
 
@@ -40,9 +44,9 @@ description: 根据业务文件路径获取临时 URL 并渲染图片。
 
 ### Props
 
-| 属性     | 说明                                       | 类型     | 默认值   |
-| -------- | ------------------------------------------ | -------- | -------- |
-| temp-url | 图片临时路径或 HTTP 链接（必填）           | `string` | -（必填）|
+| 属性     | 说明                             | 类型     | 默认值    |
+| -------- | -------------------------------- | -------- | --------- |
+| temp-url | 图片临时路径或 HTTP 链接（必填） | `string` | -（必填） |
 
 ### Attrs
 

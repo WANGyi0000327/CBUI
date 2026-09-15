@@ -78,9 +78,9 @@ describe('CbColControl', () => {
     expect(dragZone!.textContent).toContain('姓名')
     expect(dragZone!.textContent).toContain('年龄')
     // 切换"姓名"列开关（关闭 → 不再展示）
-    const nameItem = Array.from(
-      content.querySelectorAll('.cb-col-control-item')
-    ).find((el) => el.textContent.includes('姓名')) as HTMLElement
+    const nameItem = Array.from(content.querySelectorAll('.cb-col-control-item')).find((el) =>
+      el.textContent.includes('姓名')
+    ) as HTMLElement
     const nameSwitch = nameItem.querySelector('.t-switch') as HTMLElement
     nameSwitch.click()
     await nextTick()
@@ -95,9 +95,9 @@ describe('CbColControl', () => {
     const wrapper = mountCtrl()
     const content = await openPopup()
     // 先关闭"姓名"
-    const nameItem = Array.from(
-      content.querySelectorAll('.cb-col-control-item')
-    ).find((el) => el.textContent.includes('姓名')) as HTMLElement
+    const nameItem = Array.from(content.querySelectorAll('.cb-col-control-item')).find((el) =>
+      el.textContent.includes('姓名')
+    ) as HTMLElement
     nameItem.querySelector('.t-switch')!.click()
     await nextTick()
     // 点击重置

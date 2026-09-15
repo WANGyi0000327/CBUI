@@ -5,13 +5,7 @@ import type { VNode } from 'vue'
 
 // 泛型表单值类型
 export type FormValue =
-  | string
-  | number
-  | boolean
-  | Date
-  | Array<string | number | boolean>
-  | null
-  | undefined
+  string | number | boolean | Date | Array<string | number | boolean> | null | undefined
 export interface FormValues {
   [key: string]: FormValue
 }
@@ -26,14 +20,7 @@ export type ContentRenderFunction = (params: {
 }) => VNode
 
 // 字段控件类型
-export type FieldType =
-  | 'input'
-  | 'select'
-  | 'checkbox'
-  | 'radio'
-  | 'date'
-  | 'dateRange'
-  | string
+export type FieldType = 'input' | 'select' | 'checkbox' | 'radio' | 'date' | 'dateRange' | string
 
 // 选项项（select / checkbox / radio 通用）
 export interface FieldOption {

@@ -9,10 +9,7 @@
   >
     <template #content>
       <div class="cover-scrollbar py-[16px]" :style="{ width: popupwidth }">
-        <div
-          class="overflow-y-scroll size-full pl-[16px] px-[16px]"
-          style="max-height: 50vh"
-        >
+        <div class="overflow-y-scroll size-full pl-[16px] px-[16px]" style="max-height: 50vh">
           <t-form
             ref="formRef"
             label-align="top"
@@ -29,11 +26,7 @@
                 style="margin-bottom: 24px"
                 :style="{ width: item.width || '100%' }"
               >
-                <t-form-item
-                  :label="item.label"
-                  :name="item.name"
-                  :required="item.required"
-                >
+                <t-form-item :label="item.label" :name="item.name" :required="item.required">
                   <!-- 输入框 -->
                   <t-input
                     v-if="item.type === 'input'"
@@ -51,10 +44,7 @@
                     :keys="item.keys"
                   />
                   <!-- 单选框组 -->
-                  <t-radio-group
-                    v-else-if="item.type === 'radio'"
-                    v-model="formData[item.name]"
-                  >
+                  <t-radio-group v-else-if="item.type === 'radio'" v-model="formData[item.name]">
                     <t-radio
                       v-for="option in item.options || []"
                       :key="option.value"
@@ -111,7 +101,7 @@
       :style="btnWidth ? { minWidth: btnWidth } : {}"
       :class="{
         'btn-normal': filterNumber === 0,
-        'hideBg':hide,
+        hideBg: hide,
       }"
       :theme="filterNumber > 0 ? 'cb-brand-default' : ''"
     >
@@ -140,13 +130,7 @@ interface FormItem {
   keys?: any
   label: string // 字段标签
   name: string // 字段名，用于数据绑定
-  type:
-    | 'input'
-    | 'select'
-    | 'radio'
-    | 'checkbox'
-    | 'dateRangePicker'
-    | 'cascader' // 字段类型
+  type: 'input' | 'select' | 'radio' | 'checkbox' | 'dateRangePicker' | 'cascader' // 字段类型
   placeholder?: string // 占位符（输入框）
   options?: Array<{ label: string; value: string | number }> // 选项（下拉框、单选框、多选框）
   required?: boolean // 是否必填
@@ -203,9 +187,7 @@ const setFieldsValueDefault = () => {
   return values.value
 }
 const formData = ref<Record<string, any>>(
-  props.formDataProp
-    ? deepClone(props.formDataProp)
-    : setFieldsValueDefault() || {}
+  props.formDataProp ? deepClone(props.formDataProp) : setFieldsValueDefault() || {}
 )
 const visible = defineModel('visible', {
   default: false,
@@ -214,9 +196,7 @@ let initPropFormDate: any = null
 const handleReset = (type = false) => {
   // 重置
   if (!type) {
-    formData.value = initPropFormDate
-      ? deepClone(initPropFormDate)
-      : setFieldsValueDefault() || {}
+    formData.value = initPropFormDate ? deepClone(initPropFormDate) : setFieldsValueDefault() || {}
     // 清除
   } else {
     formData.value = setFieldsValueDefault() || {}

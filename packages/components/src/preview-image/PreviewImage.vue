@@ -14,10 +14,7 @@
       -->
       <div class="cb-preview-image-trigger-wrap" @click="open">
         <slot name="trigger">
-          <div
-            class="preview-image-trigger"
-            :style="{ width, height, maxHeight }"
-          >
+          <div class="preview-image-trigger" :style="{ width, height, maxHeight }">
             <img :src="images[0]" />
             <div class="preview-image-icon">
               <cb-icon name="fangda" />
@@ -109,12 +106,12 @@ defineExpose({
 </style>
 <style lang="scss">
 .t-image-viewer__modal-icon.t-image-viewer__header-pre-bt {
-  display: none!important;
+  display: none !important;
 }
 .t-image-viewer-preview-image .t-image-viewer__modal-header {
   bottom: 6px !important;
   height: 64px !important;
-  top:auto !important;
+  top: auto !important;
   background-color: rgba(0, 0, 0, 0.4) !important;
 }
 .t-image-viewer__utils {
@@ -127,18 +124,19 @@ defineExpose({
 // 隐藏下载按钮
 .t-image-viewer__utils-content {
   .t-image-viewer__modal-icon:nth-child(7) {
-    display: none!important;
+    display: none !important;
   }
 }
-.t-image-viewer-preview-image .t-image-viewer__header-box:hover, .t-image-viewer-preview-image .t-image-viewer__header-box.t-is-active {
-  border:3px solid var(--td-brand-color) !important;
+.t-image-viewer-preview-image .t-image-viewer__header-box:hover,
+.t-image-viewer-preview-image .t-image-viewer__header-box.t-is-active {
+  border: 3px solid var(--td-brand-color) !important;
 }
 .t-image-viewer__header-prev {
   &::before {
     background-image: linear-gradient(
       to right,
-      rgba(0, 0, 0, 0.4) 0%,    /* 起始色：完全等同于你的深色背景色 */
-      rgba(0, 0, 0, 0) 100%     /* 结束色：同色系，全透明 */
+      rgba(0, 0, 0, 0.4) 0%,
+      /* 起始色：完全等同于你的深色背景色 */ rgba(0, 0, 0, 0) 100% /* 结束色：同色系，全透明 */
     ) !important;
   }
   &::after {

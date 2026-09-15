@@ -2,13 +2,25 @@
   <div class="over_btns flex items-center gap-[8px]">
     <template v-for="(btn, index) in btnList_new">
       <t-button
-v-if="index < maxShownNum" :key="btn.type" theme="default"
-        variant="text" class="!text-[#C28D4D]  !mr-[10px]" :class="{ '!text-[#FF6B35]': btn.colorType === 1 }"
-        :style="getBtnStyle(btn)" :disabled="isBtnDisabled(btn)" @click.stop="btn.clickHandler(btn.type, props.row)">
+        v-if="index < maxShownNum"
+        :key="btn.type"
+        theme="default"
+        variant="text"
+        class="!text-[#C28D4D] !mr-[10px]"
+        :class="{ '!text-[#FF6B35]': btn.colorType === 1 }"
+        :style="getBtnStyle(btn)"
+        :disabled="isBtnDisabled(btn)"
+        @click.stop="btn.clickHandler(btn.type, props.row)"
+      >
         {{ getBtnLabel(btn) }}
       </t-button>
     </template>
-    <t-popup v-if="btnList_new.length > maxShownNum" ref="popupref" placement="bottom"  trigger="click">
+    <t-popup
+      v-if="btnList_new.length > maxShownNum"
+      ref="popupref"
+      placement="bottom"
+      trigger="click"
+    >
       <div :style="iconStyle">
         <cb-icon name="gengduo_shu" color="var(--td-brand-color)" class="cursor-pointer"></cb-icon>
       </div>
@@ -17,9 +29,15 @@ v-if="index < maxShownNum" :key="btn.type" theme="default"
         <div class="content" :style="{ margin: `0 ${margin}` }">
           <template v-for="btn in btnList_new.slice(maxShownNum)" :key="btn.type">
             <t-button
-theme="default" variant="text" class="!block !mr-0 !w-[100%]"
-              :class="{ '!text-[#FF6B35]': btn.colorType === 1 }" :style="getBtnStyle(btn)"
-              :disabled="isBtnDisabled(btn)" style="min-width: 72px;" @click.stop="click(btn.clickHandler, btn.type, props.row)">
+              theme="default"
+              variant="text"
+              class="!block !mr-0 !w-[100%]"
+              :class="{ '!text-[#FF6B35]': btn.colorType === 1 }"
+              :style="getBtnStyle(btn)"
+              :disabled="isBtnDisabled(btn)"
+              style="min-width: 72px"
+              @click.stop="click(btn.clickHandler, btn.type, props.row)"
+            >
               {{ getBtnLabel(btn) }}
             </t-button>
           </template>
@@ -82,9 +100,7 @@ const margin = computed(() => {
  * 判断按钮是否禁用（抽离为独立函数，复用逻辑）
  */
 const isBtnDisabled = (btn: OverBtn) => {
-  return typeof btn.disabled === 'function'
-    ? btn.disabled(props.row)
-    : btn.disabled
+  return typeof btn.disabled === 'function' ? btn.disabled(props.row) : btn.disabled
 }
 /**
  * 获取按钮标签文字，支持动态函数
@@ -104,11 +120,7 @@ const getBtnStyle = (btn: OverBtn) => {
   return btn.style || {}
 }
 const popupref = ref()
-const click = (
-  chk: (type: string, row: any) => void,
-  type: string,
-  row: any
-) => {
+const click = (chk: (type: string, row: any) => void, type: string, row: any) => {
   chk(type, row)
   popupref.value?.close()
 }

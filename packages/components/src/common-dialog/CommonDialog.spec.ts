@@ -38,9 +38,7 @@ describe('CommonDialog', () => {
     const confirm = vi.fn()
     const wrapper = mountDialog({ confirm })
     // t-button stub 渲染为 button 元素
-    const confirmBtn = wrapper
-      .findAll('button')
-      .find((b) => b.text().includes('确定'))
+    const confirmBtn = wrapper.findAll('button').find((b) => b.text().includes('确定'))
     await confirmBtn!.trigger('click')
     expect(confirm).toHaveBeenCalled()
   })

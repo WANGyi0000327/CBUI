@@ -7,6 +7,7 @@ title: OverLimitInputNumber 超限输入数字框
 基于 **TDesign `t-input-number`** 二次开发的数字输入框，提供两种超限处理策略：**回滚**（`allowInputOverLimit=false` 时，输入超出 `min` / `max` 自动回滚到上一次有效值）与**截断**（`enableTruncation=true` 时，超出自动收敛到边界值）。
 
 > 特性说明：
+>
 > - **回滚模式**：`allow-input-over-limit` 为 `false` 时，输入 `min` / `max` 范围外的数字不生效，自动恢复为上一次有效值。
 > - **截断模式**：`enable-truncation` 为 `true` 时，超出 `min`（`min <= 0` 时）或 `max` 的值自动收敛到边界。
 > - 输入为空字符串时保持为空，不会回填 `min`。
@@ -56,12 +57,7 @@ const value = ref<number | string>('')
 ```vue
 <template>
   <!-- 输入超限（< 0 或 > 100）自动回滚 -->
-  <CbOverLimitInputNumber
-    v-model="value"
-    :min="0"
-    :max="100"
-    :allow-input-over-limit="false"
-  />
+  <CbOverLimitInputNumber v-model="value" :min="0" :max="100" :allow-input-over-limit="false" />
 </template>
 ```
 
@@ -90,12 +86,7 @@ const value = ref<number | string>('')
 ```vue
 <template>
   <!-- 输入超限自动截断到边界 -->
-  <CbOverLimitInputNumber
-    v-model="value"
-    :min="0"
-    :max="10"
-    :enable-truncation="true"
-  />
+  <CbOverLimitInputNumber v-model="value" :min="0" :max="10" :enable-truncation="true" />
 </template>
 ```
 
@@ -106,26 +97,26 @@ const value = ref<number | string>('')
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| v-model | 绑定值 | `number \| string` | `''` |
-| enableTruncation | 是否开启截断模式（超出收敛到边界） | `boolean` | `false` |
-| allowInputOverLimit | 是否允许输入超出限制；`false` 时超限回滚 | `boolean` | `true` |
-| max | 最大值 | `number` | `Infinity` |
-| min | 最小值 | `number` | `-Infinity` |
-| （其余属性） | 通过 `v-bind="$attrs"` 透传给 [TDesign InputNumber](https://tdesign.tencent.com/vue-next/components/input-number)，如 `theme`、`size`、`placeholder` 等 | - | - |
+| 属性                | 说明                                                                                                                                                    | 类型               | 默认值      |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ----------- |
+| v-model             | 绑定值                                                                                                                                                  | `number \| string` | `''`        |
+| enableTruncation    | 是否开启截断模式（超出收敛到边界）                                                                                                                      | `boolean`          | `false`     |
+| allowInputOverLimit | 是否允许输入超出限制；`false` 时超限回滚                                                                                                                | `boolean`          | `true`      |
+| max                 | 最大值                                                                                                                                                  | `number`           | `Infinity`  |
+| min                 | 最小值                                                                                                                                                  | `number`           | `-Infinity` |
+| （其余属性）        | 通过 `v-bind="$attrs"` 透传给 [TDesign InputNumber](https://tdesign.tencent.com/vue-next/components/input-number)，如 `theme`、`size`、`placeholder` 等 | -                  | -           |
 
 ### Events
 
-| 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
-| change | 值变化（透传 t-input-number 的 change；截断模式下发出截断后的值） | `(value, context)` |
-| update:modelValue | v-model 更新 | `number \| string` |
+| 事件名            | 说明                                                              | 回调参数           |
+| ----------------- | ----------------------------------------------------------------- | ------------------ |
+| change            | 值变化（透传 t-input-number 的 change；截断模式下发出截断后的值） | `(value, context)` |
+| update:modelValue | v-model 更新                                                      | `number \| string` |
 
 ### Slots
 
-| 名称 | 说明 |
-| --- | --- |
+| 名称             | 说明                                                                     |
+| ---------------- | ------------------------------------------------------------------------ |
 | （全部具名插槽） | 自动透传给 `t-input-number`（如 `label`、`prefixIcon`、`suffixIcon` 等） |
 
 ## 使用须知

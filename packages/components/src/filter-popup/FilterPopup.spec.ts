@@ -14,43 +14,46 @@ const CbDynamicFormGeneratorStub = defineComponent({
   name: 'CbDynamicFormGenerator',
   props: { fields: Array, formData: Object },
   emits: ['update:formData'],
+  setup: (props) => () =>
+    h('div', { class: 'form-generator-stub' }, `fields:${(props.fields || []).length}`),
   methods: {
     reset() {
       // stub reset 不做事
     },
   },
-  setup: (props) => () =>
-    h('div', { class: 'form-generator-stub' }, `fields:${(props.fields || []).length}`),
 })
 
 const TButtonStub = defineComponent({
   name: 'TButton',
   props: { theme: String, disabled: Boolean, loading: Boolean },
-  setup: (_props, { slots }) => () => h('button', { class: 't-button-stub' }, slots.default?.()),
+  setup:
+    (_props, { slots }) =>
+    () =>
+      h('button', { class: 't-button-stub' }, slots.default?.()),
 })
 
 const TPopupStub = defineComponent({
   name: 'TPopup',
   props: { modelValue: Boolean, placement: String },
   emits: ['update:modelValue'],
-  setup: (props, { slots, emit }) => () => {
-    // TDesign Popup：默认插槽为触发元素，content 插槽为弹层内容；点击触发切换 visible
-    const trigger = slots.default
-    const content = slots.content
-    return h('div', { class: 't-popup-stub' }, [
-      h(
-        'div',
-        {
-          class: 'popup-trigger',
-          onClick: () => emit('update:modelValue', !props.modelValue),
-        },
-        trigger ? trigger() : []
-      ),
-      props.modelValue && content
-        ? h('div', { class: 'popup-content' }, content())
-        : [],
-    ])
-  },
+  setup:
+    (props, { slots, emit }) =>
+    () => {
+      // TDesign Popup：默认插槽为触发元素，content 插槽为弹层内容；点击触发切换 visible
+      const trigger = slots.default
+      const content = slots.content
+      return h('div', { class: 't-popup-stub' }, [
+        h(
+          'div',
+          {
+            class: 'popup-trigger',
+            onClick: () => emit('update:modelValue', !props.modelValue),
+          },
+          trigger ? trigger() : []
+        ),
+        props.modelValue && content ? h('div', { class: 'popup-content' }, content()) : [],
+      ])
+    },
 })
 
 const global = {

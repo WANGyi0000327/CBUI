@@ -74,12 +74,7 @@ const parseZip = (data: Uint8Array): RawZipEntry[] => {
   let eocd = -1
   const minScan = Math.max(0, len - 65557)
   for (let i = len - 22; i >= minScan; i--) {
-    if (
-      data[i] === 0x50 &&
-      data[i + 1] === 0x4b &&
-      data[i + 2] === 0x05 &&
-      data[i + 3] === 0x06
-    ) {
+    if (data[i] === 0x50 && data[i + 1] === 0x4b && data[i + 2] === 0x05 && data[i + 3] === 0x06) {
       eocd = i
       break
     }
@@ -90,12 +85,7 @@ const parseZip = (data: Uint8Array): RawZipEntry[] => {
   const entries: RawZipEntry[] = []
   let p = cdOffset
   for (let i = 0; i < totalEntries; i++) {
-    if (
-      data[p] !== 0x50 ||
-      data[p + 1] !== 0x4b ||
-      data[p + 2] !== 0x01 ||
-      data[p + 3] !== 0x02
-    ) {
+    if (data[p] !== 0x50 || data[p + 1] !== 0x4b || data[p + 2] !== 0x01 || data[p + 3] !== 0x02) {
       throw new Error('无效的 zip 文件：中央目录损坏')
     }
     const compression = readU16(data, p + 10)
@@ -109,10 +99,7 @@ const parseZip = (data: Uint8Array): RawZipEntry[] => {
     p += 46 + nameLen + extraLen + commentLen
     // 本地数据起点 = local header(30) + 其 nameLen + extraLen
     const dataOffset =
-      localOffset +
-      30 +
-      readU16(data, localOffset + 26) +
-      readU16(data, localOffset + 28)
+      localOffset + 30 + readU16(data, localOffset + 26) + readU16(data, localOffset + 28)
     const raw = data.subarray(dataOffset, dataOffset + compressedSize)
     let content: Uint8Array
     if (compression === 0) {

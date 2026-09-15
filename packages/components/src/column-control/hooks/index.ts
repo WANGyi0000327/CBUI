@@ -51,9 +51,7 @@ export function useColumnControl(
     }
     // 关键步骤：对最终结果进行统一过滤
     // return resultColumns.filter((col) => col.value !== "row-select");
-    return resultColumns.filter(
-      (s: any) => s.head_disabled === true || s.colKey === 'row-select'
-    )
+    return resultColumns.filter((s: any) => s.head_disabled === true || s.colKey === 'row-select')
   })
   // 计算属性
   const displayColumnOptions_2 = computed<any>(() => {
@@ -67,12 +65,9 @@ export function useColumnControl(
     }
     // 关键步骤：对最终结果进行统一过滤
     // 关键：获取不可拖拽列的 colKey 集合，过滤掉重复项
-    const disabledColKeys = displayColumnOptions_1.value.map(
-      (item: any) => item.colKey
-    )
+    const disabledColKeys = displayColumnOptions_1.value.map((item: any) => item.colKey)
     return resultColumns.filter(
-      (s: any) =>
-        s.head_disabled !== true && !disabledColKeys.includes(s.colKey)
+      (s: any) => s.head_disabled !== true && !disabledColKeys.includes(s.colKey)
     )
   })
   // 监听 visible 变化，记录原始配置
@@ -105,9 +100,7 @@ export function useColumnControl(
       if (columnConfigModel.value.visibleColumns.length <= 1) {
         return
       }
-      newVisibleColumns = columnConfigModel.value.visibleColumns.filter(
-        (col) => col !== colKey
-      )
+      newVisibleColumns = columnConfigModel.value.visibleColumns.filter((col) => col !== colKey)
     }
     columnConfigModel.value = {
       ...columnConfigModel.value,
@@ -155,9 +148,7 @@ export function useColumnControl(
   const getHoverItemIndex = (x: number, y: number): number => {
     const popup = document.querySelector('.column-control-popup')
     if (!popup) return -1
-    const items = Array.from(
-      popup.querySelectorAll<HTMLElement>('[data-draggable-item]')
-    )
+    const items = Array.from(popup.querySelectorAll<HTMLElement>('[data-draggable-item]'))
     for (let i = 0; i < items.length; i++) {
       const el = items[i]
       const r = el.getBoundingClientRect()
@@ -194,16 +185,11 @@ export function useColumnControl(
     const movedItem: any = newColumnOptions.splice(dragStartIndex.value, 1)[0]
     newColumnOptions.splice(targetIndex, 0, movedItem)
     // 合并不可拖拽列 + 去重后的可拖拽列
-    const disabledColKeys = displayColumnOptions_1.value.map(
-      (item: any) => item.colKey
-    )
+    const disabledColKeys = displayColumnOptions_1.value.map((item: any) => item.colKey)
     const uniqueDraggableColumns = newColumnOptions.filter(
       (item: any) => !disabledColKeys.includes(item.colKey)
     )
-    const fullColumnOptions = [
-      ...displayColumnOptions_1.value,
-      ...uniqueDraggableColumns,
-    ]
+    const fullColumnOptions = [...displayColumnOptions_1.value, ...uniqueDraggableColumns]
     const finalColumnOptions = Array.from(
       new Map(fullColumnOptions.map((item) => [item.colKey, item]))
     ).map(([_, item]) => item)

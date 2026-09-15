@@ -1,8 +1,5 @@
 <template>
-  <div
-    ref="tableRootEl"
-    class="public-table h-full flex flex-col justify-between gap-[20px]"
-  >
+  <div ref="tableRootEl" class="public-table h-full flex flex-col justify-between gap-[20px]">
     <div v-if="show_hender" class="flex flex-col">
       <!-- 头部组件 -->
       <div class="flex flex-col">
@@ -47,9 +44,7 @@
                   >已选 {{ SelecteddataIDs.length }} 项</span
                 >
                 <span
-                  v-if="
-                    selectedRowKeys.length > 0 && SelecteddataIDs.length === 0
-                  "
+                  v-if="selectedRowKeys.length > 0 && SelecteddataIDs.length === 0"
                   style="color: #999999"
                   >已选 {{ selectedRowKeys.length }} 项</span
                 >
@@ -70,7 +65,7 @@
         </div>
         <!-- 高频搜索展示 -->
         <div class="flex gap-[10px] items-center mt-[10px]">
-          <slot name='highTemp'></slot>
+          <slot name="highTemp"></slot>
           <div
             v-if="
               safeTableConfig.ishighSearch &&
@@ -84,16 +79,14 @@
               @get-high-list="getHighList"
             />
           </div>
-         </div>
+        </div>
       </div>
     </div>
     <div :class="openthere === 'customize' ? '' : 'table_box'">
       <t-table
         :row-key="safeTableConfig.rowKey"
         :data="tableConfig.data"
-        :columns="
-          !!tableConfig.isCustomHeader ? currentColumns : tableConfig.columns
-        "
+        :columns="!!tableConfig.isCustomHeader ? currentColumns : tableConfig.columns"
         :stripe="stripe"
         :bordered="bordered"
         :hover="hover"
@@ -129,10 +122,7 @@
             <div :style="{ width: col.DWidth }">
               {{ col.displayName || '操作' }}
             </div>
-            <div
-              class="absolute h-full flex items-center"
-              :style="{ right: col.DRight || '0px' }"
-            >
+            <div class="absolute h-full flex items-center" :style="{ right: col.DRight || '0px' }">
               <CbColumnControl
                 v-if="!!tableConfig.isCustomHeader"
                 v-model:visible="showColumnControl"
@@ -183,16 +173,7 @@ import type {
   TableSort,
   SelectOptions,
 } from 'tdesign-vue-next'
-import {
-  computed,
-  h,
-  nextTick,
-  onActivated,
-  reactive,
-  ref,
-  useTemplateRef,
-  watch,
-} from 'vue'
+import { computed, h, nextTick, onActivated, reactive, ref, useTemplateRef, watch } from 'vue'
 import HighSearchList from './components/hightSearchList.vue'
 import PageInfoMation from './components/pageInfoMation.vue'
 import type { ConfigType, PageInfo, ReqForm } from './interface'
@@ -259,11 +240,7 @@ interface SimpleTableEmits {
   (e: 'sort-change', sort: TableSort): void
   (e: 'drag-sort', context: unknown): void
   (e: 'handleChange', pageInfo: PageInfo): void
-  (
-    e: 'SelectChange',
-    data: Array<string>,
-    _ctx: SelectOptions<TableRowData>
-  ): void
+  (e: 'SelectChange', data: Array<string>, _ctx: SelectOptions<TableRowData>): void
   (e: 'reqTable', data: ReqForm, type: string): void
   (e: 'handleReset', formdata?: any, type?: boolean): void
   (e: 'submit_reqTable', data?: any): void

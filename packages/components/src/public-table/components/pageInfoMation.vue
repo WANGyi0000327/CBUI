@@ -47,10 +47,7 @@ const onPageSizeChange: PaginationProps['onPageSizeChange'] = (size) => {
   currentPage.value = 1
   emit('onPageSizeChange', size)
 }
-const onCurrentChange: PaginationProps['onCurrentChange'] = (
-  index,
-  pageInfo
-) => {
+const onCurrentChange: PaginationProps['onCurrentChange'] = (index, pageInfo) => {
   //   MessagePlugin.success(`转到第${index}页`);
   //   console.log("🎉-----pageInfo-----", pageInfo);
   emit('onCurrentChange', index, pageInfo)

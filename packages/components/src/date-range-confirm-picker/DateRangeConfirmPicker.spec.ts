@@ -60,13 +60,9 @@ describe('CbDateRangeConfirmPicker', () => {
     // 打开：备份 snapshot = 当前值
     await wrapper.find('.open').trigger('click')
     // 模拟用户改选了日期（未点确定）
-    await wrapper
-      .find('.stub-drp')
-      .trigger('update:modelValue', ['2024-02-01', '2024-02-28'])
+    await wrapper.find('.stub-drp').trigger('update:modelValue', ['2024-02-01', '2024-02-28'])
     // 点击外部触发 handleClose
-    ;(
-      wrapper.element as unknown as { __handler: () => void }
-    ).__handler()
+    ;(wrapper.element as unknown as { __handler: () => void }).__handler()
     await Promise.resolve()
     const emitted = wrapper.emitted('update:modelValue')
     expect(emitted).toBeTruthy()

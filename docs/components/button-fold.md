@@ -93,16 +93,16 @@ description: 按数量折叠操作按钮，超出部分收进弹出层
 
 ### Props
 
-| 属性               | 说明                            | 类型                  | 默认值  |
-| ------------------ | ------------------------------- | --------------------- | ------- |
-| operation-name     | 更多按钮文案（type='moreBtn'） | `string`              | '更多'  |
-| expend-num         | 直接展示的操作数量              | `number`              | 1       |
-| disabled-all       | 是否禁用全部操作                | `boolean`             | false   |
-| overlay-class-name | 弹出层自定义 class              | `string`              | ''      |
-| type               | 展示类型：icon / moreBtn        | `'icon' \| 'moreBtn'` | 'icon'  |
+| 属性               | 说明                           | 类型                  | 默认值 |
+| ------------------ | ------------------------------ | --------------------- | ------ |
+| operation-name     | 更多按钮文案（type='moreBtn'） | `string`              | '更多' |
+| expend-num         | 直接展示的操作数量             | `number`              | 1      |
+| disabled-all       | 是否禁用全部操作               | `boolean`             | false  |
+| overlay-class-name | 弹出层自定义 class             | `string`              | ''     |
+| type               | 展示类型：icon / moreBtn       | `'icon' \| 'moreBtn'` | 'icon' |
 
 ### Slots
 
-| 插槽名  | 说明                          |
-| ------- | ----------------------------- |
+| 插槽名  | 说明                           |
+| ------- | ------------------------------ |
 | default | 操作按钮（按 expend-num 折叠） |

@@ -8,10 +8,7 @@
  * 此文件仅作为导出门面（barrel），供 gen:index 扫描与 resolver 按需加载
  */
 import CurrencyInput from './CurrencyInput.vue'
-import type {
-  CurrencyInputProps,
-  CurrencyInputInstance,
-} from './types'
+import type { CurrencyInputProps, CurrencyInputInstance } from './types'
 
 export { CurrencyInput }
 export type { CurrencyInputProps, CurrencyInputInstance }

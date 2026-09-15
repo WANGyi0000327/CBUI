@@ -89,25 +89,25 @@ const handleCloseOther = () => {
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| activeTab | 当前激活的路由 path | `string` | `''` |
-| tabs | 标签页数据列表 | `TagBarTab[]` | `[]` |
+| 属性      | 说明                | 类型          | 默认值 |
+| --------- | ------------------- | ------------- | ------ |
+| activeTab | 当前激活的路由 path | `string`      | `''`   |
+| tabs      | 标签页数据列表      | `TagBarTab[]` | `[]`   |
 
 ### TagBarTab
 
-| 属性 | 说明 | 类型 |
-| --- | --- | --- |
-| path | 路由路径（标签唯一 key 与 value） | `string` |
-| meta.title | 标签标题 | `string` |
+| 属性       | 说明                              | 类型     |
+| ---------- | --------------------------------- | -------- |
+| path       | 路由路径（标签唯一 key 与 value） | `string` |
+| meta.title | 标签标题                          | `string` |
 
 > 组件为泛型组件 `generic="T extends Record<string, any>"`，`tabs` 接受任意满足 `{ path, meta: { title } }` 约束的数据结构。
 
 ### Events
 
-| 事件 | 说明 | 参数 |
-| --- | --- | --- |
-| jump | 点击 / 右键标签时触发（切换路由） | `(tab: T)` |
-| close | 点击关闭图标 | `(path: string)` |
-| close-other | 右键菜单「关闭其他」 | `-` |
-| refresh | 右键菜单「刷新页面」 | `-` |
+| 事件        | 说明                              | 参数             |
+| ----------- | --------------------------------- | ---------------- |
+| jump        | 点击 / 右键标签时触发（切换路由） | `(tab: T)`       |
+| close       | 点击关闭图标                      | `(path: string)` |
+| close-other | 右键菜单「关闭其他」              | `-`              |
+| refresh     | 右键菜单「刷新页面」              | `-`              |

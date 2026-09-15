@@ -28,8 +28,7 @@ const mountFold = (props = {}, slots = {}) =>
         },
         't-button': {
           props: ['disabled', 'theme'],
-          template:
-            '<button class="stub-tbutton" :disabled="disabled"><slot /></button>',
+          template: '<button class="stub-tbutton" :disabled="disabled"><slot /></button>',
         },
       },
     },
@@ -67,10 +66,7 @@ describe('CbButtonFold', () => {
   })
 
   it('disabledAll 时所有操作按钮被禁用', () => {
-    const wrapper = mountFold(
-      { expendNum: 1, disabledAll: true },
-      { default: threeOps }
-    )
+    const wrapper = mountFold({ expendNum: 1, disabledAll: true }, { default: threeOps })
     const shown = wrapper.findAll('.first-operation button.op')
     expect(shown.length).toBe(1)
     expect(shown[0].attributes('disabled')).toBeDefined()

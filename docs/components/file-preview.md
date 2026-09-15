@@ -53,11 +53,7 @@ const dlFiles = [{ url: 'https://example.com/readme.txt', fileName: '说明.txt'
 <template>
   <div>
     <t-button @click="previewRef?.open()">打开文件预览</t-button>
-    <CbFilepreview
-      ref="previewRef"
-      v-model:dialogVisible="visible"
-      :file-list="files"
-    />
+    <CbFilepreview ref="previewRef" v-model:dialogVisible="visible" :file-list="files" />
   </div>
 </template>
 
@@ -100,11 +96,7 @@ const files = [
 ```vue
 <template>
   <div style="height: 420px">
-    <CbFilepreview
-      ref="imgRef"
-      v-model:dialogVisible="visible"
-      :file-list="files"
-    />
+    <CbFilepreview ref="imgRef" v-model:dialogVisible="visible" :file-list="files" />
     <t-button @click="imgRef?.open()">预览图片</t-button>
   </div>
 </template>
@@ -140,11 +132,7 @@ const files = [{ url: 'https://example.com/photo.jpg', fileName: '照片.jpg' }]
 ```vue
 <template>
   <div style="height: 420px">
-    <CbFilepreview
-      ref="previewRef"
-      v-model:dialogVisible="visible"
-      :file-list="files"
-    />
+    <CbFilepreview ref="previewRef" v-model:dialogVisible="visible" :file-list="files" />
     <t-button @click="previewRef?.open()">预览 txt</t-button>
   </div>
 </template>
@@ -171,32 +159,32 @@ const files = [{ url: 'https://example.com/readme.txt', fileName: '说明.txt' }
 
 ## Props
 
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| fileList | `FileItem[]` | `[]` | 文件列表，`FileItem = { url, name?, fileName?, profitImg? }` |
-| nowUrl | `string` | `''` | 打开时指定预览的 url（缺省取 fileList[0]） |
-| nowname | `string` | `''` | 打开时指定文件名 |
-| fileName | `string` | `''` | 预览标题（缺省取 fileList[0].fileName） |
+| 属性     | 类型         | 默认值 | 说明                                                         |
+| -------- | ------------ | ------ | ------------------------------------------------------------ |
+| fileList | `FileItem[]` | `[]`   | 文件列表，`FileItem = { url, name?, fileName?, profitImg? }` |
+| nowUrl   | `string`     | `''`   | 打开时指定预览的 url（缺省取 fileList[0]）                   |
+| nowname  | `string`     | `''`   | 打开时指定文件名                                             |
+| fileName | `string`     | `''`   | 预览标题（缺省取 fileList[0].fileName）                      |
 
 ## v-model
 
-| 名称 | 类型 | 说明 |
-| --- | --- | --- |
+| 名称          | 类型      | 说明             |
+| ------------- | --------- | ---------------- |
 | dialogVisible | `boolean` | 弹窗显隐双向绑定 |
 
 ## Expose
 
-| 方法 | 说明 |
-| --- | --- |
+| 方法   | 说明                                        |
+| ------ | ------------------------------------------- |
 | open() | 打开预览（以 nowUrl 或 fileList[0] 初始化） |
 
 ## 支持的文件类型
 
-| 后缀 | 预览方式 |
-| --- | --- |
-| `mp3` | 音频播放器 |
-| `mp4` | 视频播放器 |
-| `pdf` | PDF 查看器（pdfjs） |
-| `png / jpg / jpeg` | 图片查看器（旋转/缩放/拖拽） |
-| `html`（含 url 带 `urlId=`） | 标注为 html 类型 |
-| 其他 | 暂不支持提示 + 下载按钮 |
+| 后缀                         | 预览方式                     |
+| ---------------------------- | ---------------------------- |
+| `mp3`                        | 音频播放器                   |
+| `mp4`                        | 视频播放器                   |
+| `pdf`                        | PDF 查看器（pdfjs）          |
+| `png / jpg / jpeg`           | 图片查看器（旋转/缩放/拖拽） |
+| `html`（含 url 带 `urlId=`） | 标注为 html 类型             |
+| 其他                         | 暂不支持提示 + 下载按钮      |

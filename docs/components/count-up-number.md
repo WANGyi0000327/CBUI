@@ -101,12 +101,12 @@ const dynamicValue = ref(5000)
 
 ### Props
 
-| 属性         | 说明                                          | 类型      | 默认值  |
-| ------------ | --------------------------------------------- | --------- | ------- |
-| value        | 目标数值（必填），变化时触发过渡动画          | `number`  | -       |
-| formatting   | 是否开启大数格式化（≥10000 转 `w`，最多 2 位小数） | `boolean` | false   |
-| duration     | 动画时长（秒）                                | `number`  | 1.5     |
-| use-easing   | 是否启用数字缓动                              | `boolean` | true    |
-| use-grouping | 是否启用千分位分组                            | `boolean` | true    |
-| separator    | 千分位分隔符                                  | `string`  | ','     |
-| decimal      | 小数点符号                                    | `string`  | '.'     |
+| 属性         | 说明                                               | 类型      | 默认值 |
+| ------------ | -------------------------------------------------- | --------- | ------ |
+| value        | 目标数值（必填），变化时触发过渡动画               | `number`  | -      |
+| formatting   | 是否开启大数格式化（≥10000 转 `w`，最多 2 位小数） | `boolean` | false  |
+| duration     | 动画时长（秒）                                     | `number`  | 1.5    |
+| use-easing   | 是否启用数字缓动                                   | `boolean` | true   |
+| use-grouping | 是否启用千分位分组                                 | `boolean` | true   |
+| separator    | 千分位分隔符                                       | `string`  | ','    |
+| decimal      | 小数点符号                                         | `string`  | '.'    |

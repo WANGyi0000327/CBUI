@@ -47,8 +47,7 @@ describe('RenderComponent', () => {
     mount(RenderComponent, {
       global: { plugins: [TDesign] },
       props: {
-        render: (h: any) =>
-          h('t-input', { onChange: businessChange, placeholder: '业务监听' }),
+        render: (h: any) => h('t-input', { onChange: businessChange, placeholder: '业务监听' }),
       },
       attrs: { 'onUpdate:value': forwardedChange },
     })

@@ -108,37 +108,37 @@ const controlVisible = ref(false)
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| allColumns | 全部表头列配置（见下方列配置字段） | `TableColumn[]` | `[]` |
-| closeoperation | 是否在弹层底部展示"操作"列的开关行（该行开关始终禁用） | boolean | `true` |
-| onSave | 保存列配置的回调（切换/排序后触发，`columnConfig` 已同步） | `(config) => Promise<void> \| void` | `-` |
+| 属性           | 说明                                                       | 类型                                | 默认值 |
+| -------------- | ---------------------------------------------------------- | ----------------------------------- | ------ |
+| allColumns     | 全部表头列配置（见下方列配置字段）                         | `TableColumn[]`                     | `[]`   |
+| closeoperation | 是否在弹层底部展示"操作"列的开关行（该行开关始终禁用）     | boolean                             | `true` |
+| onSave         | 保存列配置的回调（切换/排序后触发，`columnConfig` 已同步） | `(config) => Promise<void> \| void` | `-`    |
 
 ### v-model
 
-| 值 | 说明 |
-| --- | --- |
+| 值           | 说明                                                                                                  |
+| ------------ | ----------------------------------------------------------------------------------------------------- |
 | columnConfig | 列配置对象 `{ visibleColumns: string[], columnOptions: ColumnOption[] }`，切换显示/拖拽排序后同步更新 |
-| visible | 弹层显隐（受控，配合 `t-popup` 的 `visible-change`） |
+| visible      | 弹层显隐（受控，配合 `t-popup` 的 `visible-change`）                                                  |
 
 ### Emits
 
-| 事件 | 说明 |
-| --- | --- |
-| columnToggle | 切换列显示开关：`(colKey, checked, config)` |
-| columnOrderChange | 拖拽排序完成：`(newOrder: ColumnOption[])` |
-| saveSuccess | 保存成功 |
-| saveError | 保存失败：`(error)` |
+| 事件              | 说明                                        |
+| ----------------- | ------------------------------------------- |
+| columnToggle      | 切换列显示开关：`(colKey, checked, config)` |
+| columnOrderChange | 拖拽排序完成：`(newOrder: ColumnOption[])`  |
+| saveSuccess       | 保存成功                                    |
+| saveError         | 保存失败：`(error)`                         |
 
 ### 列配置字段
 
-| 字段 | 说明 |
-| --- | --- |
-| colKey | 列唯一标识（必传） |
-| title / displayName | 展示名称（依次取非空值） |
-| head_disabled | 置灰列：禁止切换显示、禁止拖拽（如"状态"） |
-| Coldisabled | 隐藏列：不在弹层中渲染 |
-| Prohibit_switch | 禁止切换显示（可拖拽列生效） |
+| 字段                | 说明                                       |
+| ------------------- | ------------------------------------------ |
+| colKey              | 列唯一标识（必传）                         |
+| title / displayName | 展示名称（依次取非空值）                   |
+| head_disabled       | 置灰列：禁止切换显示、禁止拖拽（如"状态"） |
+| Coldisabled         | 隐藏列：不在弹层中渲染                     |
+| Prohibit_switch     | 禁止切换显示（可拖拽列生效）               |
 
 ### 拖拽行为
 

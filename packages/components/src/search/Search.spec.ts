@@ -39,9 +39,9 @@ describe('CBSearch', () => {
       global: { plugins: [TDesign] },
       props: { inputWidth: '400px', placeholder: '请输入名称' },
     })
-    expect(
-      wrapper.findComponent({ name: 'TInputAdornment' }).attributes('style')
-    ).toContain('400px')
+    expect(wrapper.findComponent({ name: 'TInputAdornment' }).attributes('style')).toContain(
+      '400px'
+    )
     expect(wrapper.find('input').attributes('placeholder')).toBe('请输入名称')
   })
 })

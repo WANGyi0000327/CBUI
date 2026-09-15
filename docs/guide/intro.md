@@ -25,17 +25,17 @@ CB UI 不是从零开发的组件库，而是把业务项目（CRM_MASTER-toVite
 
 ## 二、技术栈
 
-| 技术 | 版本 | 说明 |
-| --- | --- | --- |
-| Vue | ^3.4.0 | 组件实现框架 |
-| TDesign | ^1.16.1 | 底层 UI 组件库（tdesign-vue-next） |
-| TypeScript | ^5.4.0 | 类型系统 |
-| Vite | ^8.0.0 | 构建工具（VitePress 内置） |
-| VitePress | ^1.2.0（实装 1.6.4） | 文档站点生成器 |
-| TailwindCSS | ^3.4.0 | 原子样式 |
-| Sass | ^1.101.3 | 复杂样式与主题变量（modern-compiler API） |
-| pnpm | ^9.0.0 | Monorepo 包管理 |
-| Vitest | ^3.0.0 | 单元测试 |
+| 技术        | 版本                 | 说明                                      |
+| ----------- | -------------------- | ----------------------------------------- |
+| Vue         | ^3.4.0               | 组件实现框架                              |
+| TDesign     | ^1.16.1              | 底层 UI 组件库（tdesign-vue-next）        |
+| TypeScript  | ^5.4.0               | 类型系统                                  |
+| Vite        | ^8.0.0               | 构建工具（VitePress 内置）                |
+| VitePress   | ^1.2.0（实装 1.6.4） | 文档站点生成器                            |
+| TailwindCSS | ^3.4.0               | 原子样式                                  |
+| Sass        | ^1.101.3             | 复杂样式与主题变量（modern-compiler API） |
+| pnpm        | ^9.0.0               | Monorepo 包管理                           |
+| Vitest      | ^3.0.0               | 单元测试                                  |
 
 ---
 
@@ -67,11 +67,11 @@ CB UI 不是从零开发的组件库，而是把业务项目（CRM_MASTER-toVite
 
 组件按**依赖强度**分为三类（对应侧边栏三个分组，配置在 `docs/.vitepress/config.ts`）：
 
-| 分类 | 判定标准 | 数量 | 示例 |
-| --- | --- | --- | --- |
-| **基础组件** | 通用 UI 原子/布局/反馈，无业务依赖，再按功能分 4 个子分组 | 25 | Button、CurrencyInput、StatusTag、GridLayout |
-| **媒体与工具** | 面向特定内容类型或提供独立工具能力，不依赖业务服务 | 6 | CbAudioPlayer、CbVideoPlayer、ImageSecret、Copy |
-| **业务组件** | 依赖具体业务场景或数据服务（临时 URL、上传、转写、权限等） | 13 | CbPublicTable、CbUpload、CbPermissionTree |
+| 分类           | 判定标准                                                   | 数量 | 示例                                            |
+| -------------- | ---------------------------------------------------------- | ---- | ----------------------------------------------- |
+| **基础组件**   | 通用 UI 原子/布局/反馈，无业务依赖，再按功能分 4 个子分组  | 25   | Button、CurrencyInput、StatusTag、GridLayout    |
+| **媒体与工具** | 面向特定内容类型或提供独立工具能力，不依赖业务服务         | 6    | CbAudioPlayer、CbVideoPlayer、ImageSecret、Copy |
+| **业务组件**   | 依赖具体业务场景或数据服务（临时 URL、上传、转写、权限等） | 13   | CbPublicTable、CbUpload、CbPermissionTree       |
 
 > 基础组件内部细分为：**按钮与操作**（3）/ **输入与选择**（10）/ **数据展示**（5）/ **布局与容器**（7）。
 

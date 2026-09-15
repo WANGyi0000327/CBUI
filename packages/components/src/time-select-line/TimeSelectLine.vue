@@ -20,11 +20,7 @@
           <cb-icon
             v-show="item.completed !== null"
             class="icon"
-            :color="
-              item.completed
-                ? 'var(--td-color-success)'
-                : 'var(--td-brand-color)'
-            "
+            :color="item.completed ? 'var(--td-color-success)' : 'var(--td-brand-color)'"
             :name="item.completed ? completedIcon : progressIcon"
           />
         </div>
@@ -104,10 +100,7 @@ const calculateLineHeight = () => {
  * @param range [开始时间, 结束时间]
  * @param completedTime 已完成截止时间，可以为 null
  */
-function generateExpandedMonthList(
-  range: string[],
-  completedTime: string | null
-): MonthItem[] {
+function generateExpandedMonthList(range: string[], completedTime: string | null): MonthItem[] {
   const originalStart = dayjs(range[0], 'YYYYMM')
   const originalEnd = dayjs(range[1], 'YYYYMM')
   let start = originalStart.subtract(0, 'month')
@@ -121,10 +114,7 @@ function generateExpandedMonthList(
   let current = end
   while (!current.isBefore(start, 'month')) {
     let status: boolean | null = false
-    if (
-      current.isAfter(originalEnd, 'month') ||
-      current.isBefore(originalStart, 'month')
-    ) {
+    if (current.isAfter(originalEnd, 'month') || current.isBefore(originalStart, 'month')) {
       status = null
     } else {
       status = completed ? !current.isAfter(completed, 'month') : false

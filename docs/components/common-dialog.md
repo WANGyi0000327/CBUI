@@ -46,12 +46,7 @@ const visible2 = ref(false)
 ```vue
 <template>
   <t-button theme="primary" @click="open">打开弹窗</t-button>
-  <CommonDialog
-    :visible="visible"
-    title="确认操作"
-    :close="handleClose"
-    :confirm="handleConfirm"
-  >
+  <CommonDialog :visible="visible" title="确认操作" :close="handleClose" :confirm="handleConfirm">
     <template #body>确定要执行此操作吗？</template>
   </CommonDialog>
 </template>
@@ -129,30 +124,30 @@ const handleConfirm = () => {
 
 ### Props（继承 TDesign DialogProps，以下为常用）
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| visible | 弹窗可见性（必传） | `boolean` | `false` |
-| title | 弹窗标题 | `string` | `''` |
-| width | 弹窗宽度 | `number \| string` | `600` |
-| placement | 弹窗位置 | `'center' \| 'top' \| 'left' \| 'right' \| 'bottom'` | `'center'` |
-| closeBtnText / confirmBtnText | 按钮文本 | `string` | `'取消' / '确定'` |
-| loading | 确定按钮加载中 | `boolean` | `false` |
-| closeBtn / confirmBtn | 是否显示取消/确定按钮 | `boolean` | `true` |
-| showheader / showfooter | 是否显示头部/底部 | `boolean` | `true` |
-| closeOnOverlayClick | 点击遮罩关闭 | `boolean` | `false` |
-| closeOnEscKeydown | ESC 关闭 | `boolean` | `true` |
-| showOverlay | 显示遮罩 | `boolean` | `true` |
-| destroyOnClose | 关闭时销毁 DOM | `boolean` | `false` |
-| customBorder / bgBorder | 顶部线条 / 头部品牌色背景 | `boolean` | `false` |
-| close / confirm | 关闭/确定回调 | `() => void` | `() => {}` |
-| open / beforeOpen / onBeforeClose | 生命周期回调 | `() => void` | `-` |
-| draggable | 是否支持拖拽 | `boolean` | `false` |
-| attach / dialogCloseBtn / zIndex / theme | 挂载点 / 关闭按钮 / 层级 / 主题 | 见 TDesign | - |
+| 属性                                     | 说明                            | 类型                                                 | 默认值            |
+| ---------------------------------------- | ------------------------------- | ---------------------------------------------------- | ----------------- |
+| visible                                  | 弹窗可见性（必传）              | `boolean`                                            | `false`           |
+| title                                    | 弹窗标题                        | `string`                                             | `''`              |
+| width                                    | 弹窗宽度                        | `number \| string`                                   | `600`             |
+| placement                                | 弹窗位置                        | `'center' \| 'top' \| 'left' \| 'right' \| 'bottom'` | `'center'`        |
+| closeBtnText / confirmBtnText            | 按钮文本                        | `string`                                             | `'取消' / '确定'` |
+| loading                                  | 确定按钮加载中                  | `boolean`                                            | `false`           |
+| closeBtn / confirmBtn                    | 是否显示取消/确定按钮           | `boolean`                                            | `true`            |
+| showheader / showfooter                  | 是否显示头部/底部               | `boolean`                                            | `true`            |
+| closeOnOverlayClick                      | 点击遮罩关闭                    | `boolean`                                            | `false`           |
+| closeOnEscKeydown                        | ESC 关闭                        | `boolean`                                            | `true`            |
+| showOverlay                              | 显示遮罩                        | `boolean`                                            | `true`            |
+| destroyOnClose                           | 关闭时销毁 DOM                  | `boolean`                                            | `false`           |
+| customBorder / bgBorder                  | 顶部线条 / 头部品牌色背景       | `boolean`                                            | `false`           |
+| close / confirm                          | 关闭/确定回调                   | `() => void`                                         | `() => {}`        |
+| open / beforeOpen / onBeforeClose        | 生命周期回调                    | `() => void`                                         | `-`               |
+| draggable                                | 是否支持拖拽                    | `boolean`                                            | `false`           |
+| attach / dialogCloseBtn / zIndex / theme | 挂载点 / 关闭按钮 / 层级 / 主题 | 见 TDesign                                           | -                 |
 
 ### Slots
 
-| 插槽 | 说明 |
-| --- | --- |
-| header | 头部（默认渲染 `title`） |
-| body | 内容 |
+| 插槽   | 说明                          |
+| ------ | ----------------------------- |
+| header | 头部（默认渲染 `title`）      |
+| body   | 内容                          |
 | footer | 底部（默认渲染取消/确定按钮） |

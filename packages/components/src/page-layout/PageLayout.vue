@@ -1,23 +1,14 @@
 <template>
   <div class="base-layout flex flex-col gap-[16px] h-[100%] p-[16px] w-[100%]">
-    <div
-      v-if="$slots.header"
-      class="base-layout-header flex justify-between flex-wrap gap-[8px]"
-    >
+    <div v-if="$slots.header" class="base-layout-header flex justify-between flex-wrap gap-[8px]">
       <slot name="header"></slot>
     </div>
-    <div
-      ref="contentRef"
-      class="base-layout-content flex-1 min-h-0"
-    >
+    <div ref="contentRef" class="base-layout-content flex-1 min-h-0">
       <div class="h-full w-full">
         <slot name="content"></slot>
       </div>
     </div>
-    <div
-      v-if="$slots.footer"
-      class="base-layout-footer flex justify-end"
-    >
+    <div v-if="$slots.footer" class="base-layout-footer flex justify-end">
       <slot name="footer"></slot>
     </div>
   </div>
@@ -51,19 +42,19 @@ defineExpose<CbPageLayoutInstance>({
 })
 </script>
 <style lang="scss" scoped>
-  .base-layout {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+.base-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  .base-layout-content {
+    flex: 1;
     min-height: 0;
-    .base-layout-content {
-      flex: 1;
-      min-height: 0;
-      min-width: 0;
-      & > div {
-        height: 100%;
-        width: 100%;
-      }
+    min-width: 0;
+    & > div {
+      height: 100%;
+      width: 100%;
     }
   }
+}
 </style>

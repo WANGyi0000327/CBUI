@@ -16,11 +16,7 @@
     >
       <!-- 自定义内容渲染 -->
       <template v-if="typeof field.content === 'function'">
-        <render-content
-          v-model="formData[field.key]"
-          :render="field.content"
-          :field="field"
-        />
+        <render-content v-model="formData[field.key]" :render="field.content" :field="field" />
       </template>
       <!-- 默认表单控件 -->
       <template v-else>

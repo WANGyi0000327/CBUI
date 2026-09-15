@@ -29,9 +29,7 @@ describe('CbAudioPlayer', () => {
     expect(wrapper.find('.progress-bar').exists()).toBe(true)
     expect(wrapper.text()).toContain('00:00')
     expect(wrapper.find('audio').exists()).toBe(true)
-    expect(wrapper.find('audio').attributes('src')).toBe(
-      'https://example.com/audio.mp3'
-    )
+    expect(wrapper.find('audio').attributes('src')).toBe('https://example.com/audio.mp3')
   })
 
   it('styletype=2 渲染精简样式', () => {

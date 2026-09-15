@@ -124,32 +124,32 @@ title: MorePopup 更多弹层
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| type | 触发器类型：`button`=文字按钮，`icon`=竖向三点图标 | `string` | `'button'` |
-| text | 按钮触发器的文案（`type='button'` 时生效） | `string` | `'更多'` |
-| triggerClass | 触发器附加 class（用于自定义按钮/图标样式） | `string` | `''` |
-| disabled | 是否禁用（禁用时不可展开弹层） | `boolean` | `false` |
-| （其余属性） | 全部通过 `v-bind="$attrs"` 透传给 [TDesign Popup](https://tdesign.tencent.com/vue-next/components/popup)，例如 `placement`、`overlayClassName` 等 | - | - |
+| 属性         | 说明                                                                                                                                              | 类型      | 默认值     |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ---------- |
+| type         | 触发器类型：`button`=文字按钮，`icon`=竖向三点图标                                                                                                | `string`  | `'button'` |
+| text         | 按钮触发器的文案（`type='button'` 时生效）                                                                                                        | `string`  | `'更多'`   |
+| triggerClass | 触发器附加 class（用于自定义按钮/图标样式）                                                                                                       | `string`  | `''`       |
+| disabled     | 是否禁用（禁用时不可展开弹层）                                                                                                                    | `boolean` | `false`    |
+| （其余属性） | 全部通过 `v-bind="$attrs"` 透传给 [TDesign Popup](https://tdesign.tencent.com/vue-next/components/popup)，例如 `placement`、`overlayClassName` 等 | -         | -          |
 
 ### Events
 
-| 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
+| 事件名             | 说明                                                  | 回调参数                          |
+| ------------------ | ----------------------------------------------------- | --------------------------------- |
 | triggle-text-click | 点击文字触发器时触发，可拿到 `close` 方法主动关闭弹层 | `{ e: Event, close: () => void }` |
 
 ### Slots
 
-| 插槽名 | 说明 |
-| --- | --- |
+| 插槽名  | 说明                                                               |
+| ------- | ------------------------------------------------------------------ |
 | content | 弹层内容。会被隐藏探测器渲染以检测可见性，无可见子元素时不渲染弹层 |
-| text | 按钮触发器的文案插槽（覆盖 `text` 属性） |
+| text    | 按钮触发器的文案插槽（覆盖 `text` 属性）                           |
 
 ### Expose
 
-| 方法名 | 说明 |
-| --- | --- |
-| close | 主动关闭弹层（可在 `triggle-text-click` 回调中调用） |
+| 方法名 | 说明                                                 |
+| ------ | ---------------------------------------------------- |
+| close  | 主动关闭弹层（可在 `triggle-text-click` 回调中调用） |
 
 ## 使用须知
 

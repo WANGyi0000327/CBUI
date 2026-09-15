@@ -7,6 +7,7 @@ title: NumericInput 数字输入框
 基于 **TDesign `t-input`** 二次开发的数字输入组件：输入过程实时格式化（过滤多余负号 / 小数点、截断小数位数），失焦时按 `min` / `max` **钳制**并**四舍五入**，`v-model` 绑定 `number | null | undefined`。
 
 > 特性说明：
+>
 > - **输入即格式化**：多余的 `-` 只保留首位、小数点只保留一个、小数位实时截断到 `decimalPlaces`。
 > - **失焦钳制**：超出 `max` / `min` 自动收敛到边界值，并按小数位四舍五入后回写。
 > - 清空输入时 `v-model` 置为 `null`。
@@ -87,19 +88,19 @@ const value = ref<number | null | undefined>()
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| v-model | 绑定值（数字或空） | `number \| null \| undefined` | `undefined` |
-| decimalPlaces | 保留小数位数（`0`=整数） | `number` | `2` |
-| max | 最大值，失焦时钳制 | `number` | `Infinity` |
-| min | 最小值，失焦时钳制 | `number` | `-Infinity` |
-| （其余属性） | 全部通过 `v-bind="$attrs"` 透传给 [TDesign Input](https://tdesign.tencent.com/vue-next/components/input)，如 `placeholder`、`disabled`、`size`、`clearable` 等 | - | - |
+| 属性          | 说明                                                                                                                                                           | 类型                          | 默认值      |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------- |
+| v-model       | 绑定值（数字或空）                                                                                                                                             | `number \| null \| undefined` | `undefined` |
+| decimalPlaces | 保留小数位数（`0`=整数）                                                                                                                                       | `number`                      | `2`         |
+| max           | 最大值，失焦时钳制                                                                                                                                             | `number`                      | `Infinity`  |
+| min           | 最小值，失焦时钳制                                                                                                                                             | `number`                      | `-Infinity` |
+| （其余属性）  | 全部通过 `v-bind="$attrs"` 透传给 [TDesign Input](https://tdesign.tencent.com/vue-next/components/input)，如 `placeholder`、`disabled`、`size`、`clearable` 等 | -                             | -           |
 
 ### Events
 
-| 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
-| blur | 失焦（已钳制并四舍五入） | - |
+| 事件名 | 说明                             | 回调参数 |
+| ------ | -------------------------------- | -------- |
+| blur   | 失焦（已钳制并四舍五入）         | -        |
 | change | 值变化（透传 t-input 的 change） | `number` |
 
 ## 使用须知

@@ -38,9 +38,7 @@ const props = withDefaults(defineProps<tagProps>(), {
   variant: '',
 })
 const currentType = computed(() => {
-  return props.typeList.find(
-    (item) => item.id === props.status || item.value === props.status
-  )
+  return props.typeList.find((item) => item.id === props.status || item.value === props.status)
 })
 watch(
   () => props.status,

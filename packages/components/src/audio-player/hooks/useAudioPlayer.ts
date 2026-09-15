@@ -12,10 +12,7 @@ export interface AudioPlayerEmits {
   (e: 'durationchange', duration: number): void
   (e: 'ended'): void
 }
-export function useAudioPlayer(
-  props: AudioPlayerProps,
-  emit: AudioPlayerEmits
-) {
+export function useAudioPlayer(props: AudioPlayerProps, emit: AudioPlayerEmits) {
   // 音频管理器
   const audioManager = useAudioManager()
   // 3. 联系人详情文字转语音弹框里录音播放使用
@@ -29,9 +26,7 @@ export function useAudioPlayer(
   const duration = ref(0)
   const isDragging = ref(false)
   // 生成内部音频 ID
-  const internalAudioId = computed(
-    () => props.audioId || `audio-${Date.now()}-${Math.random()}`
-  )
+  const internalAudioId = computed(() => props.audioId || `audio-${Date.now()}-${Math.random()}`)
   // 计算属性
   const currentTimeDisplay = computed(() => {
     const totalSeconds = Math.floor(currentTime.value / 1000)

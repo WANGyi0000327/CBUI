@@ -8,15 +8,15 @@
           :default-index="index"
           :images="previewImages"
           :z-index="10000"
-          @IndexChange="handleChange"
+          @index-change="handleChange"
         >
           <template #trigger="{ open }">
             <div
-              class="imgbox"
               v-if="single && index === 0"
+              class="imgbox"
               :style="{ width: width, height: height }"
-              @click="openpreviewTask(index,open)"
-            > 
+              @click="openpreviewTask(index, open)"
+            >
               <cb-image-secret :temp-url="img" class="w-full h-full" />
               <!-- <img alt="test" :src="img" class="img" /> -->
               <div class="imgnum">+{{ previewImages?.length }}</div>
@@ -33,26 +33,22 @@
               <cb-image-secret :temp-url="img" class="w-full h-full" />
               <div
                 class="tdesign-demo-image-viewer__ui-image--hover relative"
-                @click="openpreviewTask(index,open)"
+                @click="openpreviewTask(index, open)"
               >
                 <span>
                   <cb-icon name="fangda" size="16px"></cb-icon>
                   预览</span
                 >
-                <span class="absolute" style="top:0;right: 0;" @click.stop="deleteImage(index)">
+                <span class="absolute" style="top: 0; right: 0" @click.stop="deleteImage(index)">
                   <cb-icon name="guanbi" size="16px"></cb-icon>
-                  </span>
+                </span>
               </div>
             </div>
           </template>
         </t-image-viewer>
       </template>
       <template v-else>
-        <div
-          class="text-[var(--td-brand-color)]"
-          style="cursor: pointer"
-          @click="openpreview"
-        >
+        <div class="text-[var(--td-brand-color)]" style="cursor: pointer" @click="openpreview">
           <template v-if="$slots.trigger">
             <slot name="trigger"></slot>
           </template>
@@ -72,8 +68,8 @@
     <slot v-else name="empty"> <t-empty /> </slot>
     <CbFilepreview
       v-if="previewImages?.length > 0 && !showOnlyImages"
-      v-model:dialogVisible="dialogVisible"
-      :fileList="previewImages"
+      v-model:dialog-visible="dialogVisible"
+      :file-list="previewImages"
     ></CbFilepreview>
   </div>
 </template>
@@ -104,14 +100,8 @@ const deleteImage = (index: number) => {
   emit('deleteImage', index)
 }
 // 使用图片预览 Hook
-const {
-  previewImages,
-  isEmpty,
-  dialogVisible,
-  openpreview,
-  openpreviewTask,
-  handleChange,
-} = useFilePreview(props)
+const { previewImages, isEmpty, dialogVisible, openpreview, openpreviewTask, handleChange } =
+  useFilePreview(props)
 </script>
 <style lang="scss" scoped>
 .file-preview {
@@ -147,8 +137,7 @@ const {
   line-height: 22px;
   transition: 0.2s;
 }
-.tdesign-demo-image-viewer__ui-image:hover
-  .tdesign-demo-image-viewer__ui-image--hover {
+.tdesign-demo-image-viewer__ui-image:hover .tdesign-demo-image-viewer__ui-image--hover {
   opacity: 1;
   cursor: pointer;
 }
@@ -169,11 +158,7 @@ const {
   position: absolute;
   bottom: 0;
   color: var(--td-text-color-anti);
-  background-image: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%);
   display: flex;
   box-sizing: border-box;
 }

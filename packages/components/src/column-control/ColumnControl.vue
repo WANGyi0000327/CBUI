@@ -23,41 +23,26 @@
         </div>
         <!-- 列列表 -->
         <div class="column-list">
-          <template
-            v-for="option in displayColumnOptions_1"
-            :key="option.colKey"
-          >
+          <template v-for="option in displayColumnOptions_1" :key="option.colKey">
             <div v-if="!option.Coldisabled" class="column-item">
               <div class="switch-container">
                 <!-- <span class="column-title">{{ option.label }}</span> -->
                 <div class="switch-handle-container">
-                  <CbIcon
-                    style="margin-right: 12px"
-                    :size="'16px'"
-                    :name="'tuozhuai'"
-                  />
+                  <CbIcon style="margin-right: 12px" :size="'16px'" :name="'tuozhuai'" />
                   <span class="column-title" style="margin-right: auto">{{
                     option.displayName || option.title
                   }}</span>
                   <t-switch
-                    :value="
-                      columnConfigModel.visibleColumns.includes(option.colKey)
-                    "
+                    :value="columnConfigModel.visibleColumns.includes(option.colKey)"
                     :disabled="option.head_disabled"
                     size="small"
-                    @change="
-                      (value: boolean) =>
-                        handleColumnToggle(option.colKey, value)
-                    "
+                    @change="(value: boolean) => handleColumnToggle(option.colKey, value)"
                   />
                 </div>
               </div>
             </div>
           </template>
-          <template
-            v-for="(option, index) in displayColumnOptions_2"
-            :key="option.colKey"
-          >
+          <template v-for="(option, index) in displayColumnOptions_2" :key="option.colKey">
             <div
               v-if="!option.Coldisabled"
               class="column-item"
@@ -72,24 +57,15 @@
               <div class="switch-container">
                 <!-- <span class="column-title">{{ option.label }}</span> -->
                 <div class="switch-handle-container">
-                  <CbIcon
-                    style="margin-right: 12px"
-                    :size="'16px'"
-                    :name="'tuozhuai'"
-                  />
+                  <CbIcon style="margin-right: 12px" :size="'16px'" :name="'tuozhuai'" />
                   <span class="column-title" style="margin-right: auto">{{
                     option.displayName || option.title
                   }}</span>
                   <t-switch
-                    :value="
-                      columnConfigModel.visibleColumns.includes(option.colKey)
-                    "
+                    :value="columnConfigModel.visibleColumns.includes(option.colKey)"
                     :disabled="option.head_disabled || option.Prohibit_switch"
                     size="small"
-                    @change="
-                      (value: boolean) =>
-                        handleColumnToggle(option.colKey, value)
-                    "
+                    @change="(value: boolean) => handleColumnToggle(option.colKey, value)"
                   />
                 </div>
               </div>
@@ -98,25 +74,16 @@
           <div v-if="closeoperation" class="column-item">
             <div class="switch-container">
               <div class="switch-handle-container">
-                <CbIcon
-                  style="margin-right: 12px"
-                  :size="'16px'"
-                  :name="'tuozhuai'"
-                />
+                <CbIcon style="margin-right: 12px" :size="'16px'" :name="'tuozhuai'" />
                 <span class="column-title" style="margin-right: auto">{{
-                  displayColumnOptions_2.filter(
-                    (item: any) => item.Coldisabled
-                  )?.[0]?.displayName || "操作"
+                  displayColumnOptions_2.filter((item: any) => item.Coldisabled)?.[0]
+                    ?.displayName || '操作'
                 }}</span>
                 <t-switch
-                  :value="
-                    columnConfigModel.visibleColumns.includes('operation')
-                  "
+                  :value="columnConfigModel.visibleColumns.includes('operation')"
                   :disabled="true"
                   size="small"
-                  @change="
-                    (value: boolean) => handleColumnToggle('operation', value)
-                  "
+                  @change="(value: boolean) => handleColumnToggle('operation', value)"
                 />
               </div>
             </div>
@@ -205,7 +172,7 @@ const {
 }
 .popup-title {
   color: #333333;
-  font-family: "HONOR Sans CN";
+  font-family: 'HONOR Sans CN';
   font-weight: 600;
   font-size: 14px;
 }
@@ -276,7 +243,7 @@ const {
 }
 .column-title {
   color: #666666;
-  font-family: "PingFang SC";
+  font-family: 'PingFang SC';
   font-size: 14px;
   flex: 1;
 }

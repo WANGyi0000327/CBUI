@@ -116,8 +116,7 @@ describe('CbPublicTable', () => {
   it('清空输入：clearInput 重置搜索关键词', () => {
     const wrapper = mountTable()
     ;(wrapper.vm as unknown as { clearInput: () => void }).clearInput()
-    const reqForm = (wrapper.vm as unknown as { reqForm: Record<string, unknown> })
-      .reqForm
+    const reqForm = (wrapper.vm as unknown as { reqForm: Record<string, unknown> }).reqForm
     expect(reqForm.keywords).toBe('')
   })
 })

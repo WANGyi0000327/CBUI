@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="CbDateRangeConfirmPicker"
-    v-click-outside="handleClose"
-  >
+  <div id="CbDateRangeConfirmPicker" v-click-outside="handleClose">
     <t-date-range-picker
       v-model="value"
       v-bind="$attrs"
@@ -67,14 +64,14 @@ const handleConfirmClick = () => {
 </script>
 
 <style lang="scss">
-  .cb-date-range-confirm-popup {
-    .t-date-picker__footer {
-      justify-content: end;
+.cb-date-range-confirm-popup {
+  .t-date-picker__footer {
+    justify-content: end;
 
-      .t-button {
-        background: var(--td-brand-color) !important;
-        color: #fff !important;
-      }
+    .t-button {
+      background: var(--td-brand-color) !important;
+      color: #fff !important;
     }
   }
+}
 </style>

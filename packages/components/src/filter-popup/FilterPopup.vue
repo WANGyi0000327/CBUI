@@ -1,19 +1,19 @@
 <template>
   <t-popup
-    trigger="click"
     v-model="visible"
+    trigger="click"
     placement="bottom"
-    :overlayInnerStyle="{ transform: 'translateX(-20px)' }"
+    :overlay-inner-style="{ transform: 'translateX(-20px)' }"
   >
     <template #content>
-      <div class="filter-popup-content" v-if="currentFormData">
+      <div v-if="currentFormData" class="filter-popup-content">
         <slot name="content">
           <cb-dynamic-form-generator
-            v-model:formData="currentFormData"
-            :fields="fields"
-            labelAlign="top"
-            resetType="initial"
             ref="formRef"
+            v-model:form-data="currentFormData"
+            :fields="fields"
+            label-align="top"
+            reset-type="initial"
           />
         </slot>
         <div class="flex justify-end gap-[8px] mt-[20px]">
@@ -31,7 +31,7 @@
       <div class="flex items-center gap-[5px]">
         <cb-icon name="shaixuan" />
         筛选{{ filterLen ? `(${filterLen})` : '' }}
-        <cb-icon name="guanbi" v-if="filterLen" @click.stop="handleClear" />
+        <cb-icon v-if="filterLen" name="guanbi" @click.stop="handleClear" />
       </div>
     </t-button>
   </t-popup>
@@ -42,10 +42,7 @@ defineOptions({
 })
 import { ref, type PropType, computed, watch } from 'vue'
 import CbDynamicFormGenerator from '#/dynamic-form-generator/DynamicFormGenerator.vue'
-import type {
-  FormField,
-  FormValues,
-} from '#/dynamic-form-generator/dynamicFormGenerator'
+import type { FormField, FormValues } from '#/dynamic-form-generator/dynamicFormGenerator'
 import { cloneDeep } from 'lodash'
 const visible = ref(false)
 const props = defineProps({
@@ -66,11 +63,7 @@ const filterLen = computed(() => {
     const formValue = formData.value[item.key]
     const defaultValueValue = defaultValue.value[item.key]
     // 检查值是否与默认值不同，或者是有内容的数组
-    if (
-      Array.isArray(formValue)
-        ? formValue.length > 0
-        : formValue !== defaultValueValue
-    ) {
+    if (Array.isArray(formValue) ? formValue.length > 0 : formValue !== defaultValueValue) {
       if (formValue !== null && formValue !== undefined) count++
     }
   })

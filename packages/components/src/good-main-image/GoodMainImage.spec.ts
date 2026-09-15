@@ -7,11 +7,13 @@ import GoodMainImage from './GoodMainImage.vue'
 const TImageStub = defineComponent({
   name: 'TImage',
   props: { src: String, fit: String, position: String },
-  setup: (props, { slots }) => () =>
-    h('div', { class: 't-image-stub' }, [
-      slots.error ? h('div', { class: 'img-error' }, slots.error()) : [],
-      slots.loading ? h('div', { class: 'img-loading' }, slots.loading()) : [],
-    ]),
+  setup:
+    (props, { slots }) =>
+    () =>
+      h('div', { class: 't-image-stub' }, [
+        slots.error ? h('div', { class: 'img-error' }, slots.error()) : [],
+        slots.loading ? h('div', { class: 'img-loading' }, slots.loading()) : [],
+      ]),
 })
 
 const TLoadingStub = defineComponent({

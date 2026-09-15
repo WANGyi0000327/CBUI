@@ -43,11 +43,11 @@ pnpm gen modal 模态框
 
 脚本自动完成：
 
-| 自动生成 | 路径 |
-| --- | --- |
+| 自动生成            | 路径                                                                             |
+| ------------------- | -------------------------------------------------------------------------------- |
 | 组件目录 + 4 个文件 | `packages/components/src/modal/`（Modal.vue / types.ts / index.ts / style.scss） |
-| 文档模板 | `docs/components/modal.md` |
-| 全量入口更新 | 自动执行 `pnpm gen:index` 重写 `src/index.ts` |
+| 文档模板            | `docs/components/modal.md`                                                       |
+| 全量入口更新        | 自动执行 `pnpm gen:index` 重写 `src/index.ts`                                    |
 
 **生成后你还必须做 3 件事**（脚手架不代劳）：
 
@@ -111,7 +111,7 @@ const emit = defineEmits<ModalEmits>()
 </script>
 
 <style scoped lang="scss">
-@use "@cb-ui/theme/src/variables" as *;
+@use '@cb-ui/theme/src/variables' as *;
 
 .cb-modal {
   // 组件样式
@@ -121,12 +121,12 @@ const emit = defineEmits<ModalEmits>()
 
 **必须遵守的命名规则**：
 
-| 项 | 规则 | 反例 |
-| --- | --- | --- |
-| 目录名 | kebab-case | `Modal` ✗ |
-| 组件文件名 | PascalCase | `modal.vue` ✗ |
-| `defineOptions` name | `Cb` + PascalCase | `Modal` ✗ |
-| CSS 类 | `cb-` + kebab-case | `modal-box` ✗ |
+| 项                   | 规则               | 反例          |
+| -------------------- | ------------------ | ------------- |
+| 目录名               | kebab-case         | `Modal` ✗     |
+| 组件文件名           | PascalCase         | `modal.vue` ✗ |
+| `defineOptions` name | `Cb` + PascalCase  | `Modal` ✗     |
+| CSS 类               | `cb-` + kebab-case | `modal-box` ✗ |
 
 **写逻辑时的高频依赖**（直接用即可，无需 import）：
 
@@ -246,7 +246,7 @@ describe('CbModal', () => {
 ### 3.5 `style.scss`（可选）
 
 ```scss
-@use "@cb-ui/theme/src/variables" as *;
+@use '@cb-ui/theme/src/variables' as *;
 
 .cb-modal {
   // 组件样式
@@ -257,7 +257,7 @@ describe('CbModal', () => {
 
 ### 3.6 `docs/components/modal.md` — 组件文档
 
-> 下面的"文档模板"代码块使用 4 反引号围栏包裹，因为模板内部含 ```vue 子代码块——**外层必须用 4 个反引号**，否则内层 ``` 会提前终止外层块（历史踩坑点，见文末坑 1）。
+> 下面的"文档模板"代码块使用 4 反引号围栏包裹，因为模板内部含 `vue 子代码块——**外层必须用 4 个反引号**，否则内层 ` 会提前终止外层块（历史踩坑点，见文末坑 1）。
 
 ````markdown
 ---
@@ -276,7 +276,7 @@ description: 模态框组件描述。
 <DemoBlock>
   <CbModal visible>内容</CbModal>
 
-  <template #code>
+<template #code>
 
 ```vue
 <template>
@@ -292,17 +292,17 @@ description: 模态框组件描述。
 ### Props
 
 | 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
+| ---- | ---- | ---- | ------ |
 
 ### Events
 
 | 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
+| ------ | ---- | -------- |
 
 ### Slots
 
-| 插槽名 | 说明 |
-| --- | --- |
+| 插槽名  | 说明     |
+| ------- | -------- |
 | default | 默认内容 |
 ````
 
@@ -330,11 +330,11 @@ pnpm gen:index
 
 组件文档放进 `docs/components/` 后，侧边栏**自动扫描**出现该组件；但**归入哪个分类**由三集合决定：
 
-| 集合 | 判定标准 | 现有例子 |
-| --- | --- | --- |
-| `BASE_SUBGROUPS` | 通用 UI 原子/布局/反馈，无业务依赖 → 再分 4 子组 | button / input / status-tag / grid-layout |
-| `MEDIA_TOOL_COMPONENTS` | 有独立能力、不依赖业务服务的中间层 | audio-player / video-player / copy / count-up-number |
-| `BUSINESS_COMPONENTS` | 依赖业务场景或数据服务 | upload / public-table / permission-tree / dynamic-form-generator |
+| 集合                    | 判定标准                                         | 现有例子                                                         |
+| ----------------------- | ------------------------------------------------ | ---------------------------------------------------------------- |
+| `BASE_SUBGROUPS`        | 通用 UI 原子/布局/反馈，无业务依赖 → 再分 4 子组 | button / input / status-tag / grid-layout                        |
+| `MEDIA_TOOL_COMPONENTS` | 有独立能力、不依赖业务服务的中间层               | audio-player / video-player / copy / count-up-number             |
+| `BUSINESS_COMPONENTS`   | 依赖业务场景或数据服务                           | upload / public-table / permission-tree / dynamic-form-generator |
 
 **不改 config.ts 的默认行为**：不属于任何集合的组件自动进"基础组件"的 **「未分组」** 区（config.ts 已兜底显示，不会消失）；建议按功能补进 `BASE_SUBGROUPS` 对应子分组，侧边栏更规整。
 
@@ -357,15 +357,15 @@ const MEDIA_TOOL_COMPONENTS = new Set([
 
 ## 五、验证链（交付前必跑）
 
-| 步骤 | 命令 | 通过标准 |
-| --- | --- | --- |
-| 1. 类型检查 | `npx vue-tsc --noEmit -p packages/components/tsconfig.json` | 0 error |
-| 2. 代码规范 | `npx eslint packages/components/src/<name>` | 0 errors（any 基线 warning 可接受） |
-| 3. 组件单测 | `npx vitest run packages/components/src/<name>` | 全过 |
-| 4. 全量回归 | `pnpm test` | 44 files / 240 tests 全绿 |
-| 5. 组件库构建 | `pnpm build:lib` | dist 产物生成 |
-| 6. 文档站构建 | 先停 dev → `pnpm build:docs` | 构建通过 |
-| 7. 浏览器实测 | `pnpm dev` → 访问 `/components/<name>.html` | 渲染 + 交互正常 |
+| 步骤          | 命令                                                        | 通过标准                            |
+| ------------- | ----------------------------------------------------------- | ----------------------------------- |
+| 1. 类型检查   | `npx vue-tsc --noEmit -p packages/components/tsconfig.json` | 0 error                             |
+| 2. 代码规范   | `npx eslint packages/components/src/<name>`                 | 0 errors（any 基线 warning 可接受） |
+| 3. 组件单测   | `npx vitest run packages/components/src/<name>`             | 全过                                |
+| 4. 全量回归   | `pnpm test`                                                 | 44 files / 240 tests 全绿           |
+| 5. 组件库构建 | `pnpm build:lib`                                            | dist 产物生成                       |
+| 6. 文档站构建 | 先停 dev → `pnpm build:docs`                                | 构建通过                            |
+| 7. 浏览器实测 | `pnpm dev` → 访问 `/components/<name>.html`                 | 渲染 + 交互正常                     |
 
 **三个必知坑位**：
 
@@ -392,13 +392,13 @@ const MEDIA_TOOL_COMPONENTS = new Set([
 
 ## 七、速查：常见问题
 
-| 问题 | 答案 |
-| --- | --- |
-| 组件文档侧边栏没出现？ | 确认 md 在 `docs/components/`；改过 config.ts 需重启 dev |
-| 全量入口没我组件？ | 确认目录有 `index.ts` 且格式正确，重跑 `pnpm gen:index` |
-| 单测报 "Cannot call xxx on empty DOMWrapper"？ | stub 的弹层组件没渲染默认插槽（补 `<slot />`）或异步未等待 |
-| eslint 报 require 报错？ | `scripts/*.cjs` 是故意用 CommonJS，规则已在 `.eslintrc.cjs` overrides 关闭 |
-| 组件要调业务接口？ | `import { serviceManager } from '#/config/api'`，测试用 `config/api.ts` shim |
-| 引入后组件名冲突？ | `defineOptions name` 必须是全局唯一的 `CbXxx` |
+| 问题                                           | 答案                                                                         |
+| ---------------------------------------------- | ---------------------------------------------------------------------------- |
+| 组件文档侧边栏没出现？                         | 确认 md 在 `docs/components/`；改过 config.ts 需重启 dev                     |
+| 全量入口没我组件？                             | 确认目录有 `index.ts` 且格式正确，重跑 `pnpm gen:index`                      |
+| 单测报 "Cannot call xxx on empty DOMWrapper"？ | stub 的弹层组件没渲染默认插槽（补 `<slot />`）或异步未等待                   |
+| eslint 报 require 报错？                       | `scripts/*.cjs` 是故意用 CommonJS，规则已在 `.eslintrc.cjs` overrides 关闭   |
+| 组件要调业务接口？                             | `import { serviceManager } from '#/config/api'`，测试用 `config/api.ts` shim |
+| 引入后组件名冲突？                             | `defineOptions name` 必须是全局唯一的 `CbXxx`                                |
 
 更多细节见《组件开发指南》与《常见问题》。

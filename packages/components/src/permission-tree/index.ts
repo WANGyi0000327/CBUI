@@ -6,12 +6,7 @@
  * 供 gen:index 扫描与 resolver 按需加载。
  */
 import PermissionTree from './PermissionTree.vue'
-import type {
-  CustomTreeKey,
-  BackendTreeNode,
-  CheckedInfo,
-  TreeSelectionConfig,
-} from './index.d'
+import type { CustomTreeKey, BackendTreeNode, CheckedInfo, TreeSelectionConfig } from './index.d'
 
 export { PermissionTree }
 export type { CustomTreeKey, BackendTreeNode, CheckedInfo, TreeSelectionConfig }

@@ -13,11 +13,9 @@ declare global {
   }
 }
 
-const resolveService = () =>
-  typeof window !== 'undefined' ? window.serviceManager : undefined
+const resolveService = () => (typeof window !== 'undefined' ? window.serviceManager : undefined)
 
-const apiPrefix = () =>
-  (typeof window !== 'undefined' && window.SaApiName) || 'sa'
+const apiPrefix = () => (typeof window !== 'undefined' && window.SaApiName) || 'sa'
 
 // 保存表头配置
 export const tableHeaderSave = (params: any) => {
@@ -25,21 +23,14 @@ export const tableHeaderSave = (params: any) => {
   if (!service) {
     return Promise.resolve({ code: 0, msg: 'local' })
   }
-  return service
-    .getHttp()
-    .post(`${apiPrefix()}/v1/tableHeader/save`, params)
+  return service.getHttp().post(`${apiPrefix()}/v1/tableHeader/save`, params)
 }
 
 // 获取表头配置
-export const getHeaderColumnList = (params: {
-  appCode: string
-  tableCode: string
-}) => {
+export const getHeaderColumnList = (params: { appCode: string; tableCode: string }) => {
   const service = resolveService()
   if (!service) {
     return Promise.resolve({ column: [], showColumn: [] })
   }
-  return service
-    .getHttp()
-    .get(`${apiPrefix()}/v1/tableHeader/getColumnList`, params)
+  return service.getHttp().get(`${apiPrefix()}/v1/tableHeader/getColumnList`, params)
 }

@@ -6,11 +6,7 @@
       :scroll-position="scrollPosition"
       class="tabs-container-content"
     >
-      <t-tab-panel
-        v-for="(tab, index) in tabs"
-        :key="tab.path"
-        :value="tab.path"
-      >
+      <t-tab-panel v-for="(tab, index) in tabs" :key="tab.path" :value="tab.path">
         <template #label>
           <div
             :class="['tab-item', { active: activeTab === tab.path }]"

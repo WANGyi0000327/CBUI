@@ -1,9 +1,7 @@
 <template>
   <div class="cb-overflow-input">
     <div class="cb-overflow-input__content" :title="label">{{ label }}</div>
-    <div v-if="count > 0" class="cb-overflow-input__unit">
-      等{{ count }}{{ unit }}
-    </div>
+    <div v-if="count > 0" class="cb-overflow-input__unit">等{{ count }}{{ unit }}</div>
   </div>
 </template>
 <script setup lang="ts">

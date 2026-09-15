@@ -9,8 +9,7 @@ export const EXTENSION_ALIASES: Record<string, string[]> = {
 export const MIME_TYPE_MAP: Record<string, string> = {
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': '.xlsx',
   'application/vnd.ms-excel': '.xls',
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-    '.docx',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': '.docx',
   'application/msword': '.doc',
   'application/pdf': '.pdf',
   'image/jpeg': '.jpg',

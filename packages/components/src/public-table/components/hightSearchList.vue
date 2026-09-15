@@ -2,10 +2,7 @@
   <div class="text-[#999999] flex items-center text-[12px]">
     <span>高频筛选：</span>
     <div class="ml-[5px] flex gap-[10px]">
-      <div
-        v-for="(item, index) in highSearchList"
-        :key="index"
-      >
+      <div v-for="(item, index) in highSearchList" :key="index">
         <check-tag
           v-model:high-select-rows="highSelectRows"
           :status="item.labelCode"

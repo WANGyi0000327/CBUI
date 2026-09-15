@@ -23,8 +23,7 @@ const mountPopup = (props = {}, slots = {}) =>
         },
         't-button': {
           props: ['disabled'],
-          template:
-            '<button class="stub-tbutton" :disabled="disabled"><slot /></button>',
+          template: '<button class="stub-tbutton" :disabled="disabled"><slot /></button>',
         },
       },
     },

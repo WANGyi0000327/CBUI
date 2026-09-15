@@ -20,20 +20,24 @@ const global = {
       name: 'TDialog',
       props: { visible: Boolean },
       emits: ['update:visible'],
-      setup: (_props, { slots }) => () =>
-        h(
-          'div',
-          { class: 't-dialog-stub' },
-          slots.body ? slots.body() : slots.default?.()
-        ),
+      setup:
+        (_props, { slots }) =>
+        () =>
+          h('div', { class: 't-dialog-stub' }, slots.body ? slots.body() : slots.default?.()),
     }),
     't-button': defineComponent({
       name: 'TButton',
-      setup: (_props, { slots }) => () => h('button', slots.default?.()),
+      setup:
+        (_props, { slots }) =>
+        () =>
+          h('button', slots.default?.()),
     }),
     't-loading': defineComponent({
       name: 'TLoading',
-      setup: (_props, { slots }) => () => h('div', slots.default?.()),
+      setup:
+        (_props, { slots }) =>
+        () =>
+          h('div', slots.default?.()),
     }),
     PdfViewer: defineComponent({
       name: 'PdfViewer',

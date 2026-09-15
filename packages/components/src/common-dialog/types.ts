@@ -3,11 +3,10 @@ import type { DialogProps } from 'tdesign-vue-next'
 /**
  * CommonDialog 通用弹窗组件属性
  */
-export interface BaseDialogProps
-  extends Omit<
-    DialogProps,
-    'title' | 'showHeader' | 'showFooter' | 'visible' | 'confirmBtn'
-  > {
+export interface BaseDialogProps extends Omit<
+  DialogProps,
+  'title' | 'showHeader' | 'showFooter' | 'visible' | 'confirmBtn'
+> {
   placement?: DialogProps['placement'] /** 弹窗位置（可选，默认为 'center'） */
   closeBtnText?: string /** 取消按钮文本（可选，默认为 '取消'） */
   confirmBtnText?: string /** 确定按钮文本（可选，默认为 '确定'） */

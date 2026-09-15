@@ -102,27 +102,27 @@ const price = ref(99.5)
 
 ### Props
 
-| 属性              | 说明                                  | 类型      | 默认值       |
-| ----------------- | ------------------------------------- | --------- | ------------ |
-| decimal-places    | 小数位数                              | `number`  | 2            |
-| max               | 最大值（blur 超过则提示/回填）        | `number`  | 9999999.99   |
-| min               | 最小值（blur 低于则清空并提示）       | `number`  | 0            |
-| text              | 字段语义名（用于提示文案）            | `string`  | '价格'       |
-| allow-input-zero  | 是否允许输入 0                        | `boolean` | true         |
-| input-zero-message| 输入 0 时的提示文案                   | `string`  | '不能输入0'  |
-| placeholder       | 占位提示                              | `string`  | '请输入价格' |
-| ishint            | 超过最大值时是否弹出提示              | `boolean` | true         |
-| isassignment      | 超过最大值时是否自动回填为 max        | `boolean` | true         |
-| is-show-suffix    | 是否显示后缀"元"                      | `boolean` | true         |
+| 属性               | 说明                            | 类型      | 默认值       |
+| ------------------ | ------------------------------- | --------- | ------------ |
+| decimal-places     | 小数位数                        | `number`  | 2            |
+| max                | 最大值（blur 超过则提示/回填）  | `number`  | 9999999.99   |
+| min                | 最小值（blur 低于则清空并提示） | `number`  | 0            |
+| text               | 字段语义名（用于提示文案）      | `string`  | '价格'       |
+| allow-input-zero   | 是否允许输入 0                  | `boolean` | true         |
+| input-zero-message | 输入 0 时的提示文案             | `string`  | '不能输入0'  |
+| placeholder        | 占位提示                        | `string`  | '请输入价格' |
+| ishint             | 超过最大值时是否弹出提示        | `boolean` | true         |
+| isassignment       | 超过最大值时是否自动回填为 max  | `boolean` | true         |
+| is-show-suffix     | 是否显示后缀"元"                | `boolean` | true         |
 
 ### v-model
 
-| 名称       | 说明             | 类型             |
-| ---------- | ---------------- | ---------------- |
+| 名称       | 说明               | 类型             |
+| ---------- | ------------------ | ---------------- |
 | modelValue | 当前金额值（双向） | `number \| null` |
 
 ### 实例方法（defineExpose）
 
-| 方法   | 说明         | 签名              |
-| ------ | ------------ | ----------------- |
-| focus  | 聚焦输入框   | `() => Promise<void>` |
+| 方法  | 说明       | 签名                  |
+| ----- | ---------- | --------------------- |
+| focus | 聚焦输入框 | `() => Promise<void>` |

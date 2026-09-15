@@ -7,6 +7,7 @@ title: Pagination 分页
 基于 **TDesign `t-pagination`** 二次开发的分页组件：内置每页条数选择（30 / 50 / 100 条）、快速跳页、最多 7 个页码按钮；`total` 为 0 时不渲染分页条。
 
 > 特性说明：
+>
 > - **内置条数选择**：默认 30 / 50 / 100 条每页，可通过 `page-size-options` 自定义。
 > - **快捷跳页**：内置 `show-jumper` 跳页输入框。
 > - **空态隐藏**：`total <= 0` 时整个分页条不渲染。
@@ -21,11 +22,7 @@ title: Pagination 分页
 
 ```vue
 <template>
-  <CbPagination
-    v-model:current="current"
-    v-model:pageSize="pageSize"
-    :total="total"
-  />
+  <CbPagination v-model:current="current" v-model:pageSize="pageSize" :total="total" />
 </template>
 
 <script setup lang="ts">
@@ -79,17 +76,17 @@ const total = 356
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| total | 数据总条数（`<= 0` 时不渲染分页条） | `number` | - |
-| pageSizeOptions | 每页条数可选项 | `{ label: string; value: number }[]` | `[30, 50, 100]` 条/页 |
-| （其余属性） | 通过 `v-bind="$attrs"` 透传给 [TDesign Pagination](https://tdesign.tencent.com/vue-next/components/pagination)，如 `v-model:current`、`v-model:pageSize`、`disabled` 等 | - | - |
+| 属性            | 说明                                                                                                                                                                    | 类型                                 | 默认值                |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | --------------------- |
+| total           | 数据总条数（`<= 0` 时不渲染分页条）                                                                                                                                     | `number`                             | -                     |
+| pageSizeOptions | 每页条数可选项                                                                                                                                                          | `{ label: string; value: number }[]` | `[30, 50, 100]` 条/页 |
+| （其余属性）    | 通过 `v-bind="$attrs"` 透传给 [TDesign Pagination](https://tdesign.tencent.com/vue-next/components/pagination)，如 `v-model:current`、`v-model:pageSize`、`disabled` 等 | -                                    | -                     |
 
 ### Events
 
-| 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
-| （透传） | 通过 `v-bind="$attrs"` 透传 `t-pagination` 的事件，如 `change`、`current-change`、`page-size-change` 等 | - |
+| 事件名   | 说明                                                                                                    | 回调参数 |
+| -------- | ------------------------------------------------------------------------------------------------------- | -------- |
+| （透传） | 通过 `v-bind="$attrs"` 透传 `t-pagination` 的事件，如 `change`、`current-change`、`page-size-change` 等 | -        |
 
 ## 使用须知
 
