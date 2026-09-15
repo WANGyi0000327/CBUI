@@ -2,9 +2,12 @@
 
 | 文档名称 | Props 文档自动提取与按需加载方案 |
 | -------- | -------------------------------- |
-| 版本     | V1.0.0                           |
+| 版本     | V2.0.0（现状版）                 |
 | 创建日期 | 2026-07-21                       |
-| 文档状态 | 待评审                           |
+| 更新日期 | 2026-09-14                       |
+| 文档状态 | 已实施                           |
+
+> **阅读提示**：本方案分两大部分——**Props 文档提取**（已落地）与**按需加载**（当前以"复制源码"模式供给业务项目，unplugin 自动引入为面向复制后项目的参考配置，未在组件库内启用）。文中明确标注「现状」「参考」。
 
 ---
 
@@ -18,39 +21,36 @@
 - 减少重复工作
 - 类型定义即文档，保证准确性
 
-### 1.2 技术方案
+### 1.2 技术方案（现状）
 
 #### 1.2.1 整体架构
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                  Props 文档自动提取流程                      │
+│                  Props 文档提取流程（现状）                   │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │   组件源码                                                    │
-│   ├── Button.vue                                             │
-│   └── types.ts ──▶ JSDoc 注释                               │
+│   ├── Xxx.vue                                               │
+│   └── types.ts（Props/Emits/Slots 三接口 + JSDoc 注释）       │
 │            │                                                 │
 │            ▼                                                 │
-│   vite-plugin-dts ──▶ 生成 .d.ts 类型声明文件                │
+│   extract-props.mjs ──▶ docs/.vitepress/generated/           │
+│   （pnpm extract:props）     <组件目录>-api.md（API 草稿）     │
 │            │                                                 │
 │            ▼                                                 │
-│   extract-props.mjs ──▶ 提取类型信息生成草稿                 │
-│            │                                                 │
-│            ▼                                                 │
-│   生成 Markdown API 文档 ──▶ 组件文档页面                     │
+│   开发者复制草稿 → 组件文档 API 表格（docs/components/*.md）   │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-#### 1.2.2 类型定义规范
+**结论先行**：当前采用 **types.ts JSDoc → 脚本生成草稿 → 人工确认后进文档** 的半自动方式。组件文档中的 API 表格**手工维护为主**，脚本负责生成草稿、减少重复劳动。
 
-**类型文件结构**（`packages/components/src/button/types.ts`）：
+#### 1.2.2 类型定义规范（现状要求）
+
+**类型文件**（`packages/components/src/<组件>/types.ts`）：
 
 ```typescript
-/** 按钮类型 */
-export type ButtonType = 'primary' | 'default' | 'danger'
-
 /** 按钮尺寸 */
 export type ButtonSize = 'small' | 'medium' | 'large'
 
@@ -59,307 +59,63 @@ export type ButtonSize = 'small' | 'medium' | 'large'
  */
 export interface ButtonProps {
   /**
-   * 按钮类型
-   * @default 'default'
-   */
-  type?: ButtonType
-
-  /**
    * 按钮尺寸
    * @default 'medium'
    */
   size?: ButtonSize
-
   /**
    * 是否禁用
    * @default false
    */
   disabled?: boolean
-
-  /**
-   * 是否加载中
-   * @default false
-   */
-  loading?: boolean
-
-  /**
-   * 自定义样式类名
-   */
-  class?: string
-
-  /**
-   * 自定义内联样式
-   */
-  style?: CSSStyleDeclaration
 }
 
 /**
  * 按钮组件事件
  */
 export interface ButtonEmits {
-  /**
-   * 点击按钮时触发
-   * @param event 鼠标事件对象
-   */
+  /** 点击时触发 */
   click: [event: MouseEvent]
-
-  /**
-   * 按钮失去焦点时触发
-   * @param event 焦点事件对象
-   */
-  blur: [event: FocusEvent]
 }
 
 /**
  * 按钮组件插槽
  */
 export interface ButtonSlots {
-  /**
-   * 按钮内容
-   */
   default: () => any
 }
 ```
 
-#### 1.2.3 Vue 组件中的类型引用
+**JSDoc 注释规范**：
 
-```vue
-<!-- packages/components/src/button/Button.vue -->
-<template>
-  <button
-    class="cb-button"
-    :class="[`cb-button--${type}`, `cb-button--${size}`, { 'is-disabled': disabled || loading }]"
-    :disabled="disabled || loading"
-    @click="handleClick"
-  >
-    <span v-if="loading" class="cb-button__spinner" />
-    <slot />
-  </button>
-</template>
+| 标签     | 用途     | 示例                                   |
+| -------- | -------- | -------------------------------------- |
+| `@default` | 默认值 | `@default 'medium'`                    |
+| `@param` | 参数说明 | `@param event 鼠标事件对象`            |
+| `@deprecated` | 废弃标记 | `@deprecated 请使用 size 属性`         |
 
-<script setup lang="ts">
-import { withDefaults, defineEmits } from 'vue'
-import type { ButtonProps, ButtonEmits } from './types'
+**硬性要求**（影响提取与文档质量）：
 
-const props = withDefaults(defineProps<ButtonProps>(), {
-  type: 'default',
-  size: 'medium',
-  disabled: false,
-  loading: false,
-})
+1. 三接口命名必须以 `Props` / `Emits` / `Slots` 结尾
+2. 可选属性写 `?`，带默认值的必须标 `@default`
+3. 类型必须从 `index.ts` 中 `export type` 导出（入口脚本按此收集类型）
 
-const emit = defineEmits<ButtonEmits>()
+#### 1.2.3 提取脚本（现状）
 
-const handleClick = (event: MouseEvent) => {
-  if (props.disabled || props.loading) return
-  emit('click', event)
-}
-</script>
-```
+| 项         | 说明                                                        |
+| ---------- | ----------------------------------------------------------- |
+| 脚本路径   | `packages/components/scripts/extract-props.mjs`             |
+| 运行命令   | `pnpm extract:props`                                        |
+| 输出目录   | `docs/.vitepress/generated/<组件目录>-api.md`（已在 .gitignore） |
+| 使用方式   | 复制草稿到组件文档 API 表格，人工校对后提交                  |
 
-#### 1.2.4 自动生成 .d.ts 文件
-
-**Vite 配置**（`packages/components/vite.config.ts`）：
-
-```typescript
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import dts from 'vite-plugin-dts'
-
-export default defineConfig({
-  plugins: [
-    vue(),
-    dts({
-      tsconfigPath: './tsconfig.json',
-      insertTypesEntry: true,
-      copyDtsFiles: true,
-      staticImport: true,
-    }),
-  ],
-  build: {
-    lib: {
-      entry: './src/index.ts',
-      name: 'CBUI',
-      fileName: (format) => `index.${format}.js`,
-      formats: ['es', 'cjs', 'umd'],
-    },
-    rollupOptions: {
-      external: ['vue'],
-      output: {
-        globals: { vue: 'Vue' },
-      },
-    },
-  },
-})
-```
-
-**生成的类型声明文件示例**：
-
-```typescript
-// dist/button/types.d.ts
-
-/** 按钮类型 */
-export type ButtonType = 'primary' | 'default' | 'danger'
-
-/** 按钮尺寸 */
-export type ButtonSize = 'small' | 'medium' | 'large'
-
-/**
- * 按钮组件属性
- */
-export interface ButtonProps {
-  /**
-   * 按钮类型
-   * @default 'default'
-   */
-  type?: ButtonType
-
-  /**
-   * 按钮尺寸
-   * @default 'medium'
-   */
-  size?: ButtonSize
-  // ...
-}
-```
-
-#### 1.2.5 文档提取工具
-
-> **当前实施状态（2026-07-28 更新）**：采用**手动编写 API 表格**方式，脚本仅作为辅助生成工具。
->
-> 尝试过 VitePress 内置的 `<<< @/path` 和 `<!-- @include: ./path -->` 两种包含语法，均未能正常渲染为 Markdown 表格（内容被当作代码块或直接消失）。
->
-> 当前方案：
->
-> - 辅助脚本：[packages/components/scripts/extract-props.mjs](file:///d:/domexiangm720/CBUi/packages/components/scripts/extract-props.mjs)
-> - 使用方式：运行 `pnpm extract:props` 生成 API 草稿，复制到组件文档中手动维护
-> - 生成目录：`docs/.vitepress/generated/{component}-api.md`（已在 .gitignore 中忽略）
-
-**方案一：使用 VitePress 内置 `@include` Markdown 包含语法（已尝试，未成功）**
-
-> VitePress 1.x 内置支持 `<!-- @include: ./path -->` 形式的 Markdown 文件包含，但在本项目环境中未能正常渲染。
-
-**方案二：自定义脚本提取（当前采用）**
+**验证**：
 
 ```bash
-# 运行辅助脚本生成 API 草稿
-pnpm extract:props
-
-# 查看生成的文件
-cat docs/.vitepress/generated/button-api.md
+pnpm extract:props && ls -la docs/.vitepress/generated/
 ```
 
-**方案三：TypeDoc（未采用）**
-
-> TypeDoc 可以生成完整的 API 文档，但输出格式不适合直接嵌入 VitePress 组件文档页面，故未采用。
-
-```typescript
-// scripts/generate-api-docs.ts
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs'
-import { parse } from 'typescript'
-import * as ts from 'typescript'
-
-function generateApiDocs(componentPath: string) {
-  const content = readFileSync(componentPath, 'utf-8')
-  const sourceFile = parse(content)
-
-  const propsInterface = findInterface(sourceFile, 'Props')
-  const emitsInterface = findInterface(sourceFile, 'Emits')
-  const slotsInterface = findInterface(sourceFile, 'Slots')
-
-  let markdown = ''
-
-  if (propsInterface) {
-    markdown += generatePropsTable(propsInterface)
-  }
-
-  if (emitsInterface) {
-    markdown += generateEventsTable(emitsInterface)
-  }
-
-  if (slotsInterface) {
-    markdown += generateSlotsTable(slotsInterface)
-  }
-
-  return markdown
-}
-
-function findInterface(
-  sourceFile: ts.SourceFile,
-  suffix: string
-): ts.InterfaceDeclaration | undefined {
-  let result: ts.InterfaceDeclaration | undefined
-
-  ts.forEachChild(sourceFile, (node) => {
-    if (ts.isInterfaceDeclaration(node) && node.name.text.endsWith(suffix)) {
-      result = node
-    }
-  })
-
-  return result
-}
-
-function generatePropsTable(interfaceDecl: ts.InterfaceDeclaration): string {
-  let table = '\n## Props\n\n| 属性 | 说明 | 类型 | 默认值 |\n|---|---|---|---|\n'
-
-  interfaceDecl.members.forEach((member) => {
-    if (ts.isPropertySignature(member)) {
-      const name = member.name.getText()
-      const type = member.type?.getText() ?? 'any'
-      const defaultValue = getDefaultValue(member)
-      const description = getJSDocDescription(member)
-
-      table += `| ${name} | ${description} | ${type} | ${defaultValue} |\n`
-    }
-  })
-
-  return table
-}
-
-function getJSDocDescription(node: ts.Node): string {
-  const jsDoc = ts.getJSDocComment(node)
-  if (!jsDoc) return ''
-
-  const firstTag = jsDoc.tags?.[0]
-  if (firstTag?.tagName.text === 'description') {
-    return firstTag.comment ?? ''
-  }
-
-  return jsDoc.comment?.split('\n')[0] ?? ''
-}
-
-function getDefaultValue(node: ts.PropertySignature): string {
-  const jsDoc = ts.getJSDocComment(node)
-  if (!jsDoc) return '-'
-
-  const defaultTag = jsDoc.tags?.find((tag) => tag.tagName.text === 'default')
-  return defaultTag?.comment ?? '-'
-}
-```
-
-#### 1.2.6 JSDoc 注释规范
-
-| 标签           | 用途     | 示例                                    |
-| -------------- | -------- | --------------------------------------- |
-| `@description` | 属性说明 | `@description 按钮类型`                 |
-| `@default`     | 默认值   | `@default 'default'`                    |
-| `@param`       | 参数说明 | `@param event 鼠标事件对象`             |
-| `@example`     | 使用示例 | `@example <cb-button>Click</cb-button>` |
-| `@deprecated`  | 废弃标记 | `@deprecated 请使用 size 属性`          |
-| `@see`         | 参考链接 | `@see https://example.com`              |
-
-### 1.3 文档生成流程
-
-```bash
-# 1. 构建组件库
-pnpm build:lib
-
-# 2. 生成 API 文档草稿
-pnpm extract:props
-
-# 3. 构建文档站
-pnpm build:docs
-```
+> **历史尝试（记录，勿重复踩坑）**：VitePress 内置 `<!-- @include: ./.vitepress/generated/<组件>-api.md -->` 包含语法在本项目环境下未能正常渲染为 Markdown 表格（内容被当作代码块或直接消失），故当前不依赖该机制。若后续需要，可在 DemoBlock 组件层重新验证。
 
 ---
 
@@ -367,365 +123,121 @@ pnpm build:docs
 
 ### 2.1 需求背景
 
-全量引入组件库会导致打包体积过大。按需加载可以：
+组件库面向业务项目的供给方式决定了加载策略：
 
-- 只引入使用的组件
-- 减少最终打包体积
-- 提升首屏加载速度
+| 供给模式         | 说明                                               | 加载策略 |
+| ---------------- | -------------------------------------------------- | -------- |
+| **复制源码**（现状） | 业务项目把组件目录源码拷入项目，随项目打包       | 天然按需：用哪个拷哪个 |
+| **包引用**（预留）   | 通过 npm 包 / workspace 引用组件库                 | 全量 or unplugin 自动引入 |
 
-### 2.2 技术方案
+> **现状**：组件库**不发布 npm 包**，业务项目采用复制源码方式——组件只进用它的项目，打包体积天然受控，**无需额外的按需加载工程**。本章其余内容为包引用场景的参考方案。
 
-#### 2.2.1 方案对比
+### 2.2 组件库入口设计（现状）
 
-| 方案                             | 优点             | 缺点             | 适用场景                 |
-| -------------------------------- | ---------------- | ---------------- | ------------------------ |
-| 手动按需引入                     | 灵活可控         | 代码冗长         | 小项目                   |
-| unplugin-vue-components 自动引入 | 零配置，自动检测 | 仅支持模板中使用 | 中大型项目               |
-| unplugin-auto-import 自动引入    | 支持组合式函数   | 配置较复杂       | 需要自动导入 composables |
-| Tree Shaking                     | 无需额外配置     | 依赖构建工具支持 | 所有项目                 |
-
-**推荐方案：unplugin-vue-components + unplugin-auto-import**
-
-#### 2.2.2 组件库入口设计
-
-**全量入口**（`packages/components/src/index.ts`）：
-
-```typescript
-import type { App } from 'vue'
-
-import { Button } from './button'
-import { Input } from './input'
-import { Modal } from './modal'
-// ...
-
-export { Button, Input, Modal }
-
-export default {
-  install(app: App) {
-    const components = [Button, Input, Modal]
-    components.forEach((component) => {
-      app.component(component.name || component.__name || '', component)
-    })
-  },
-}
-```
-
-**单个组件入口**（`packages/components/src/button/index.ts`）：
-
-```typescript
-import Button from './Button.vue'
-import type { ButtonProps, ButtonType, ButtonSize } from './types'
-
-export { Button }
-export type { ButtonProps, ButtonType, ButtonSize }
-export default Button
-```
-
-**样式入口**（`packages/components/src/button/style.ts`）：
-
-```typescript
-import './style.scss'
-```
-
-#### 2.2.3 方案一：手动按需引入
-
-**使用方式**：
-
-```typescript
-// 手动引入组件（复制代码到项目后的引入方式）
-import { Button } from '@/components/cb-ui/button'
-
-// 手动引入样式（如果组件有独立样式文件）
-import '@/components/cb-ui/button/style.scss'
-```
-
-**优点**：
-
-- 完全可控
-- 无额外依赖
-
-**缺点**：
-
-- 每次使用都需要引入
-- 容易遗漏样式引入
-
-#### 2.2.4 方案二：unplugin-vue-components 自动引入（推荐）
-
-**安装依赖**：
+**全量入口** `packages/components/src/index.ts` —— **由脚本自动生成**，勿手改：
 
 ```bash
-pnpm add -D unplugin-vue-components unplugin-auto-import
+pnpm gen:index
+# 自动扫描 packages/components/src/<组件>/index.ts
+# 重写：import / export / export type / install 注册数组
 ```
 
-**Vite 配置**（`vite.config.ts`）：
+**单组件出口** `packages/components/src/<组件>/index.ts`（barrel 规范）：
 
 ```typescript
+import Modal from './Modal.vue'
+import type { ModalProps, ModalEmits, ModalSlots } from './types'
+
+export { Modal }
+export type { ModalProps, ModalEmits, ModalSlots }
+export default Modal
+```
+
+::: warning 入口脚本提取规则
+`gen:index` 用正则 `export\s*\{\s*(\w+)\s*\}` 提取组件名（**只识别第一个**）、`export\s+type\s*\{([^}]+)\}` 提取类型。`export {}` 中只放一个组件名，多导出放 `export default` 之后。
+:::
+
+### 2.3 按需加载方案对比（参考）
+
+| 方案                             | 优点             | 缺点             | 适用场景             |
+| -------------------------------- | ---------------- | ---------------- | -------------------- |
+| 复制源码（**现状**）             | 体积天然可控     | 组件更新靠手动同步 | 内部项目             |
+| 手动按需引入                     | 灵活可控         | 代码冗长         | 小项目               |
+| unplugin-vue-components 自动引入 | 零配置，自动检测 | 仅模板中使用     | 中大型项目           |
+| Tree Shaking                     | 无需额外配置     | 依赖构建工具     | 全量引用的补充       |
+
+### 2.4 自动引入参考配置（面向包引用场景）
+
+组件包已内置 `CBUIResolver`（`packages/components/src/resolver.ts`，同时由 `exports["./resolver"]` 导出），业务项目按需接入：
+
+```ts
+// 业务项目 vite.config.ts
 import { defineConfig } from 'vite'
 import Components from 'unplugin-vue-components/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import { CBUIResolver } from './src/resolver'
+import { CBUIResolver } from '@cb-ui/components/resolver'
 
 export default defineConfig({
   plugins: [
     Components({
-      resolvers: [
-        CBUIResolver({
-          importStyle: true,
-          prefix: 'Cb',
-        }),
-      ],
-    }),
-    AutoImport({
-      resolvers: [
-        CBUIResolver({
-          importStyle: false,
-        }),
-      ],
+      resolvers: [CBUIResolver({ importStyle: true, prefix: 'Cb' })],
+      dts: true,
     }),
   ],
 })
 ```
 
-**自定义 Resolver**（`packages/components/src/resolver.ts`）：
+**Resolver 行为**：模板中出现 `<CbButton>` 时自动生成
 
 ```typescript
-import type { ComponentResolver } from 'unplugin-vue-components'
-
-export interface CBUIResolverOptions {
-  /**
-   * 是否自动导入样式
-   * @default true
-   */
-  importStyle?: boolean
-
-  /**
-   * 组件前缀
-   * @default 'cb'
-   */
-  prefix?: string
-
-  /**
-   * 组件库名称
-   * @default '@cb-ui/components'
-   */
-  libraryName?: string
-
-  /**
-   * 样式文件后缀
-   * @default 'scss'
-   */
-  styleSuffix?: string
-}
-
-export function CBUIResolver(options: CBUIResolverOptions = {}): ComponentResolver {
-  const {
-    importStyle = true,
-    prefix = 'Cb',
-    libraryName = '@cb-ui/components',
-    styleSuffix = 'scss',
-  } = options
-
-  return {
-    type: 'component',
-    resolve: (name: string) => {
-      if (!name.startsWith(prefix)) return
-
-      const componentName = name.slice(prefix.length)
-      const camelCaseName = componentName.charAt(0).toLowerCase() + componentName.slice(1)
-
-      const result = {
-        name: componentName,
-        from: `${libraryName}/${camelCaseName}`,
-      }
-
-      if (importStyle) {
-        result.style = `${libraryName}/${camelCaseName}/style.${styleSuffix}`
-      }
-
-      return result
-    },
-  }
-}
-```
-
-**使用方式**：
-
-```vue
-<!-- 模板中直接使用，无需手动导入 -->
-<template>
-  <CbButton type="primary">主要按钮</CbButton>
-  <CbInput v-model="value" />
-</template>
-
-<script setup lang="ts">
-// 无需手动 import，自动导入
-const value = ref('')
-</script>
-```
-
-**自动生成的代码**：
-
-```typescript
-import { CbButton } from '@cb-ui/components/button'
+import { Button } from '@cb-ui/components/button'
 import '@cb-ui/components/button/style.scss'
-import { CbInput } from '@cb-ui/components/input'
-import '@cb-ui/components/input/style.scss'
 ```
 
-#### 2.2.5 方案三：unplugin-auto-import 自动导入 Composables
+**组件包侧已就位的基础设施**：
 
-**配置**（`vite.config.ts`）：
+- `package.json`：`"type": "module"`、`"sideEffects": ["*.css", "*.scss"]`（Tree Shaking 友好）
+- 单组件导出路径：`exports["./button"]` → `src/button/index.ts`
+- 样式：组件 SFC 内部 `@use "@cb-ui/theme/src/variables"`（无独立 style.scss 的组件自动内联）
+
+### 2.5 文档站接入方式（现状：全量注册）
+
+文档站不需要按需加载——`docs/.vitepress/theme/index.ts` **全量注册**，示例才可随意使用任意组件：
 
 ```typescript
-AutoImport({
-  imports: [
-    'vue',
-    {
-      '@cb-ui/components': ['useMessage', 'useNotification'],
-    },
-  ],
-  resolvers: [CBUIResolver()],
-  dts: 'src/auto-imports.d.ts',
-})
-```
+import { CBUI } from '@cb-ui/components'
+import TDesign from 'tdesign-vue-next'
 
-**使用方式**：
-
-```typescript
-<script setup lang="ts">
-// useMessage 自动导入，无需手动 import
-useMessage.success('操作成功')
-</script>
-```
-
-#### 2.2.6 方案四：Tree Shaking
-
-**组件库配置**（`package.json`）：
-
-```json
-{
-  "type": "module",
-  "sideEffects": ["*.css", "*.scss"]
+export default {
+  extends: DefaultTheme,
+  enhanceApp({ app }) {
+    app.use(TDesign) // t-* 标签
+    app.use(CBUI)    // Cb* 组件（全量）
+    app.component('DemoBlock', DemoBlock)
+  },
 }
 ```
 
-**注意事项**：
-
-1. 使用 ES Module 格式（`type: "module"`）
-2. 标记样式文件为 side effect
-3. 确保组件导出使用纯函数，不产生副作用
-
-**打包工具配置**：
-
-- Vite/Rollup：默认支持，无需额外配置
-- Webpack：需要配置 `mode: 'production'` 和 `optimization.usedExports: true`
-
-### 2.3 按需加载性能对比
-
-| 引入方式                   | 打包体积（gzip） | 说明               |
-| -------------------------- | ---------------- | ------------------ |
-| 全量引入                   | ~200KB           | 包含所有组件       |
-| 按需引入（Button + Input） | ~30KB            | 仅包含使用的组件   |
-| 自动引入（Button + Input） | ~30KB            | 与手动按需引入相同 |
-
-### 2.4 最佳实践
-
-#### 2.4.1 开发环境配置
-
-```typescript
-// vite.config.ts
-import { defineConfig } from 'vite'
-import Components from 'unplugin-vue-components/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import { CBUIResolver } from '../../packages/components/src/resolver'
-
-export default defineConfig({
-  plugins: [
-    Components({
-      resolvers: [CBUIResolver({ importStyle: true })],
-    }),
-    AutoImport({
-      resolvers: [CBUIResolver({ importStyle: false })],
-    }),
-  ],
-})
-```
-
-#### 2.4.2 生产环境配置
-
-```typescript
-// vite.config.ts
-import { defineConfig } from 'vite'
-import Components from 'unplugin-vue-components/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import { CBUIResolver } from '../../packages/components/src/resolver'
-
-export default defineConfig({
-  plugins: [
-    Components({
-      resolvers: [CBUIResolver({ importStyle: 'css' })],
-      dts: true,
-    }),
-    AutoImport({
-      resolvers: [CBUIResolver({ importStyle: false })],
-      dts: true,
-    }),
-  ],
-  build: {
-    minify: true,
-    rollupOptions: {
-      external: ['vue'],
-    },
-  },
-})
-```
-
-#### 2.4.3 文档站配置
-
-```typescript
-// docs/.vitepress/vite.config.ts
-import { defineConfig } from 'vite'
-import Components from 'unplugin-vue-components/vite'
-import { CBUIResolver } from '../../packages/components/src/resolver'
-
-export default defineConfig({
-  plugins: [
-    Components({
-      resolvers: [CBUIResolver({ importStyle: true })],
-    }),
-  ],
-})
-```
+> 文档站别名（`config.ts`）直接引用组件**源码**：`@cb-ui/components → packages/components/src`、`# → src`（业务 API 用 `config/api.ts` shim mock）、`canvas → stub`。
 
 ---
 
-## 三、集成与验证
-
-### 3.1 文档提取验证
+## 三、集成与验证（现状命令）
 
 ```bash
-# 验证组件库构建
-pnpm build:lib && ls -la packages/components/dist/
+# 1. 类型检查（必带 --noEmit，防 TS5055）
+npx vue-tsc --noEmit -p packages/components/tsconfig.json
 
-# 验证 API 草稿生成
-pnpm extract:props && ls -la docs/.vitepress/generated/
+# 2. 全量单测（44 files / 240 tests）
+pnpm test
 
-# 验证文档站构建
+# 3. 组件库构建（Vite 8.1 + vite-plugin-dts）
+pnpm build:lib
+
+# 4. 生成 API 草稿
+pnpm extract:props
+
+# 5. 文档站构建（先停 dev）
 pnpm build:docs
-```
-
-### 3.2 按需加载验证
-
-```bash
-# 验证组件导出
-pnpm build:lib && node -e "const { Button } = require('./packages/components/dist/index.cjs.js'); console.log(Button)"
-
-# 验证样式导出
-ls -la packages/components/dist/button/style.css
-
-# 验证自动引入
-pnpm dev
-# 检查浏览器 Network 是否只加载使用的组件样式
 ```
 
 ---
@@ -734,33 +246,28 @@ pnpm dev
 
 ### 4.1 Props 文档提取
 
-1. **JSDoc 注释必须完整**：缺少注释会导致文档缺失
-2. **类型定义必须导出**：未导出的类型无法被提取
-3. **默认值标记**：使用 `@default` 标签标记默认值
-4. **类型命名规范**：Props 接口以 `Props` 结尾，Events 以 `Emits` 结尾
+1. **JSDoc 必须完整**：缺注释 → 文档缺说明；`@default` 缺失 → 默认值列空
+2. **类型必须导出**：`index.ts` 未 `export type` 的类型无法被入口收集
+3. **接口命名规范**：`XxxProps` / `XxxEmits` / `XxxSlots`
+4. **API 表格手工校对**：脚本草稿生成后需人工检查类型展示、默认值是否与 `withDefaults` 一致
 
-### 4.2 组件按需加载
+### 4.2 按需加载
 
-1. **样式引入方式**：开发环境用 `.scss`，生产环境用 `.css`
-2. **Resolver 配置**：确保 prefix 与组件命名一致
-3. **Tree Shaking**：组件库必须使用 ES Module 格式
-4. **Side Effects**：样式文件必须标记为 side effect
+1. **现状优先复制源码**：内部项目默认复制，无需引入 unplugin
+2. **Resolver 预留**：包引用场景用 `@cb-ui/components/resolver`，prefix 与组件命名一致
+3. **Tree Shaking**：组件包已配 `type: module` + `sideEffects` 标记
+4. **文档站勿用按需**：全量注册保证示例可用性，体积非文档站关注点
 
 ---
 
 ## 五、总结
 
-| 功能               | 方案                             | 工具                                           |
-| ------------------ | -------------------------------- | ---------------------------------------------- |
-| Props 文档自动提取 | 手动编写，辅助脚本生成草稿       | extract-props.mjs                              |
-| 组件按需加载       | unplugin-vue-components 自动引入 | unplugin-vue-components + unplugin-auto-import |
-| 样式按需加载       | Resolver 自动引入样式            | 自定义 CBUIResolver                            |
-| Tree Shaking       | ES Module + sideEffects 标记     | Vite/Rollup                                    |
+| 功能               | 方案（现状）                              | 工具                                 |
+| ------------------ | ----------------------------------------- | ------------------------------------ |
+| Props 文档提取     | types.ts JSDoc → 脚本生成草稿 → 人工确认  | extract-props.mjs                    |
+| 全量入口维护       | 目录扫描自动重写                          | generate-index.mjs（pnpm gen:index） |
+| 组件供给           | 复制源码（天然按需）                      | 无额外依赖                           |
+| 自动引入（预留）   | unplugin + CBUIResolver                   | resolver.ts 已内置导出               |
+| Tree Shaking       | ES Module + sideEffects 标记              | 组件包 package.json 已配置           |
 
-通过以上方案，可以实现：
-
-1. **文档自动化**：组件 API 文档从代码自动生成，保证同步更新
-2. **按需加载**：只引入使用的组件和样式，减少打包体积
-3. **开发体验**：模板中直接使用组件，无需手动导入
-
-这两个方案相互配合，可以大幅提升组件库的开发效率和使用体验。
+> 一句话总结：**文档提取走"JSDoc → 草稿 → 人工"半自动链路；加载策略以复制源码为主，自动引入为包引用场景预留**。
