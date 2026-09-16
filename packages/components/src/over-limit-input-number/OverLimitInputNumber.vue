@@ -8,17 +8,18 @@
     @change="(value: InputNumberValue, context: ChangeContext) => handleChange(value, context)"
   >
     <!-- 传递具名插槽 -->
-    <template v-for="(_, name) in $slots" #[name]="slotProps">
-      <slot :name="name" v-bind="slotProps"></slot>
+    <template v-for="slotEntry in slotEntries" #[slotEntry[0]]="slotProps">
+      <slot :name="slotEntry[0]" v-bind="slotProps"></slot>
     </template>
   </t-input-number>
 </template>
 <script lang="ts" setup>
 import type { InputNumberValue, ChangeContext } from 'tdesign-vue-next'
-import { nextTick, ref } from 'vue'
+import { nextTick, ref, useSlots, type Slot } from 'vue'
 defineOptions({
   name: 'CbOverLimitInputNumber',
 })
+const slotEntries = Object.entries(useSlots()) as [string, Slot][]
 const props = defineProps({
   enableTruncation: {
     type: Boolean,

@@ -51,7 +51,7 @@
 </template>
 <script lang="ts" setup>
 import type { PropType } from 'vue'
-import { nextTick, onBeforeUnmount, onMounted, ref, useSlots, watch } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref, useSlots, watch, type Slot } from 'vue'
 const visible = ref(false)
 const emits = defineEmits(['triggle-text-click'])
 defineOptions({
@@ -69,6 +69,7 @@ defineProps({
   },
   triggerClass: {
     type: String,
+    default: '',
   },
   disabled: {
     type: Boolean,
@@ -76,7 +77,7 @@ defineProps({
 })
 const detectorRef = ref<HTMLElement | null>(null)
 const hasVisibleContent = ref(false)
-const slots = useSlots()
+const slots = useSlots() as Record<string, Slot>
 const updateContentStatus = () => {
   if (!detectorRef.value) return
   const elements = Array.from(detectorRef.value.children) as HTMLElement[]
@@ -128,7 +129,7 @@ const close = () => {
   visible.value = false
 }
 const handleContextClick = (context: { e: MouseEvent }) => {
-  const triggerClassName = (context.e.target as any)?.className as string
+  const triggerClassName = (context.e.target as HTMLElement | null)?.className ?? ''
   if (triggerClassName.indexOf('t-link') !== -1 || triggerClassName.indexOf('t-button') !== -1) {
     close()
   }

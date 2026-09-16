@@ -1,6 +1,16 @@
 import { ref, computed, watch, type Ref, nextTick, onUnmounted } from 'vue'
 import type { TableColumn, ColumnOption, ColumnConfig } from '../table'
 
+// 列选项行：ColumnOption 与 TableColumn 的并集形状（业务列配置字段不规则）
+interface DisplayColumnOption extends ColumnOption {
+  colKey?: string
+  head_disabled?: boolean
+  Coldisabled?: boolean
+  Prohibit_switch?: boolean
+  displayName?: string
+  title?: string
+}
+
 interface UseColumnControlProps {
   columnConfig: ColumnConfig
   allColumns: TableColumn[]
@@ -14,8 +24,8 @@ interface UseColumnControlReturn {
   draggingIndex: Ref<number>
   originalConfig: Ref<ColumnConfig | null>
   // 计算属性
-  displayColumnOptions_1: Ref<any>
-  displayColumnOptions_2: Ref<any>
+  displayColumnOptions_1: Ref<DisplayColumnOption[]>
+  displayColumnOptions_2: Ref<DisplayColumnOption[]>
   // 方法
   handleVisibleChange: (newVisible: boolean) => void
   handleColumnToggle: (colKey: string, checked: boolean) => void
@@ -29,7 +39,7 @@ interface UseColumnControlReturn {
 
 export function useColumnControl(
   props: UseColumnControlProps,
-  emit: (event: any, ...args: any[]) => void,
+  emit: (event: string, ...args: unknown[]) => void,
   visibleModel: Ref<boolean>,
   columnConfigModel: Ref<ColumnConfig>
 ): UseColumnControlReturn {
@@ -39,35 +49,40 @@ export function useColumnControl(
   const draggingIndex = ref<number>(-1)
   const originalConfig = ref<ColumnConfig | null>(null)
   // 计算属性
-  const displayColumnOptions_1 = computed<any>(() => {
+  const displayColumnOptions_1 = computed<DisplayColumnOption[]>(() => {
     // 修复：let resultColumns = [] 会被 TS 推断为 never[]，赋 ColumnOption[] 报 TS2322
-    let resultColumns: any[] = []
+    let resultColumns: DisplayColumnOption[] = []
     if (columnConfigModel.value.columnOptions.length > 0) {
       // 如果有配置好的列，就使用它
       resultColumns = columnConfigModel.value.columnOptions
     } else {
-      // 否则，从 allColumns 生成
-      resultColumns = [...props.allColumns]
+      // 否则，从 allColumns 生成（业务列配置含 colKey/head_disabled 等扩展字段）
+      resultColumns = [...props.allColumns] as unknown as DisplayColumnOption[]
     }
     // 关键步骤：对最终结果进行统一过滤
     // return resultColumns.filter((col) => col.value !== "row-select");
-    return resultColumns.filter((s: any) => s.head_disabled === true || s.colKey === 'row-select')
+    return resultColumns.filter(
+      (s: DisplayColumnOption) => s.head_disabled === true || s.colKey === 'row-select'
+    )
   })
   // 计算属性
-  const displayColumnOptions_2 = computed<any>(() => {
-    let resultColumns: any[] = []
+  const displayColumnOptions_2 = computed<DisplayColumnOption[]>(() => {
+    let resultColumns: DisplayColumnOption[] = []
     if (columnConfigModel.value.columnOptions.length > 0) {
       // 如果有配置好的列，就使用它
       resultColumns = columnConfigModel.value.columnOptions
     } else {
       // 否则，从 allColumns 生成
-      resultColumns = [...props.allColumns]
+      resultColumns = [...props.allColumns] as unknown as DisplayColumnOption[]
     }
     // 关键步骤：对最终结果进行统一过滤
     // 关键：获取不可拖拽列的 colKey 集合，过滤掉重复项
-    const disabledColKeys = displayColumnOptions_1.value.map((item: any) => item.colKey)
+    const disabledColKeys = displayColumnOptions_1.value.map(
+      (item: DisplayColumnOption) => item.colKey
+    )
     return resultColumns.filter(
-      (s: any) => s.head_disabled !== true && !disabledColKeys.includes(s.colKey)
+      (s: DisplayColumnOption) =>
+        s.head_disabled !== true && !disabledColKeys.includes(s.colKey)
     )
   })
   // 监听 visible 变化，记录原始配置
@@ -182,16 +197,24 @@ export function useColumnControl(
   // 实际排序：把源行移动到目标行位置，合并去重后写回 columnConfig
   const doReorder = async (targetIndex: number) => {
     const newColumnOptions = [...displayColumnOptions_2.value]
-    const movedItem: any = newColumnOptions.splice(dragStartIndex.value, 1)[0]
+    const movedItem: DisplayColumnOption | undefined = newColumnOptions.splice(
+      dragStartIndex.value,
+      1
+    )[0]
+    if (!movedItem) return
     newColumnOptions.splice(targetIndex, 0, movedItem)
     // 合并不可拖拽列 + 去重后的可拖拽列
-    const disabledColKeys = displayColumnOptions_1.value.map((item: any) => item.colKey)
+    const disabledColKeys = displayColumnOptions_1.value.map(
+      (item: DisplayColumnOption) => item.colKey
+    )
     const uniqueDraggableColumns = newColumnOptions.filter(
-      (item: any) => !disabledColKeys.includes(item.colKey)
+      (item: DisplayColumnOption) => !disabledColKeys.includes(item.colKey)
     )
     const fullColumnOptions = [...displayColumnOptions_1.value, ...uniqueDraggableColumns]
     const finalColumnOptions = Array.from(
-      new Map(fullColumnOptions.map((item) => [item.colKey, item]))
+      new Map(
+        fullColumnOptions.map((item: DisplayColumnOption) => [item.colKey as string, item])
+      )
     ).map(([_, item]) => item)
     columnConfigModel.value = {
       ...columnConfigModel.value,

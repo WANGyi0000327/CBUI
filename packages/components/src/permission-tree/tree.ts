@@ -206,7 +206,7 @@ const updateSingleNodeState = (
   checked: boolean
 ): BackendTreeNode[] => {
   let found = false
-  const updateNodes = (nodes: any[]): any[] => {
+  const updateNodes = (nodes: BackendTreeNode[]): BackendTreeNode[] => {
     if (found) return nodes // 如果已经找到并更新，直接返回
     return nodes.map((node) => {
       // 如果找到目标节点，更新并标记

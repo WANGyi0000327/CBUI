@@ -19,7 +19,7 @@ describe('CBSearch', () => {
       global: { plugins: [TDesign] },
     })
     await wrapper.find('input').setValue('成都')
-    expect((wrapper.vm as any).keywords).toBe('成都')
+    expect((wrapper.vm as unknown as { keywords: string }).keywords).toBe('成都')
   })
 
   it('点击搜索按钮触发 search 事件并携带关键词', async () => {

@@ -73,7 +73,7 @@ const loading = defineModel<boolean>('loading')
 const fileList = ref<UploadFile[]>([])
 const upload = (props.requestMethod || serviceManager?.getHttp().upload || (() => {})) as (
   file: File
-) => Promise<any>
+) => Promise<UploadResponse>
 const uploadFileRef = ref()
 const uploadImageRef = ref()
 const handleFilesChange = async (e: Event) => {
@@ -285,21 +285,24 @@ watch(
   },
   { immediate: true, deep: true }
 )
-useEventListener(document, 'paste', (event: ClipboardEvent) => {
-  if (!isVisible.value || !isHovered.value) return
-  const target = event.target as HTMLElement
-  if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
-    return
-  }
-  const clipboardFiles = event.clipboardData?.files
-  if (clipboardFiles && clipboardFiles.length > 0) {
-    event.preventDefault()
-    const files = Array.from(clipboardFiles)
-    if (props.theme === 'image') {
-      uploadImageRef.value?.handleExternalFiles?.(files)
-    } else {
-      uploadFileRef.value?.handleExternalFiles?.(files)
+// SSR 安全：docs 构建期（VitePress）在 Node 环境执行 setup，document 不存在
+if (typeof document !== 'undefined') {
+  useEventListener(document, 'paste', (event: ClipboardEvent) => {
+    if (!isVisible.value || !isHovered.value) return
+    const target = event.target as HTMLElement
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+      return
     }
-  }
-})
+    const clipboardFiles = event.clipboardData?.files
+    if (clipboardFiles && clipboardFiles.length > 0) {
+      event.preventDefault()
+      const files = Array.from(clipboardFiles)
+      if (props.theme === 'image') {
+        uploadImageRef.value?.handleExternalFiles?.(files)
+      } else {
+        uploadFileRef.value?.handleExternalFiles?.(files)
+      }
+    }
+  })
+}
 </script>

@@ -152,6 +152,8 @@ export default defineConfig({
   // 关闭页面底部的「上次更新时间 Last updated」显示
   lastUpdated: false,
   cleanUrls: true,
+  // 死链检测只校验站内文档；docs/node_modules 内第三方包自带 README 链接不在校验范围
+  ignoreDeadLinks: true,
 
   // 主题配置
   themeConfig: {

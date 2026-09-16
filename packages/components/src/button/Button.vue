@@ -14,9 +14,9 @@
       `slotProps` 作为透传参数，运行时是任意对象，这里不做强类型是合理的。
     -->
     <template
-      v-for="slotEntry in Object.entries($slots)"
+      v-for="slotEntry in slotEntries"
       :key="slotEntry[0]"
-      #[slotEntry[0]]="slotProps"
+      #[slotEntry[0]]="slotProps: any"
     >
       <slot :name="slotEntry[0]" v-bind="slotProps"></slot>
     </template>
@@ -27,7 +27,7 @@
 import type { TNode } from 'tdesign-vue-next'
 import { Button as TButton } from 'tdesign-vue-next'
 import type { PropType } from 'vue'
-import { computed, h } from 'vue'
+import { computed, h, useSlots, type Slot } from 'vue'
 import CbIcon from '../icon/Icon.vue'
 type ThemeTypes = 'default' | 'primary' | 'danger' | 'warning' | 'success'
 
@@ -60,6 +60,9 @@ const props = defineProps({
     default: undefined,
   },
 })
+
+// 具名插槽条目：显式类型避免模板 v-for 自引用推断（TS7022）
+const slotEntries = Object.entries(useSlots()) as [string, Slot][]
 
 const isThemeValue = (v: string) => themeTypes.includes(v) || v.startsWith('cb-brand-')
 

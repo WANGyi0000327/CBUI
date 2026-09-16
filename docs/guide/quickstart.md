@@ -165,7 +165,7 @@ import '@cb-ui/components/dist/style.css'
 | `pnpm build:lib`           | 构建组件库产物    | Vite library 模式 → `packages/components/dist` |
 | `pnpm gen <name> [中文名]` | 一键生成新组件    | 目录 + 文件 + 文档 + 自动 gen:index            |
 | `pnpm gen:index`           | 重生成全量入口    | 扫描 `src/` 下组件目录，勿手改 `index.ts`      |
-| `pnpm test`                | 全量单测          | Vitest，44 files / 240 tests                   |
+| `pnpm test`                | 全量单测          | Vitest，47 files / 262 tests                   |
 | `pnpm lint`                | ESLint 检查+修复  | 0 errors 基线                                  |
 | `pnpm extract:props`       | 生成 API 表格草稿 | 输出到 `docs/.vitepress/generated/`            |
 

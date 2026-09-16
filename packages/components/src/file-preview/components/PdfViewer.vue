@@ -12,12 +12,12 @@
           <div
             v-for="(_page, index) in numPages"
             :key="index"
-            :ref="(el) => (thumbnailRefs[index] = el)"
+            :ref="(el) => (thumbnailRefs[index] = el as HTMLElement | null)"
             @click="goToPage(index + 1)"
           >
             <div :class="{ active: currentPage === index + 1 }" class="thumbnail-item">
               <canvas
-                :ref="(el) => (thumbCanvasRefs[index] = el)"
+                :ref="(el) => (thumbCanvasRefs[index] = el as HTMLCanvasElement | null)"
                 class="thumbnail-canvas"
               ></canvas>
               <div class="page-number">{{ index + 1 }}</div>
@@ -32,14 +32,14 @@
             <div
               v-for="(_page, index) in numPages"
               :key="index"
-              :ref="(el) => (pageRefs[index] = el)"
+              :ref="(el) => (pageRefs[index] = el as HTMLElement | null)"
               class="page-container"
               :style="{
                 transform: `rotate(${rotate}deg)`,
                 marginTop: isPortraitOrientation(rotate),
               }"
             >
-              <canvas :ref="(el) => (pageCanvasRefs[index] = el)" class="pdf-canvas"></canvas>
+              <canvas :ref="(el) => (pageCanvasRefs[index] = el as HTMLCanvasElement | null)" class="pdf-canvas"></canvas>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@ const props = withDefaults(defineProps<Props>(), {
   pdfUrl: '',
 })
 // 响应式状态
-let pdfDoc: any = {}
+let pdfDoc: pdfjsLib.PDFDocumentProxy | null = null
 const currentPage = ref(1)
 const numPages = ref(0)
 const scale = ref(1)
@@ -115,12 +115,12 @@ const devicePixelRatio = typeof window !== 'undefined' ? window.devicePixelRatio
 const mainContent = ref<HTMLDivElement | null>(null)
 const thumbnailSidebar = ref<HTMLDivElement | null>(null)
 const thumbnailList = ref<HTMLDivElement | null>(null)
-const pageRefs = ref<any>([]) // 页面容器引用
-const thumbnailRefs = ref<any>([]) // 缩略图容器引用
-const pageCanvasRefs = ref<any>([]) // 页面画布引用
-const thumbCanvasRefs = ref<any>([]) // 缩略图画布引用
-// 渲染任务跟踪
-const pageRenderTasks = shallowRef<any>({})
+const pageRefs = ref<Array<HTMLElement | null>>([]) // 页面容器引用
+const thumbnailRefs = ref<Array<HTMLElement | null>>([]) // 缩略图容器引用
+const pageCanvasRefs = ref<Array<HTMLCanvasElement | null>>([]) // 页面画布引用
+const thumbCanvasRefs = ref<Array<HTMLCanvasElement | null>>([]) // 缩略图画布引用
+// 渲染任务跟踪（pdf.js RenderTask 的结构化子集）
+const pageRenderTasks = shallowRef<Record<string, { cancel: () => void }>>({})
 // 按钮配置
 const but_arr = ref<ButtonItem[]>([
   { name: '缩小', icon: 'suoxiao' },
@@ -160,8 +160,8 @@ onMounted(() => {
 // 生命周期：卸载前清理
 onBeforeUnmount(() => {
   // 清理所有渲染任务
-  if (pageRenderTasks.value?.length > 0)
-    Object.values(pageRenderTasks.value).forEach((task: any) => {
+  if (Object.keys(pageRenderTasks.value).length > 0)
+    Object.values(pageRenderTasks.value).forEach((task) => {
       task?.cancel()
     })
   // 清理防抖计时器
@@ -215,7 +215,7 @@ const loadPdf = async (url: string) => {
   }
 }
 // 计算初始缩放比例，使PDF撑满容器
-const calculateInitialScale = async (viewport: any) => {
+const calculateInitialScale = async (viewport: pdfjsLib.PageViewport) => {
   if (!mainContent.value) return
   // 等待DOM更新
   await nextTick()
@@ -336,7 +336,7 @@ const generateThumbnails = async () => {
     return new Promise<void>((resolve) => {
       requestAnimationFrame(async () => {
         try {
-          const page = await pdfDoc?.getPage(pageNum)
+          const page = await pdfDoc!.getPage(pageNum)
           // 缩略图也考虑设备像素比，保持清晰度
           const actualScale = thumbnailScale.value * devicePixelRatio
           const viewport = page.getViewport({ scale: actualScale })
@@ -403,7 +403,7 @@ const updateCurrentPageFromScroll = () => {
   let closestPage = 1
   let minDistance = Infinity
   // 查找最接近视口中心的页面
-  pageRefs.value.forEach((pageEl: any, index: number) => {
+  pageRefs.value.forEach((pageEl: HTMLElement | null, index: number) => {
     if (!pageEl) return
     const rect = pageEl.getBoundingClientRect()
     const pageCenter = rect.top + rect.height / 2
@@ -428,10 +428,10 @@ const ensureThumbnailVisible = (pageNum: number) => {
   const thumbnailRect = thumbnailEl.getBoundingClientRect()
   // 缩略图不在可视区域时滚动
   if (thumbnailRect.top < sidebarRect.top || thumbnailRect.bottom > sidebarRect.bottom) {
-    const listRect: any = thumbnailList.value.getBoundingClientRect()
+    const listRect = thumbnailList.value.getBoundingClientRect()
     const relativeTop = thumbnailRect.top - listRect.top
     thumbnailList.value.scrollTop =
-      listRect.scrollTop + relativeTop - sidebarRect.height / 2 + thumbnailRect.height / 2
+      thumbnailList.value.scrollTop + relativeTop - sidebarRect.height / 2 + thumbnailRect.height / 2
   }
 }
 // 滚动到当前激活的缩略图

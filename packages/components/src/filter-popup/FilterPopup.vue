@@ -46,7 +46,10 @@ import type { FormField, FormValues } from '#/dynamic-form-generator/dynamicForm
 import { cloneDeep } from 'lodash'
 const visible = ref(false)
 const props = defineProps({
-  fields: Array as PropType<Array<FormField>>,
+  fields: {
+    type: Array as PropType<Array<FormField>>,
+    default: () => [],
+  },
   disabled: {
     type: Boolean,
     default: false,

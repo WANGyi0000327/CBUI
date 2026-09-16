@@ -56,28 +56,29 @@
 </template>
 <script lang="ts" setup>
 import { getHeaderColumnList, tableHeaderSave } from '#/api/index'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch, type PropType } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
+import type { ColControlColumn } from './types'
 defineOptions({ name: 'CbColControl' })
 const props = defineProps({
   label: { type: String, default: '操作' },
-  options: { type: Array as () => any[], default: () => [] },
+  options: { type: Array as PropType<ColControlColumn[]>, default: () => [] },
   appCode: { type: String, required: true },
   tableCode: { type: String, required: true },
   popupProps: {
-    type: Object as () => Record<string, any>,
+    type: Object as PropType<Record<string, unknown>>,
     default: () => ({}),
   },
 })
-const modelValue = defineModel<any[]>()
-const localColumns = ref<any[]>([])
-const isSystemCol = (item: any) =>
+const modelValue = defineModel<ColControlColumn[]>()
+const localColumns = ref<ColControlColumn[]>([])
+const isSystemCol = (item: ColControlColumn) =>
   ['row-select', 'drag', 'serial-number'].includes(item.colKey) ||
   (!item.title && !item.dispalyTitle && !item.displayName)
-const isLeftFixed = (item: any) => item.fixed === 'left' && !isSystemCol(item)
-const isRightFixed = (item: any) => item.fixed === 'right' || item.colKey === 'operation'
-const isEdit = (item: any) => !isSystemCol(item) && !isLeftFixed(item) && !isRightFixed(item)
-const getTitle = (item: any) => {
+const isLeftFixed = (item: ColControlColumn) => item.fixed === 'left' && !isSystemCol(item)
+const isRightFixed = (item: ColControlColumn) => item.fixed === 'right' || item.colKey === 'operation'
+const isEdit = (item: ColControlColumn) => !isSystemCol(item) && !isLeftFixed(item) && !isRightFixed(item)
+const getTitle = (item: ColControlColumn) => {
   return (
     item.displayName ||
     item.dispalyTitle ||
@@ -91,14 +92,14 @@ const syncToParent = (shouldSave = false) => {
     debounceSave()
   }
 }
-let timer: any = null
+let timer: ReturnType<typeof setTimeout> | null = null
 const debounceSave = () => {
   if (timer) clearTimeout(timer)
   timer = setTimeout(() => saveRemoteConfig(), 1000)
 }
 const saveRemoteConfig = async () => {
   const serializeColumn = localColumns.value.map((col) => {
-    const { visible, title, ...rest } = col
+    const { visible: _visible, title, ...rest } = col
     const savedTitle = typeof title === 'string' ? title : undefined
     return { ...rest, title: savedTitle }
   })
@@ -113,29 +114,29 @@ const saveRemoteConfig = async () => {
   try {
     await tableHeaderSave(params)
     console.log('配置已自动保存')
-  } catch (e) {
-    console.error('保存配置失败', e)
+  } catch {
+    console.error('保存配置失败')
   }
 }
 const fetchRemoteConfig = async () => {
   try {
-    const res: any = await getHeaderColumnList({
+    const res = (await getHeaderColumnList({
       appCode: props.appCode,
       tableCode: props.tableCode,
-    })
+    })) as { column?: ColControlColumn[]; showColumn?: string[] } | null
     if (res && res.column && res.column.length > 0) {
       combineConfig(res.column, res.showColumn || [])
     } else {
       initLocalData()
     }
-  } catch (e) {
+  } catch {
     initLocalData()
   }
 }
-const combineConfig = (remoteColumns: any[], showColumnKeys: string[]) => {
+const combineConfig = (remoteColumns: ColControlColumn[], showColumnKeys: string[]) => {
   const optionsMap = new Map(props.options.map((item) => [item.colKey, item]))
   const remoteMiddles = remoteColumns
-    .filter((rc) => optionsMap.has(rc.colKey) && isEdit(optionsMap.get(rc.colKey)))
+    .filter((rc) => optionsMap.has(rc.colKey) && isEdit(optionsMap.get(rc.colKey)!))
     .map((rc) => rc.colKey)
   const newMiddles = props.options
     .filter((opt) => isEdit(opt) && !remoteColumns.some((rc) => rc.colKey === opt.colKey))
@@ -144,7 +145,7 @@ const combineConfig = (remoteColumns: any[], showColumnKeys: string[]) => {
   const systems = props.options.filter(isSystemCol)
   const lefts = props.options.filter(isLeftFixed)
   const rights = props.options.filter(isRightFixed)
-  const middles = finalMiddleKeys.map((key) => optionsMap.get(key))
+  const middles = finalMiddleKeys.map((key) => optionsMap.get(key)!)
   const newLocalColumns = [...systems, ...lefts, ...middles, ...rights].map((col) => ({
     ...col,
     visible:

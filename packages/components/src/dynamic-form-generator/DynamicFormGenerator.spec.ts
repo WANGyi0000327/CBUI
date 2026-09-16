@@ -3,8 +3,14 @@ import { mount } from '@vue/test-utils'
 import { reactive, h } from 'vue'
 import DynamicFormGenerator from './DynamicFormGenerator.vue'
 import TDesign from 'tdesign-vue-next'
+import type { FormField } from './dynamicFormGenerator'
 
-const mountCtrl = (fields: any[], data: Record<string, any> = {}) => {
+type DFGVM = {
+  validate: unknown
+  reset: unknown
+}
+
+const mountCtrl = (fields: Array<Record<string, unknown>>, data: Record<string, unknown> = {}) => {
   const formData = reactive(data)
   const wrapper = mount(DynamicFormGenerator, {
     global: {
@@ -16,7 +22,7 @@ const mountCtrl = (fields: any[], data: Record<string, any> = {}) => {
       },
     },
     props: {
-      fields,
+      fields: fields as FormField[],
       formData,
     },
   })
@@ -105,7 +111,8 @@ describe('CbDynamicFormGenerator', () => {
     const { wrapper } = mountCtrl([{ key: 'name', label: '姓名' }], {
       name: '',
     })
-    expect(typeof (wrapper.vm as any).validate).toBe('function')
-    expect(typeof (wrapper.vm as any).reset).toBe('function')
+    const vm = wrapper.vm as unknown as DFGVM
+    expect(typeof vm.validate).toBe('function')
+    expect(typeof vm.reset).toBe('function')
   })
 })

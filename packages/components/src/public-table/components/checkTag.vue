@@ -50,12 +50,12 @@ const props = withDefaults(defineProps<tagProps>(), {
   typeList: () => [] as tagType[],
   status: '',
 })
-const highSelectRows = defineModel<any>('highSelectRows')
+const highSelectRows = defineModel<Map<string | number, unknown>>('highSelectRows')
 const checked = ref(false)
 watch(
   () => highSelectRows.value,
   () => {
-    checked.value = !!highSelectRows.value.get(props.status)
+    checked.value = !!highSelectRows.value?.get(props.status)
   },
   {
     deep: true,
@@ -66,7 +66,7 @@ const currentType = computed(() => {
     (item) => item.labelCode === props.status || item.code === props.status
   )
 })
-const handleChageTag = (checked: boolean, context: any) => {
+const handleChageTag = (checked: boolean, context: unknown) => {
   console.log(checked, context)
 }
 </script>

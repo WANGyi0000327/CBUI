@@ -78,7 +78,7 @@ monorepo 根，**只放跨包脚本**（`pnpm -F <包名> xxx` 转发到子包�
 
 ESLint 8 + TS + vue3-recommended + prettier。两个关键点：
 
-- `no-explicit-any` / `no-unused-vars` 均为 **warn**（当前基线 0 errors / 264 warnings，属既有债务）。
+- `no-explicit-any` / `no-unused-vars` 均为 **warn**（当前基线 **0 errors / 0 warnings**，`no-explicit-any` 147 条既有债务已于 2026-09 全部清理）。
 - `overrides` 对 `**/*.cjs` 关闭 `no-require-imports` —— `scripts/*.cjs` 是故意用 CommonJS 写的 Node 工具，`require()` 是正常用法。
 
 ### 2.7 `.npmrc`
@@ -112,11 +112,11 @@ Changesets 已初始化（`config.json` + `initial-release.md`），但**尚未�
 | `pnpm check` | `check:type && check:lint && check:test && check:build` | **一键质量门**：类型 → lint → 单测 → 构建，全过才算绿 | 提交/合并前、CI |
 | `pnpm check:type` | `vue-tsc --noEmit -p packages/components/tsconfig.json` | 组件包类型检查（0 error 即过） | 单查类型 |
 | `pnpm check:lint` | `eslint packages scripts --ext .vue,.ts,.tsx,.cjs,.mjs` | 全量 lint（0 errors 即过，warnings 不阻断） | 单查规范 |
-| `pnpm check:test` | `vitest run` | 跑全部单测（当前 44 files / 240 tests） | 单查测试 |
+| `pnpm check:test` | `vitest run` | 跑全部单测（当前 47 files / 262 tests） | 单查测试 |
 | `pnpm check:build` | `pnpm build:lib` | 重新构建组件库 | 单查构建 |
 | `pnpm test` | `vitest run` | 等价 `check:test` | 同上 |
 | `pnpm test:watch` | `vitest` | 监听模式，改代码自动重跑 | 写单测时 |
-| `pnpm test:coverage` | `vitest run --coverage` | 跑单测 + 覆盖率报告（当前基线 lines 75.29%） | 看覆盖率 |
+| `pnpm test:coverage` | `vitest run --coverage` | 跑单测 + 覆盖率报告（当前基线 lines 77.77%） | 看覆盖率 |
 | `pnpm lint` | `eslint . --ext .vue,.ts,.tsx --fix` | 全量 lint 并自动修复 | 想顺手修 warnings |
 | `pnpm format` | `prettier --write "**/*.{vue,ts,tsx,scss,css,md,json}"` | Prettier 全量格式化 | 提交前统一格式 |
 

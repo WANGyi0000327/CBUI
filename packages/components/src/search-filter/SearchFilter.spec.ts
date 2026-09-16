@@ -37,7 +37,7 @@ describe('CbSearchFilter', () => {
   })
 
   it('弹层打开时渲染 list 动态字段与操作按钮', async () => {
-    const wrapper = mountFilter({ list, visible: true })
+    mountFilter({ list, visible: true })
     await new Promise((r) => setTimeout(r, 100))
     const popupText = document.body.textContent || ''
     expect(popupText).toContain('关键词')

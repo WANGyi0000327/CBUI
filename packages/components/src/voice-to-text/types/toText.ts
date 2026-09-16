@@ -33,7 +33,7 @@ export interface AudioTranscriptHookReturn {
   currentTranscriptIndex: Ref<number>
   currentTime: Ref<number>
   // Methods
-  setItemRef: (el: any, index: number) => void
+  setItemRef: (el: HTMLElement | null, index: number) => void
   onTimeUpdate: (time: number) => void
   onEnded: () => void
   updateCurrentTranscript: () => void

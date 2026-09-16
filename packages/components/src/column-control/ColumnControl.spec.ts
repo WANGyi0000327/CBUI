@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import ColumnControl from './ColumnControl.vue'
+import type { ColumnConfig } from './table'
 import TDesign from 'tdesign-vue-next'
 
 const allColumns = [
@@ -86,7 +87,7 @@ describe('CbColumnControl', () => {
     await new Promise((r) => setTimeout(r, 50))
     const emitted = wrapper.emitted('update:columnConfig')
     expect(emitted).toBeTruthy()
-    const lastConfig = emitted!.at(-1)![0] as any
+    const lastConfig = emitted!.at(-1)![0] as ColumnConfig
     expect(lastConfig.visibleColumns).not.toContain('name')
     expect(lastConfig.visibleColumns).toContain('age')
   })

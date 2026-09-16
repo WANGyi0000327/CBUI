@@ -141,8 +141,8 @@
             </div>
           </div>
         </template>
-        <template v-for="(_, name) in $slots" #[name]="scope">
-          <slot :name="name" v-bind="scope"></slot>
+        <template v-for="slotEntry in slotEntries" #[slotEntry[0]]="scope">
+          <slot :name="slotEntry[0]" v-bind="scope"></slot>
         </template>
       </t-table>
       <slot name="table_bottom"></slot>
@@ -172,8 +172,9 @@ import type {
   TableRowData,
   TableSort,
   SelectOptions,
+  PaginationProps,
 } from 'tdesign-vue-next'
-import { computed, h, nextTick, onActivated, reactive, ref, useTemplateRef, watch } from 'vue'
+import { computed, h, nextTick, onActivated, reactive, ref, useSlots, useTemplateRef, watch, type Slot } from 'vue'
 import HighSearchList from './components/hightSearchList.vue'
 import PageInfoMation from './components/pageInfoMation.vue'
 import type { ConfigType, PageInfo, ReqForm } from './interface'
@@ -182,7 +183,7 @@ defineOptions({
 })
 // 定义组件的 Props 类型
 interface SimpleTableProps {
-  footerSummary?: any
+  footerSummary?: TableProps['footerSummary']
   maxHeight?: string
   stripe?: boolean //是否显示斑马纹
   bordered?: boolean //是否显示边框
@@ -216,6 +217,7 @@ interface SimpleTableProps {
   // 选中行键值数组
   selectedRowKeys?: TableProps['selectedRowKeys']
   // 选中行ID数组
+  // eslint-disable-next-line vue/prop-name-casing -- SelecteddataIDs 为既有公共 API，改名会破坏调用方
   SelecteddataIDs?: Array<string>
   // 是否保留分页时选中的行
   reserveSelectedRowOnPaginate?: boolean
@@ -225,8 +227,9 @@ interface SimpleTableProps {
   isreqTable?: boolean //是否使用默认确定事件
   pageParams?: PageInfo
   filterNumber?: number //筛选项数量
-  pageSizeOptions?: any //分页选项
+  pageSizeOptions?: PaginationProps['pageSizeOptions'] //分页选项
   totalContent?: boolean //分页 是否显示总数
+  // eslint-disable-next-line vue/prop-name-casing -- show_hender 为既有公共 API，改名会破坏调用方
   show_hender?: boolean //是否显示头部操作按钮
   openthere?: string //那里引用的组件
   customHoverClass?: string //是否自定义悬浮效果 配合default-text-style 和 ellipsis: true,使用
@@ -242,12 +245,12 @@ interface SimpleTableEmits {
   (e: 'handleChange', pageInfo: PageInfo): void
   (e: 'SelectChange', data: Array<string>, _ctx: SelectOptions<TableRowData>): void
   (e: 'reqTable', data: ReqForm, type: string): void
-  (e: 'handleReset', formdata?: any, type?: boolean): void
-  (e: 'submit_reqTable', data?: any): void
-  (e: 'saveConfig', config: any): void
+  (e: 'handleReset', formdata?: unknown, type?: boolean): void
+  (e: 'submit_reqTable', data?: unknown): void
+  (e: 'saveConfig', config: unknown): void
   (e: 'SelectData', data: Array<TableRowData>): void
-  (e: 'handleSelectHigh', data: any): void
-  (e: 'scroll', data: any): void
+  (e: 'handleSelectHigh', data: unknown[]): void
+  (e: 'scroll', data: { e: WheelEvent }): void
 }
 // 定义组件的 Props
 const props = withDefaults(defineProps<SimpleTableProps>(), {
@@ -286,16 +289,20 @@ const props = withDefaults(defineProps<SimpleTableProps>(), {
   SelecteddataIDs: () => [],
   reserveSelectedRowOnPaginate: false,
   total: 0,
+  footerSummary: undefined,
+  pageParams: undefined,
   reducemaxHeight: '290px',
   isreqTable: true,
   filterNumber: 0,
-  pageSizeOptions: [30, 50, 100],
+  pageSizeOptions: () => [30, 50, 100] as NonNullable<PaginationProps['pageSizeOptions']>,
   totalContent: true,
   show_hender: true,
   openthere: '',
   customHoverClass: '',
   cacheScroll: true,
 })
+// 具名插槽条目：显式类型避免模板 v-for 自引用推断（TS7022）
+const slotEntries = Object.entries(useSlots()) as [string, Slot][]
 // 是否显示分页
 const shouldShowPagination = computed(() => {
   return props.showpageForever || (props.showpage && computedTotal.value > 0)
@@ -329,14 +336,14 @@ watch(
   }
 )
 //触发请求
-const reqTable = (val?: any) => {
+const reqTable = (val?: string) => {
   reqForm.pageIndex = 1
   if (val) {
     reqForm[safeTableConfig.value.searchKey] = val
   }
   emit('reqTable', reqForm, 'search')
 }
-const submit_reqTable = (val?: any) => {
+const submit_reqTable = (val?: Record<string, unknown>) => {
   reqForm.pageIndex = 1
   if (props.isreqTable) {
     if (val) {
@@ -349,8 +356,8 @@ const submit_reqTable = (val?: any) => {
 }
 //处理高频筛选
 const highSearchRef = useTemplateRef('highSearch')
-const getHighList = (item: any) => {
-  let highList: any = []
+const getHighList = (item: { size?: number; values: () => Iterable<unknown> }) => {
+  let highList: unknown[] = []
   if (item.size) {
     highList = Array.from(item.values())
   } else {
@@ -363,7 +370,7 @@ const clearHighList = () => {
   highSearchRef.value?.handleClearAll()
 }
 // 处理重置事件
-const handleReset = (formdata: any, type?: boolean) => {
+const handleReset = (formdata: unknown, type?: boolean) => {
   emit('handleReset', formdata, type)
 }
 // 处理行点击事件
@@ -395,7 +402,7 @@ const sortChange: TableProps['onSortChange'] = (sortVal) => {
 const onDragSort = (context: DragSortContext<TableRowData>) => {
   emit('drag-sort', context)
 }
-const handleChange = (pageInfo: PageInfo | any) => {
+const handleChange = (pageInfo: PageInfo) => {
   emit('reqTable', reqForm, 'page')
   // { ...reqForm, ...pageInfo, pageIndex: pageInfo.current }
   emit('handleChange', pageInfo)
@@ -419,18 +426,18 @@ watch(
 )
 const currentColumns = computed(() => {
   return props.tableConfig.columns
-    .filter((col) => columnConfig.value.visibleColumns.includes(col.colKey))
+    .filter((col) => columnConfig.value.visibleColumns.includes(col.colKey || ''))
     .sort((a, b) => {
       const indexA = columnConfig.value.columnOptions.findIndex(
-        (opt: any) => opt.colKey === a.colKey
+        (opt) => opt.colKey === a.colKey
       )
       const indexB = columnConfig.value.columnOptions.findIndex(
-        (opt: any) => opt.colKey === b.colKey
+        (opt) => opt.colKey === b.colKey
       )
       return indexA - indexB
     })
 })
-const handleSaveConfig = (config: any) => {
+const handleSaveConfig = (config: unknown) => {
   console.log(config, 'config')
   emit('saveConfig', config)
 }

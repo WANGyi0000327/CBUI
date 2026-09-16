@@ -33,10 +33,10 @@
                     option.displayName || option.title
                   }}</span>
                   <t-switch
-                    :value="columnConfigModel.visibleColumns.includes(option.colKey)"
+                    :value="columnConfigModel.visibleColumns.includes(option.colKey || '')"
                     :disabled="option.head_disabled"
                     size="small"
-                    @change="(value: boolean) => handleColumnToggle(option.colKey, value)"
+                    @change="(value: boolean) => handleColumnToggle(option.colKey || '', value)"
                   />
                 </div>
               </div>
@@ -62,10 +62,10 @@
                     option.displayName || option.title
                   }}</span>
                   <t-switch
-                    :value="columnConfigModel.visibleColumns.includes(option.colKey)"
+                    :value="columnConfigModel.visibleColumns.includes(option.colKey || '')"
                     :disabled="option.head_disabled || option.Prohibit_switch"
                     size="small"
-                    @change="(value: boolean) => handleColumnToggle(option.colKey, value)"
+                    @change="(value: boolean) => handleColumnToggle(option.colKey || '', value)"
                   />
                 </div>
               </div>
@@ -76,7 +76,7 @@
               <div class="switch-handle-container">
                 <CbIcon style="margin-right: 12px" :size="'16px'" :name="'tuozhuai'" />
                 <span class="column-title" style="margin-right: auto">{{
-                  displayColumnOptions_2.filter((item: any) => item.Coldisabled)?.[0]
+                  displayColumnOptions_2.filter((item) => item.Coldisabled)?.[0]
                     ?.displayName || '操作'
                 }}</span>
                 <t-switch
@@ -121,12 +121,13 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   allColumns: () => [],
   closeoperation: true,
+  onSave: () => undefined,
   // defaultVisibleColumns: () => [],
 })
 // Emits - 移除了 save，新增成功和错误事件
 const emit = defineEmits<{
   saveSuccess: [config: ColumnConfig]
-  saveError: [error: any]
+  saveError: [error: unknown]
   columnToggle: [colKey: string, checked: boolean]
   columnOrderChange: [newOrder: ColumnOption[]]
 }>()
@@ -142,16 +143,13 @@ const {
   handleVisibleChange,
   handleColumnToggle,
   handlePointerDown,
-  handlePointerMove,
-  handlePointerUp,
-  doReorder,
 } = useColumnControl(
   {
     columnConfig: columnConfigModel.value,
     allColumns: props.allColumns,
     // defaultVisibleColumns: props.defaultVisibleColumns,
   },
-  emit,
+  emit as (event: string, ...args: unknown[]) => void,
   visibleModel,
   columnConfigModel
 )

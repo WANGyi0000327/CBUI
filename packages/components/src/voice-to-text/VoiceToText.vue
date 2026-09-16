@@ -6,7 +6,7 @@
         <div
           v-for="(item, index) in transcripts"
           :key="index"
-          :ref="(el) => setItemRef(el, index)"
+          :ref="(el) => handleSetItemRef(el, index)"
           :class="['message-wrapper', item.SpeakerId === '0' ? 'message-left' : 'message-right']"
           @click="handleTranscriptClick(item.BeginTime)"
         >
@@ -43,7 +43,7 @@ import { computed, ref } from 'vue'
 import { useAudioTranscript } from './hooks/index'
 import type { AudioPlayerMethods, AudioTranscriptHookProps } from './types/toText'
 const props = defineProps<AudioTranscriptHookProps>()
-const emit = defineEmits(['close'])
+defineEmits(['close'])
 const internalAudioId = computed(() => props.audioId || `transcript-audio-${Date.now()}`)
 const audioPlayerRef = ref<AudioPlayerMethods | null>(null)
 // 使用 audio transcript hooks
@@ -64,6 +64,10 @@ console.log(props.audioSrc, internalAudioId)
 const handleTranscriptClick = (time: number) => {
   if (!audioPlayerRef.value) return
   onTranscriptClick(time, audioPlayerRef.value.seekTo, audioPlayerRef.value.play)
+}
+// ref 回调包装：模板 ref 元素类型较宽，收敛为 HTMLElement | null
+const handleSetItemRef = (el: unknown, index: number) => {
+  setItemRef(el as HTMLElement | null, index)
 }
 const onDurationChange = (duration: number) => {
   console.log('🌵-----duration-----', duration)

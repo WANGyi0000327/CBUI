@@ -123,7 +123,7 @@
 | 指标               | 目标值       | 现状                                       |
 | ------------------ | ------------ | ------------------------------------------ |
 | 文档站首屏加载时间 | ≤ 2s（4G）   | VitePress 静态生成，dev 毫秒级 HMR         |
-| 单元测试           | 覆盖率 ≥ 80% | ✅ **44 files / 240 tests 全绿**（vitest） |
+| 单元测试           | 覆盖率 ≥ 80% | ✅ **47 files / 262 tests 全绿**（vitest） |
 | 类型检查           | 0 error      | ✅ `vue-tsc --noEmit` 0 error              |
 | 代码规范           | 0 error      | ✅ `eslint scripts` 0 error                |
 
@@ -174,7 +174,7 @@
 | M1：项目初始化 | ✅   | Monorepo 结构、pnpm workspace、VitePress 骨架        |
 | M2：核心组件库 | ✅   | 基础/媒体/业务三类组件沉淀，当前 44 个               |
 | M3：文档站搭建 | ✅   | 三分类侧边栏、DemoBlock、指南 5 篇                   |
-| M4：工程化完善 | ✅   | 单测补齐（44/240）、vue-tsc/eslint 0 error、脚本体系 |
+| M4：工程化完善 | ✅   | 单测补齐（47/262）、vue-tsc/eslint 0 error、脚本体系 |
 | M5：持续迭代   | 🔄   | 新组件开发文档、脚手架、单测按需补全                 |
 
 ---
@@ -191,9 +191,9 @@
 
 ### 7.2 质量验收
 
-- [x] 单测：44 files / 240 tests 全绿
+- [x] 单测：47 files / 262 tests 全绿
 - [x] 类型：`vue-tsc --noEmit` 0 error
-- [x] 覆盖率已跑基线：**75.29% stmts / 80.71% branch / 57.14% funcs / 75.29% lines**（`pnpm test:coverage`），行覆盖率已接近 80% 目标；主要缺口：utils（10.81%）、upload 系（56.45%）、file-preview 子组件（PdfViewer 35.92%），属后续 P1 补测项
+- [x] 覆盖率已跑基线：**77.77% stmts / 81.57% branch / 58.12% funcs / 77.77% lines**（`pnpm test:coverage`），较上版（75.29%）提升 2.5pt；utils 已补至 100%、upload 系 56.45%→65.57%（hook.ts 4.87%→94.28%）；剩余缺口：file-preview 子组件（PdfViewer 35.92%）、upload 整体 65.57%，属后续 P1 补测项
 
 ### 7.3 交付物验收
 

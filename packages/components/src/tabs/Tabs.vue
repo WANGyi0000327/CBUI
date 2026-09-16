@@ -13,9 +13,10 @@
 </template>
 <script lang="ts" setup>
 import type { PropType } from 'vue'
-const typeid = defineModel()
+const typeid = defineModel<number | string>()
 const emits = defineEmits(['tab_chk'])
-const props = defineProps({
+defineProps({
+  // eslint-disable-next-line vue/prop-name-casing -- type_tab 为既有公共 API，改名会破坏调用方
   type_tab: {
     type: Array as PropType<{ id: number; label: string; value: number }[]>,
     default: () => [],

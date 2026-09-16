@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { defineComponent, h, ref } from 'vue'
+import { defineComponent, h } from 'vue'
 import FilterPopup from './FilterPopup.vue'
 
 // 依赖 stub
@@ -91,7 +91,7 @@ describe('CbFilterPopup 筛选弹层', () => {
       },
       global,
     })
-    const vm = wrapper.vm as any
+    const vm = wrapper.vm as unknown as { filterLen: number }
     // 初始挂载后 defaultValue 已由 immediate watch 记录
     expect(vm.filterLen).toBe(0)
     // 更新 formData 值（直接改 props）
@@ -149,7 +149,7 @@ describe('CbFilterPopup 筛选弹层', () => {
     await wrapper.vm.$nextTick()
     wrapper.setProps({ formData: { name: '', age: '28' } })
     await wrapper.vm.$nextTick()
-    const vm = wrapper.vm as any
+    const vm = wrapper.vm as unknown as { handleClear: () => void }
     vm.handleClear()
     expect(wrapper.emitted('query')).toBeTruthy()
   })

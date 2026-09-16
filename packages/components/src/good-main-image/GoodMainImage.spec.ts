@@ -48,7 +48,7 @@ describe('CbGoodMainImage 商品主图', () => {
       },
       global,
     })
-    const vm = wrapper.vm as any
+    const vm = wrapper.vm as unknown as { displayName: string }
     expect(vm.displayName.length).toBe(20)
     // 渲染在错误兜底里
     expect(wrapper.find('.fallback-text').text()).toBe(vm.displayName)
@@ -56,7 +56,7 @@ describe('CbGoodMainImage 商品主图', () => {
 
   it('空 name 时兜底文字为空', () => {
     const wrapper = mount(GoodMainImage, { props: { src: '' }, global })
-    expect((wrapper.vm as any).displayName).toBe('')
+    expect((wrapper.vm as unknown as { displayName: string }).displayName).toBe('')
   })
 
   it('默认尺寸为 100%', () => {

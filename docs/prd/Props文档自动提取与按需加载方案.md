@@ -227,7 +227,7 @@ export default {
 # 1. 类型检查（必带 --noEmit，防 TS5055）
 npx vue-tsc --noEmit -p packages/components/tsconfig.json
 
-# 2. 全量单测（44 files / 240 tests）
+# 2. 全量单测（47 files / 262 tests）
 pnpm test
 
 # 3. 组件库构建（Vite 8.1 + vite-plugin-dts）

@@ -10,7 +10,7 @@ import type { KeysType } from 'tdesign-vue-next'
 /**
  * MultipleSelect 多选下拉组件属性
  */
-export interface MultipleSelectProps<T = Record<string, any>> {
+export interface MultipleSelectProps<T = Record<string, unknown>> {
   /**
    * 选项数据列表
    */

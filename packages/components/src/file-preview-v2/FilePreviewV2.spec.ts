@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { defineComponent, h, ref } from 'vue'
+import { defineComponent, h } from 'vue'
 import FilePreviewV2 from './FilePreviewV2.vue'
 
 // 依赖 stub：t-image-viewer 渲染 trigger 插槽；cb-image-secret 渲染占位；cb-icon 渲染图标名

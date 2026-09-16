@@ -15,41 +15,6 @@ export function useFilePreview(props: {
   const previewImages = computed(() => imageList.value)
   // 数据加载状态
   const isEmpty = computed(() => !loading.value && imageList.value.length === 0)
-  /**
-   * 获取图片数据
-   */
-  const fetchImages = async (names: Array<FilePreviewImageName>) => {
-    // 前置条件检查
-    if (loading.value || !names?.length) {
-      imageList.value = []
-      return
-    }
-    loading.value = true
-    // 准备参数
-    const params = props.showOnlyImages ? names : names.map((item: any) => item.url)
-    try {
-      //   const res: any = await getTempAccessUrlMap(params);
-      const res: any = {}
-      if (!res) {
-        imageList.value = []
-        return
-      }
-      // 处理响应数据
-      imageList.value = props.showOnlyImages
-        ? names.map((name) => res[name as string] || '')
-        : names.map((item: any) => ({
-            ...item,
-            url: res[item.url] ?? item.url, // 使用空值合并运算符
-          }))
-      console.log('🦄-----imageList.value-----', imageList.value)
-    } catch (error) {
-      console.error('获取图片数据失败:', error)
-      imageList.value = []
-    } finally {
-      loading.value = false
-    }
-    loading.value = false
-  }
   // 根据URL后缀判断文件类型
   const getFileType = (url: string, getType = false): string => {
     console.log('🌵-----url-----', url)
@@ -96,7 +61,7 @@ export function useFilePreview(props: {
   }
   const handleChange = async (index: number) => {
     console.log('🚀 ~ handleChange ~ index:', index)
-    const url: any = previewImages.value[index]
+    const url = previewImages.value[index]!
     await getImageUrl(url)
     previewImages.value[index] = previewUrl.value
   }
@@ -117,21 +82,21 @@ export function useFilePreview(props: {
       // 无清理逻辑，保留空块语义
     }
   }
-  const openpreviewTask = async (index: number, open: any) => {
-    const url: any = previewImages.value[index]
+  const openpreviewTask = async (index: number, open: () => void) => {
+    const url = previewImages.value[index]!
     console.log('🚀 ~ openpreviewTask ~ url:', url)
     await getImageUrl(url)
     previewImages.value[index] = previewUrl.value
     // dialogVisible.value = true
-    open(index)
+    open()
     console.log('🚀 ~ openpreviewTask ~ urls:', previewImages.value, dialogVisible.value)
   }
   const openpreview = () => {
     console.log('🦄-----previewImages.value-----', previewImages.value)
     // 检查是否有支持的类型
-    const hasSupportedType = previewImages.value.some((item: any) => {
+    const hasSupportedType = previewImages.value.some((item: FilePreviewImageName) => {
       // 根据模式确定如何获取URL
-      const url = props.showOnlyImages ? item : item.url || item
+      const url = typeof item === 'string' ? item : item.url || ''
       const type = getFileType(url)
       return type && ['audio', 'video', 'pdf', 'image', 'html'].includes(type)
     })

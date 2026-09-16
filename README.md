@@ -9,7 +9,7 @@
 - **自动化脚手架**：`pnpm gen` 一条命令生成新组件（目录 5 文件 + 文档 + 入口），`pnpm gen:index` 自动维护全量入口
 - **Props 文档自动提取**：从组件 `types.ts` 的 JSDoc 自动生成 API 文档片段，文档站 `@include` 引用，改注释即改文档
 - **按需加载预留**：内置 `CBUIResolver`，可配合 `unplugin-vue-components` 实现按需自动引入
-- **质量闭环**：`pnpm check` 一键验证（类型 + Lint + 单测 + 构建），当前 44 files / 240 tests 全绿，行覆盖率 75.29%
+- **质量闭环**：`pnpm check` 一键验证（类型 + Lint + 单测 + 构建），当前 47 files / 262 tests 全绿，行覆盖率 77.77%
 - **全量 / 按需双模式**：支持 `app.use(CBUI)` 全量注册，也支持 `@cb-ui/components/button` 子路径源码引用
 
 ## 🛠 技术栈
@@ -104,10 +104,11 @@ import { Button } from '@cb-ui/components/button'
 
 | 检查项 | 现状 |
 | --- | --- |
-| 单元测试 | **44 files / 240 tests 全绿**（Vitest + happy-dom） |
-| 覆盖率基线 | 75.29% stmts / 80.71% branch / 75.29% lines |
+| 单元测试 | **47 files / 262 tests 全绿**（Vitest + happy-dom） |
+| 覆盖率基线 | 77.77% stmts / 81.57% branch / 77.77% lines |
 | 类型检查 | `vue-tsc --noEmit` 0 error |
-| Lint | 0 errors（264→226 warnings 为既有债务，不阻断） |
+| Lint | **0 errors / 0 warnings**（`no-explicit-any` 147 条债务已全部清理） |
+| 版本管理 | Changesets 配置就绪（`@cb-ui/components|theme|utils`，0.x 内部阶段尚未接入发布流水线） |
 | 一键验证 | `pnpm check`（type → lint → test → build） |
 
 ## 🤝 参与贡献

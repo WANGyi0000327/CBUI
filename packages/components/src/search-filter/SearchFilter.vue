@@ -127,7 +127,7 @@ import type { FormRules, FormValidateParams } from 'tdesign-vue-next'
 import { ref, onMounted } from 'vue'
 // 表单字段配置类型定义
 interface FormItem {
-  keys?: any
+  keys?: Record<string, unknown>
   label: string // 字段标签
   name: string // 字段名，用于数据绑定
   type: 'input' | 'select' | 'radio' | 'checkbox' | 'dateRangePicker' | 'cascader' // 字段类型
@@ -135,7 +135,7 @@ interface FormItem {
   options?: Array<{ label: string; value: string | number }> // 选项（下拉框、单选框、多选框）
   required?: boolean // 是否必填
   width?: string // 宽度（可选）
-  config?: any
+  config?: Record<string, unknown>
   multiple?: boolean // 是否多选（级联选择）
 }
 defineOptions({
@@ -153,7 +153,7 @@ const props = withDefaults(
     showTotal?: boolean
     total?: number
     destroyOnClose?: boolean
-    formDataProp?: any
+    formDataProp?: Record<string, unknown>
     formRules?: FormRules
     hide?: boolean
   }>(),
@@ -161,17 +161,20 @@ const props = withDefaults(
     list: () => [],
     popupwidth: 'auto',
     filterNumber: () => 0,
+    btnWidth: 'auto',
     showTotal: false,
     total: 0,
     filterForm: () => ({}),
     destroyOnClose: () => false,
+    formDataProp: undefined,
+    formRules: () => ({}),
     hide: () => false,
   }
 )
 const searchIng = ref(false)
 const setFieldsValueDefault = () => {
   const { list } = props || {}
-  const values: any = ref({})
+  const values = ref<Record<string, unknown>>({})
   list.forEach((item) => {
     if (
       item.type === 'dateRangePicker' ||
@@ -186,13 +189,13 @@ const setFieldsValueDefault = () => {
   })
   return values.value
 }
-const formData = ref<Record<string, any>>(
+const formData = ref<Record<string, unknown>>(
   props.formDataProp ? deepClone(props.formDataProp) : setFieldsValueDefault() || {}
 )
-const visible = defineModel('visible', {
+const visible = defineModel<boolean>('visible', {
   default: false,
 })
-let initPropFormDate: any = null
+let initPropFormDate: Record<string, unknown> | null = null
 const handleReset = (type = false) => {
   // 重置
   if (!type) {

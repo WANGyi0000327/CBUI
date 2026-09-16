@@ -21,23 +21,27 @@ const props = defineProps({
     default: () => ({}),
   },
 })
-const modelValue = defineModel<any>()
+const modelValue = defineModel<unknown>()
 const emit = defineEmits(['update:value'])
-const onUpdate = (v: any) => {
+const onUpdate = (v: unknown) => {
   modelValue.value = v
 }
-const isVNode = (v: any): boolean => !!v && (v.__v_isVNode === true || !!v.type)
+const isVNode = (v: unknown): boolean => {
+  if (!v || typeof v !== 'object') return false
+  const node = v as { __v_isVNode?: boolean; type?: unknown }
+  return node.__v_isVNode === true || !!node.type
+}
 const renderContent = computed(() => {
   const fn = props.render
   // 非函数（组件对象等）直接作为组件渲染
   if (typeof fn !== 'function') return fn
-  return (nodeProps: any, ctx: any) => {
+  return (nodeProps: Record<string, unknown>, ctx: { attrs?: Record<string, unknown> }) => {
     const params = {
       modelValue: modelValue.value,
       field: props.field,
       onUpdate,
     }
-    let vnode: any = null
+    let vnode: ReturnType<typeof h> | null = null
     // 优先尝试对象参数写法（content 用法）
     try {
       const res = fn(params)
@@ -65,7 +69,7 @@ const renderContent = computed(() => {
     // （TDesign 输入类组件输入变化时触发 onChange，而非 update:value）
     if (vnode.props) {
       const originalOnChange = vnode.props.onChange
-      vnode.props.onChange = (...args: any[]) => {
+      vnode.props.onChange = (...args: unknown[]) => {
         if (typeof originalOnChange === 'function') {
           originalOnChange(...args)
         }

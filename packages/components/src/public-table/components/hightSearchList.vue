@@ -17,7 +17,7 @@
 import { ref } from 'vue'
 import type { HighSearchItem } from '../interface'
 import CheckTag from './checkTag.vue'
-const props = withDefaults(
+withDefaults(
   defineProps<{
     highSearchList: Array<HighSearchItem> | undefined
   }>(),
@@ -26,7 +26,7 @@ const props = withDefaults(
   }
 )
 const emits = defineEmits(['getHighList'])
-const highSelectRows = ref(new Map([]))
+const highSelectRows = ref(new Map<string | number, unknown>([]))
 const handleChange = (item: HighSearchItem) => {
   if (highSelectRows.value.get(item.labelCode)) {
     highSelectRows.value.delete(item.labelCode)

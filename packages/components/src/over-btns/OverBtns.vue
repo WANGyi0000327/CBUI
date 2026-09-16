@@ -49,7 +49,7 @@
 <script setup lang="ts">
 // import { MoreIcon } from 'tdesign-icons-vue-next'
 import { computed, type PropType, ref } from 'vue'
-import type { OverBtn } from './utils/overBtns'
+import type { OverBtn, OverRow } from './utils/overBtns'
 defineOptions({
   name: 'CbOverBtns',
 })
@@ -64,8 +64,8 @@ const props = defineProps({
     default: 2,
   },
   row: {
-    type: Object,
-    default: () => {},
+    type: Object as PropType<OverRow>,
+    default: () => ({}),
     required: true,
   },
   iconStyle: {
@@ -120,7 +120,7 @@ const getBtnStyle = (btn: OverBtn) => {
   return btn.style || {}
 }
 const popupref = ref()
-const click = (chk: (type: string, row: any) => void, type: string, row: any) => {
+const click = (chk: OverBtn['clickHandler'], type: string, row: OverRow) => {
   chk(type, row)
   popupref.value?.close()
 }

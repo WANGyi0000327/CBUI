@@ -15,8 +15,13 @@
  */
 import type { DirectiveBinding } from 'vue'
 
+// 绑定元素扩展：指令挂载的自定义属性
+interface ClickOutsideElement extends HTMLElement {
+  _clickOutsideHandler?: (event: MouseEvent) => void
+}
+
 export const clickOutside = {
-  mounted(el: any, binding: DirectiveBinding) {
+  mounted(el: ClickOutsideElement, binding: DirectiveBinding) {
     el._clickOutsideHandler = (event: MouseEvent) => {
       // 获取点击经过的所有 DOM 节点路径
       const path = event.composedPath ? event.composedPath() : []
@@ -32,8 +37,10 @@ export const clickOutside = {
     // 使用捕获阶段 (true)，确保在事件被 stopPropagation 之前能抓到
     document.addEventListener('click', el._clickOutsideHandler, true)
   },
-  unmounted(el: any) {
-    document.removeEventListener('click', el._clickOutsideHandler, true)
+  unmounted(el: ClickOutsideElement) {
+    if (el._clickOutsideHandler) {
+      document.removeEventListener('click', el._clickOutsideHandler, true)
+    }
   },
 }
 

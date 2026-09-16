@@ -5,8 +5,8 @@ declare global {
   interface Window {
     serviceManager?: {
       getHttp: () => {
-        post: (url: string, params?: any) => Promise<any>
-        get: (url: string, params?: any) => Promise<any>
+        post: (url: string, params?: unknown) => Promise<unknown>
+        get: (url: string, params?: unknown) => Promise<unknown>
       }
     }
     SaApiName?: string
@@ -18,7 +18,7 @@ const resolveService = () => (typeof window !== 'undefined' ? window.serviceMana
 const apiPrefix = () => (typeof window !== 'undefined' && window.SaApiName) || 'sa'
 
 // 保存表头配置
-export const tableHeaderSave = (params: any) => {
+export const tableHeaderSave = (params: Record<string, unknown>) => {
   const service = resolveService()
   if (!service) {
     return Promise.resolve({ code: 0, msg: 'local' })

@@ -25,7 +25,7 @@ export const uploadProps = {
     type: Number,
   },
   requestMethod: {
-    type: Function as PropType<(file: File) => Promise<any>>,
+    type: Function as PropType<(file: File) => Promise<unknown>>,
   },
   showTips: {
     type: Boolean,

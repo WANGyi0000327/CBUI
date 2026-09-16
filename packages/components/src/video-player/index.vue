@@ -30,7 +30,7 @@ defineOptions({
 // 视频播放器（业务 CbVideoPlayer 的库内最小实现）：
 // 原生 video + 播放/暂停 + 进度条 + 时间显示，供文件预览等场景使用。
 import { computed, ref } from 'vue'
-const props = withDefaults(
+withDefaults(
   defineProps<{
     src: string
     poster?: string

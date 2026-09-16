@@ -23,7 +23,7 @@ describe('CbSearchInput', () => {
   it('v-model 双向绑定并自动 trim', async () => {
     const wrapper = mountInput({ modelValue: '' })
     await wrapper.find('input').setValue('  成都  ')
-    expect((wrapper.vm as any).modelValue).toBe('成都')
+    expect((wrapper.vm as unknown as { modelValue: string }).modelValue).toBe('成都')
   })
 
   it('点击搜索触发 search 事件并携带关键词', async () => {
@@ -40,7 +40,7 @@ describe('CbSearchInput', () => {
     const clearIcon = wrapper.find('.input-close')
     expect(clearIcon.exists()).toBe(true)
     await clearIcon.trigger('click')
-    expect((wrapper.vm as any).modelValue).toBeUndefined()
+    expect((wrapper.vm as unknown as { modelValue: string | undefined }).modelValue).toBeUndefined()
     expect(wrapper.emitted('search')).toBeTruthy()
   })
 

@@ -120,7 +120,7 @@ const customFormattingFn = (n: number): string => {
 
   // 🎯 以下为你原有的 CountUp 内部默认千分位和小数点格式化逻辑的精简复刻
   // 确保在 1万 以下或者没开 formatting 时，千分位逗号和小数点依旧正常
-  const options: any = countUpInstance?.options || props
+  const options = (countUpInstance?.options || props) as CountUpOptions
   const decimals = getDecimalPlaces(n)
 
   // 处理负号

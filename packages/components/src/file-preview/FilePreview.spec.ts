@@ -1,10 +1,26 @@
-import { describe, it, expect, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { describe, it, expect } from 'vitest'
+import { mount, type VueWrapper } from '@vue/test-utils'
 import { defineComponent, h } from 'vue'
 import FilePreview from './FilePreview.vue'
 import PdfViewer from './components/PdfViewer.vue'
 import imgage from './components/imgage.vue'
 import CbVideo from './components/CbVideo.vue'
+
+// 测试通过 wrapper.vm 访问组件内部方法，用最小化接口替代 any
+type FilePreviewVM = {
+  open: () => void
+  handleClick: (url: string, name: string, fileName: string) => void
+  getFileType: (url: string) => string
+  getTopPic: (url: string) => string
+}
+type ImgageVM = {
+  rotateDeg: number
+  scale: number
+  handleButClick: (type: string) => void
+}
+const asFilePreviewVM = (wrapper: VueWrapper) =>
+  wrapper.vm as unknown as FilePreviewVM
+const asImgageVM = (wrapper: VueWrapper) => wrapper.vm as unknown as ImgageVM
 
 // 子组件/依赖 stub：文件预览依赖真实文件资源与全局注册的 cb-icon / t-dialog
 const CbIconStub = defineComponent({
@@ -66,7 +82,7 @@ describe('CbFilepreview 文件预览', () => {
       },
       global,
     })
-    ;(wrapper.vm as any).open()
+    asFilePreviewVM(wrapper).open()
     await wrapper.vm.$nextTick()
     expect(wrapper.find('.pdf-stub').exists()).toBe(true)
     expect(wrapper.find('.imgage-stub').exists()).toBe(false)
@@ -79,7 +95,7 @@ describe('CbFilepreview 文件预览', () => {
       },
       global,
     })
-    ;(wrapper.vm as any).open()
+    asFilePreviewVM(wrapper).open()
     await wrapper.vm.$nextTick()
     expect(wrapper.find('.imgage-stub').exists()).toBe(true)
   })
@@ -91,22 +107,22 @@ describe('CbFilepreview 文件预览', () => {
       },
       global,
     })
-    ;(wrapper.vm as any).open()
+    asFilePreviewVM(wrapper).open()
     await wrapper.vm.$nextTick()
     expect(wrapper.find('.video-stub').exists()).toBe(true)
     await wrapper.setProps({
       fileList: [{ url: 'https://x.com/d.mp3', fileName: '音频.mp3' }],
     })
-    ;(wrapper.vm as any).open()
+    asFilePreviewVM(wrapper).open()
     await wrapper.vm.$nextTick()
     expect(wrapper.find('.audio-stub').exists()).toBe(true)
   })
 
   it('getFileType 按后缀识别类型', () => {
-    const vm = mount(FilePreview, {
+    const vm = asFilePreviewVM(mount(FilePreview, {
       props: { fileList: [] },
       global,
-    }).vm as any
+    }))
     expect(vm.getFileType('a.mp3')).toBe('audio')
     expect(vm.getFileType('a.mp4')).toBe('video')
     expect(vm.getFileType('a.pdf')).toBe('pdf')
@@ -118,10 +134,10 @@ describe('CbFilepreview 文件预览', () => {
   })
 
   it('getTopPic 返回对应类型图标', () => {
-    const vm = mount(FilePreview, {
+    const vm = asFilePreviewVM(mount(FilePreview, {
       props: { fileList: [] },
       global,
-    }).vm as any
+    }))
     const pic = vm.getTopPic('a.pdf')
     expect(typeof pic).toBe('string')
     expect(pic.length).toBeGreaterThan(0)
@@ -137,7 +153,7 @@ describe('CbFilepreview 文件预览', () => {
       },
       global,
     })
-    ;(wrapper.vm as any).open()
+    asFilePreviewVM(wrapper).open()
     await wrapper.vm.$nextTick()
     await wrapper.vm.$nextTick()
     // 标签区渲染
@@ -145,7 +161,7 @@ describe('CbFilepreview 文件预览', () => {
     // 点击第二个标签切换到图片
     const items = wrapper.findAll('.fvd-tab-item')
     expect(items.length).toBe(2)
-    ;(wrapper.vm as any).handleClick('https://x.com/b.jpg', '', '照片.jpg')
+    asFilePreviewVM(wrapper).handleClick('https://x.com/b.jpg', '', '照片.jpg')
     await wrapper.vm.$nextTick()
     expect(wrapper.find('.imgage-stub').exists()).toBe(true)
   })
@@ -161,7 +177,7 @@ describe('CbPdfViewer 基础', () => {
 describe('CbImgage 图片查看器', () => {
   it('旋转/缩放按钮更新状态', async () => {
     const wrapper = mount(imgage, { props: { imgUrl: '' }, global })
-    const vm = wrapper.vm as any
+    const vm = asImgageVM(wrapper)
     vm.handleButClick('左转')
     expect(vm.rotateDeg).toBe(-90)
     vm.handleButClick('右转')

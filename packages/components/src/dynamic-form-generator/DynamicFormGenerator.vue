@@ -79,6 +79,7 @@ import RenderContent from '../render-component/index'
 const props = defineProps({
   fields: {
     type: Array as PropType<Array<FormField>>,
+    default: () => [],
   },
 })
 // 表单数据

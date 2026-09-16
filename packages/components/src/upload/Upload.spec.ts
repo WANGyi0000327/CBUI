@@ -82,7 +82,7 @@ describe('CbUpload 上传组件', () => {
       global,
     })
     await new Promise((r) => setTimeout(r, 50))
-    ;(wrapper.vm as any).clearFiles()
+    ;(wrapper.vm as unknown as { clearFiles: () => void }).clearFiles()
     await new Promise((r) => setTimeout(r, 50))
     expect(wrapper.find('.custom-upload-file-list').exists()).toBe(false)
   })

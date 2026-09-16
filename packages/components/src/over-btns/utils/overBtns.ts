@@ -18,7 +18,7 @@ interface OverBtn {
 }
 
 interface OverRow {
-  [key: string]: any
+  [key: string]: unknown
 }
 
 export type { OverBtn, OverRow }

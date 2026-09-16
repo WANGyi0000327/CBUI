@@ -6,7 +6,7 @@ export interface ColControlColumn {
   fixed?: 'left' | 'right'
   visible?: boolean
   disabled?: boolean
-  [key: string]: any
+  [key: string]: unknown
 }
 
 export interface CbColControlProps {
@@ -19,5 +19,5 @@ export interface CbColControlProps {
   /** 表格编码（远程配置保存） */
   tableCode: string
   /** 透传给 t-popup 的额外属性 */
-  popupProps?: Record<string, any>
+  popupProps?: Record<string, unknown>
 }

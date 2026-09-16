@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
 import ColControl from './ColControl.vue'
+import type { ColControlColumn } from './types'
 import TDesign from 'tdesign-vue-next'
 
 // 列配置：系统列 + 左固定 + 可编辑 + 操作列（右固定）
@@ -53,7 +54,7 @@ describe('CbColControl', () => {
   })
 
   it('点击打开弹层：显示表头展示项目与重置链接', async () => {
-    const wrapper = mountCtrl()
+    mountCtrl()
     const content = await openPopup()
     expect(content).toBeTruthy()
     expect(content.textContent).toContain('表头展示项目')
@@ -85,7 +86,7 @@ describe('CbColControl', () => {
     nameSwitch.click()
     await nextTick()
     const emitted = wrapper.emitted('update:modelValue')!
-    const lastValue = emitted.at(-1)![0] as any[]
+    const lastValue = emitted.at(-1)![0] as ColControlColumn[]
     expect(lastValue.some((c) => c.colKey === 'name')).toBe(false)
     expect(lastValue.some((c) => c.colKey === 'age')).toBe(false)
     expect(lastValue.some((c) => c.colKey === 'status')).toBe(true)
@@ -105,7 +106,7 @@ describe('CbColControl', () => {
     resetLink.click()
     await nextTick()
     const emitted = wrapper.emitted('update:modelValue')!
-    const afterReset = emitted.at(-1)![0] as any[]
+    const afterReset = emitted.at(-1)![0] as ColControlColumn[]
     expect(afterReset.some((c) => c.colKey === 'name')).toBe(true)
     expect(afterReset.some((c) => c.colKey === 'age')).toBe(false)
   })

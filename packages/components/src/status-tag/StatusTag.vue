@@ -39,7 +39,7 @@
 defineOptions({
   name: 'CbStatusTag',
 })
-import { computed, useSlots } from 'vue'
+import { computed, useSlots, type CSSProperties } from 'vue'
 import type { tagType } from './interface'
 const slots = useSlots()
 const hasTagIcon = computed(() => {
@@ -54,7 +54,7 @@ const hasContent = computed(() => {
 interface tagProps {
   typeList: Array<tagType>
   status: string | number
-  tagStyle?: Record<string, any>
+  tagStyle?: CSSProperties
   size?: string
   showType?: 'tag' | 'text'
   dot?: boolean

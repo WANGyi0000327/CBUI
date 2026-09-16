@@ -20,6 +20,7 @@ const props = defineProps({
   },
   unit: {
     type: String,
+    default: '',
   },
   delimiter: {
     type: String,

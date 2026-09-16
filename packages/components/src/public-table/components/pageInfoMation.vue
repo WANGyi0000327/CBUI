@@ -27,7 +27,7 @@ const pageSize = defineModel('pageSize', {
   type: Number,
   default: 30,
 })
-const pageSizeOptions = defineModel<number[]>('pageSizeOptions', {
+const pageSizeOptions = defineModel<PaginationProps['pageSizeOptions']>('pageSizeOptions', {
   type: Array as () => number[],
   default: () => [30, 50, 100],
 })

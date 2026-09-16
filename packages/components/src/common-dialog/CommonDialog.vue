@@ -119,6 +119,9 @@ withDefaults(defineProps<BaseDialogProps>(), {
   closeBtn: true,
   attach: '',
   dialogCloseBtn: true,
+  beforeOpen: () => {},
+  onBeforeClose: () => {},
+  zIndex: undefined,
 })
 </script>
 <style scoped lang="scss">

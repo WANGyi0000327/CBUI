@@ -71,9 +71,9 @@ interface MonthItem {
 }
 const emits = defineEmits(['change'])
 const activeKey = defineModel<string>()
-const compRefs = ref<Record<string, any>>({})
-const setCompRef = (el: any, id: string) => {
-  if (el) compRefs.value[id] = el
+const compRefs = ref<Record<string, HTMLElement | null>>({})
+const setCompRef = (el: unknown, id: string) => {
+  compRefs.value[id] = el as HTMLElement | null
 }
 // 竖线高度
 const lineHeight = ref(0)
@@ -156,8 +156,9 @@ const handleItemClick = (item: MonthItem, event: MouseEvent) => {
   emits('change')
 }
 const refresh = () => {
-  if (activeKey.value && compRefs.value[activeKey.value]) {
-    compRefs.value[activeKey.value].scrollIntoView({
+  const activeEl = activeKey.value ? compRefs.value[activeKey.value] : null
+  if (activeEl) {
+    activeEl.scrollIntoView({
       behavior: 'smooth',
       block: 'center',
     })
@@ -168,8 +169,9 @@ defineExpose({
 })
 onMounted(() => {
   calculateLineHeight()
-  if (activeKey.value && compRefs.value[activeKey.value]) {
-    compRefs.value[activeKey.value].scrollIntoView({
+  const activeEl = activeKey.value ? compRefs.value[activeKey.value] : null
+  if (activeEl) {
+    activeEl.scrollIntoView({
       behavior: 'smooth',
       block: 'center',
       inline: 'nearest',

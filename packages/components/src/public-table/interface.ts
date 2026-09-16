@@ -1,3 +1,5 @@
+import type { TableRowData, PrimaryTableCol } from 'tdesign-vue-next'
+
 export interface PageInfo {
   pageIndex: number
   pageSize: number
@@ -10,10 +12,10 @@ export interface HighSearchItem {
   labelCode: string
   labelName: string
   labelId: string
-  [key: string]: any
+  [key: string]: unknown
 }
 export interface ReqForm {
-  [key: string]: any
+  [key: string]: unknown
   pageIndex: number
   pageSize: number
 }
@@ -21,14 +23,14 @@ export interface ReqForm {
 export interface SearchItem {
   label: string
   value: string
-  [key: string]: any
+  [key: string]: unknown
 }
 export interface ConfigType {
-  data: any[] //表格数据
+  data: TableRowData[] //表格数据
   searchKey?: string //关键字key
   searchPlaceholder?: string //搜索框占位符
   ishighSearch?: boolean //是否显示高频搜索
-  columns: any[] //表格列配置
+  columns: PrimaryTableCol[] //表格列配置
   rowKey?: string //行key
   highSearchList?: Array<HighSearchItem> //高频搜索列表
   isShowSearch?: boolean //是否显示搜索栏

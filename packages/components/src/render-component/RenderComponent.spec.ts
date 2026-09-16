@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import TDesign, { Input as TInput } from 'tdesign-vue-next'
-import { h } from 'vue'
 import RenderComponent from './RenderComponent.vue'
 
 describe('RenderComponent', () => {
@@ -9,7 +8,7 @@ describe('RenderComponent', () => {
     const wrapper = mount(RenderComponent, {
       global: { plugins: [TDesign] },
       props: {
-        render: (h: any) => h('div', { class: 'rc-demo' }, '渲染内容'),
+        render: (h: typeof import('vue')['h']) => h('div', { class: 'rc-demo' }, '渲染内容'),
       },
     })
     expect(wrapper.find('.rc-demo').text()).toBe('渲染内容')
@@ -19,7 +18,7 @@ describe('RenderComponent', () => {
     const wrapper = mount(RenderComponent, {
       global: { plugins: [TDesign] },
       props: {
-        render: (h: any) => h(TInput, { placeholder: '测试' }),
+        render: (h: typeof import('vue')['h']) => h(TInput, { placeholder: '测试' }),
       },
     })
     // TInput 解析后应渲染为 input
@@ -31,7 +30,7 @@ describe('RenderComponent', () => {
     const wrapper = mount(RenderComponent, {
       global: { plugins: [TDesign] },
       props: {
-        render: (h: any) => h(TInput, { placeholder: '转发测试' }),
+        render: (h: typeof import('vue')['h']) => h(TInput, { placeholder: '转发测试' }),
       },
       attrs: { 'onUpdate:value': onChange },
     })
@@ -47,7 +46,7 @@ describe('RenderComponent', () => {
     mount(RenderComponent, {
       global: { plugins: [TDesign] },
       props: {
-        render: (h: any) => h('t-input', { onChange: businessChange, placeholder: '业务监听' }),
+        render: (h: typeof import('vue')['h']) => h('t-input', { onChange: businessChange, placeholder: '业务监听' }),
       },
       attrs: { 'onUpdate:value': forwardedChange },
     })

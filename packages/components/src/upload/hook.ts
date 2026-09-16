@@ -1,17 +1,16 @@
 import * as XLSX from 'xlsx'
-interface ExcelData {
-  [key: string]: any
-}
 interface ExcelSheet {
   name: string
-  data: ExcelData[]
+  data: unknown[][]
+  total: number
 }
 interface ExcelFile {
   sheets: ExcelSheet[]
   totalData: number
 }
 //获取导入的表格多少条数据
-export function countExcelData(file?: any): Promise<ExcelFile> {
+export function countExcelData(file?: File): Promise<ExcelFile> {
+  if (!file) return Promise.reject(new Error('文件不存在'))
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onload = (e: ProgressEvent<FileReader>) => {
@@ -19,13 +18,13 @@ export function countExcelData(file?: any): Promise<ExcelFile> {
         const data: ArrayBuffer = e.target!.result as ArrayBuffer
         const workbook: XLSX.WorkBook = XLSX.read(data, { type: 'array' })
         const sheets: ExcelSheet[] = workbook.SheetNames.map((sheetName: string) => {
-          const worksheet: XLSX.WorkSheet = workbook.Sheets[sheetName] as any
-          const jsonData: ExcelData[] = XLSX.utils.sheet_to_json(worksheet, {
+          const worksheet: XLSX.WorkSheet = workbook.Sheets[sheetName]!
+          const jsonData: unknown[][] = XLSX.utils.sheet_to_json(worksheet, {
             header: 1,
           })
           // 类型守卫判断表头
           const isHeader = jsonData[0]?.some(
-            (cell: any) => typeof cell === 'string' && cell.toLowerCase().includes('name')
+            (cell: unknown) => typeof cell === 'string' && cell.toLowerCase().includes('name')
           )
           return {
             name: sheetName,
@@ -33,7 +32,7 @@ export function countExcelData(file?: any): Promise<ExcelFile> {
             total: isHeader ? jsonData.length - 1 : jsonData.length,
           }
         })
-        const totalData = sheets.reduce((sum, sheet: any) => sum + sheet.total, 0)
+        const totalData = sheets.reduce((sum, sheet) => sum + sheet.total, 0)
         resolve({ sheets, totalData })
       } catch (err) {
         console.error('文件解析失败，请检查文件格式', err)

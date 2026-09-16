@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { useSlots, ref, Comment, Fragment, type VNode } from 'vue'
+import { useSlots, ref, Comment, Fragment, type VNode, type Slot } from 'vue'
 defineOptions({
   name: 'CbButtonFold',
 })
@@ -73,7 +73,7 @@ const props = defineProps({
   },
 })
 
-const slots = useSlots()
+const slots = useSlots() as Record<string, Slot>
 const visible = ref(false)
 
 const getNormalizedChildren = (): VNode[] => {
@@ -101,8 +101,8 @@ const getOtherOperations = () => {
   return getNormalizedChildren().slice(props.expendNum)
 }
 
-const getMergedProps = (item: any) => {
-  const originalProps = item.props || {}
+const getMergedProps = (item: VNode) => {
+  const originalProps = (item.props || {}) as Record<string, unknown>
   return {
     ...originalProps,
     disabled: props.disabledAll || originalProps.disabled === true || originalProps.disabled === '',
@@ -114,7 +114,7 @@ const close = () => {
 }
 
 const handleContextClick = (context: { e: MouseEvent }) => {
-  const triggerClassName = (context.e.target as any)?.className as string
+  const triggerClassName = (context.e.target as HTMLElement | null)?.className ?? ''
 
   if (triggerClassName.indexOf('t-link') !== -1 || triggerClassName.indexOf('t-button') !== -1) {
     close()

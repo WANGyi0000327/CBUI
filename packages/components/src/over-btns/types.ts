@@ -23,7 +23,7 @@ export interface OverBtnsProps {
   /**
    * 当前行数据（传给按钮的 label / disabled / clickHandler 等）
    */
-  row?: Record<string, any>
+  row?: Record<string, unknown>
   /**
    * 折叠图标触发器样式
    * @default { width: '30px' }

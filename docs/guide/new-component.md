@@ -362,7 +362,7 @@ const MEDIA_TOOL_COMPONENTS = new Set([
 | 1. 类型检查   | `npx vue-tsc --noEmit -p packages/components/tsconfig.json` | 0 error                             |
 | 2. 代码规范   | `npx eslint packages/components/src/<name>`                 | 0 errors（any 基线 warning 可接受） |
 | 3. 组件单测   | `npx vitest run packages/components/src/<name>`             | 全过                                |
-| 4. 全量回归   | `pnpm test`                                                 | 44 files / 240 tests 全绿           |
+| 4. 全量回归   | `pnpm test`                                                 | 47 files / 262 tests 全绿           |
 | 5. 组件库构建 | `pnpm build:lib`                                            | dist 产物生成                       |
 | 6. 文档站构建 | 先停 dev → `pnpm build:docs`                                | 构建通过                            |
 | 7. 浏览器实测 | `pnpm dev` → 访问 `/components/<name>.html`                 | 渲染 + 交互正常                     |

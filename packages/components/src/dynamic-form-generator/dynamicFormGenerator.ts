@@ -26,17 +26,17 @@ export type FieldType = 'input' | 'select' | 'checkbox' | 'radio' | 'date' | 'da
 export interface FieldOption {
   label: string
   value: string | number | boolean
-  [key: string]: any
+  [key: string]: unknown
 }
 
 // 透传给控件的组件属性
-export type ComponentProps = Record<string, any>
+export type ComponentProps = Record<string, unknown>
 
 // 校验规则（TDesign FormRule 的简化形式）
-export type ValidationRule = Record<string, any>
+export type ValidationRule = Record<string, unknown>
 
 // 字段配置泛型
-export interface FormField<T = FormValue, K extends string = string> {
+export interface FormField<K extends string = string> {
   key: K
   label: string | LabelRenderFunction
   content?: string | ContentRenderFunction
@@ -51,6 +51,6 @@ export interface FormField<T = FormValue, K extends string = string> {
 }
 // 泛型表单 Props
 export interface DynamicFormProps<T extends FormValues = FormValues> {
-  fields: Array<FormField<FormValue, keyof T & string>>
+  fields: Array<FormField<keyof T & string>>
   modelValue: FormValues
 }

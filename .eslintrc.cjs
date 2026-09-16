@@ -36,6 +36,16 @@ module.exports = {
         '@typescript-eslint/no-require-imports': 'off',
       },
     },
+    {
+      // 单测 spec 中会定义 stub 组件（模拟 TDesign 子组件），
+      // 其 props 以"够用即可"为原则，不强制逐项给 default/type，也允许一文件多组件
+      files: ['**/*.spec.ts'],
+      rules: {
+        'vue/one-component-per-file': 'off',
+        'vue/require-default-prop': 'off',
+        'vue/require-prop-types': 'off',
+      },
+    },
   ],
   ignorePatterns: [
     'dist',
